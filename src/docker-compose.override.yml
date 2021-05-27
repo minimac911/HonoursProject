@@ -36,6 +36,6 @@ services:
     ports:
       - "5103:80"
 
-#volumes:
-#  mysql-db-data:
-#     external: false
+volumes:
+  mysql-db-data:
+     external: false
