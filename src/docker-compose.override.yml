@@ -25,14 +25,14 @@ services:
   cart:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:DefaultConnection=Server=mysql;Database=honoursproject_services_cart;User=root;Password=root"
+      - DockerConnectionString=Server=mysql;Database=honoursproject_services_cart;User=root;Password=root
     ports:
       - "5102:80"
 
   order:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:DefaultConnection=Server=mysql;Database=honoursproject_services_order;User=root;Password=root"
+      - DockerConnectionString=Server=mysql;Database=honoursproject_services_order;User=root;Password=root
     ports:
       - "5103:80"
 
