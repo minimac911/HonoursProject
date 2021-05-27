@@ -1,0 +1,61 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31321.278
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{012185B7-918F-4895-8CEE-C8A7E829875B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Catalog", "Services\Catalog\Catalog.csproj", "{9FDC3423-0466-429C-B0A1-71CC40AD11D7}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cart", "Services\Cart\Cart.csproj", "{D83DD977-8F46-4CC3-9241-21ACACD19BF3}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Order", "Services\Order\Order.csproj", "{FB215B77-06A0-42F8-8B69-F80B839320F4}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ApiGateways", "ApiGateways", "{AA863D9D-1A73-45FD-9195-592E82AE6F56}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "EventBus", "EventBus", "{3D78ACEE-4A06-4984-AE24-6EC7B7CDDBB3}"
+EndProject
+Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-compose.dcproj", "{0BA826A8-96B2-4FFB-9348-B062C291BBE0}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebCoreAPI", "ApiGateways\WebCoreAPI\WebCoreAPI.csproj", "{1C39660A-0925-42CE-A1BA-7F2965C01514}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9FDC3423-0466-429C-B0A1-71CC40AD11D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9FDC3423-0466-429C-B0A1-71CC40AD11D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9FDC3423-0466-429C-B0A1-71CC40AD11D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9FDC3423-0466-429C-B0A1-71CC40AD11D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D83DD977-8F46-4CC3-9241-21ACACD19BF3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D83DD977-8F46-4CC3-9241-21ACACD19BF3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D83DD977-8F46-4CC3-9241-21ACACD19BF3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D83DD977-8F46-4CC3-9241-21ACACD19BF3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FB215B77-06A0-42F8-8B69-F80B839320F4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FB215B77-06A0-42F8-8B69-F80B839320F4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FB215B77-06A0-42F8-8B69-F80B839320F4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FB215B77-06A0-42F8-8B69-F80B839320F4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0BA826A8-96B2-4FFB-9348-B062C291BBE0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0BA826A8-96B2-4FFB-9348-B062C291BBE0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0BA826A8-96B2-4FFB-9348-B062C291BBE0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0BA826A8-96B2-4FFB-9348-B062C291BBE0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1C39660A-0925-42CE-A1BA-7F2965C01514}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1C39660A-0925-42CE-A1BA-7F2965C01514}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1C39660A-0925-42CE-A1BA-7F2965C01514}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1C39660A-0925-42CE-A1BA-7F2965C01514}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9FDC3423-0466-429C-B0A1-71CC40AD11D7} = {012185B7-918F-4895-8CEE-C8A7E829875B}
+		{D83DD977-8F46-4CC3-9241-21ACACD19BF3} = {012185B7-918F-4895-8CEE-C8A7E829875B}
+		{FB215B77-06A0-42F8-8B69-F80B839320F4} = {012185B7-918F-4895-8CEE-C8A7E829875B}
+		{1C39660A-0925-42CE-A1BA-7F2965C01514} = {AA863D9D-1A73-45FD-9195-592E82AE6F56}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8857D385-5E57-488B-B526-E60193302985}
+	EndGlobalSection
+EndGlobal

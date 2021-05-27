@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Catalog.Migrations
 {
     [DbContext(typeof(CatalogContext))]
-    [Migration("20210526145539_test")]
-    partial class test
+    [Migration("20210527122119_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,7 +41,7 @@ namespace Catalog.Migrations
                         .HasColumnType("datetime(6)");
 
                     b.HasKey("Id")
-                        .HasName("PK_item");
+                        .HasName("pk_item");
 
                     b.ToTable("item");
 

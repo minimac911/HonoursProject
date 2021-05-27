@@ -3,19 +3,20 @@
 FROM mcr.microsoft.com/dotnet/aspnet:5.0 AS base
 WORKDIR /app
 EXPOSE 80
+EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["Services/Catalog/Catalog.csproj", "Services/Catalog/"]
-RUN dotnet restore "Services/Catalog/Catalog.csproj"
+COPY ["ApiGateway/WebCoreAPI/WebCoreAPI.csproj", "ApiGateway/WebCoreAPI/"]
+RUN dotnet restore "ApiGateway/WebCoreAPI/WebCoreAPI.csproj"
 COPY . .
-WORKDIR "/src/Services/Catalog"
-RUN dotnet build "Catalog.csproj" -c Release -o /app/build
+WORKDIR "/src/ApiGateway/WebCoreAPI"
+RUN dotnet build "WebCoreAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "Catalog.csproj" -c Release -o /app/publish
+RUN dotnet publish "WebCoreAPI.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "Catalog.dll"]
+ENTRYPOINT ["dotnet", "WebCoreAPI.dll"]

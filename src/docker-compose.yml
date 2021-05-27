@@ -1,29 +1,34 @@
 version: '3.4'
 
 services:
-  catalog-api:
-    build:
-        context: .
-        dockerfile: Services/Catalog/Dockerfile
-    environment:
-      # For development purposes
-      - ASPNETCORE_ENVIRONMENT=Development
-      - "ConnectionStrings:DefaultConnection=Server=db;Database=prototype_one;User=root;Password=development"
-    ports:
-      - "50496:80"
-    depends_on:
-      - db
-
-  db:
+  mysql:
     image: mysql
-    environment:
-      - MYSQL_DATABASE=prototype_one
-      - MYSQL_ROOT_PASSWORD=development
-    ports:
-      - "4000:3306"
-    volumes: 
-      - db-data:/var/lib/mysql
 
-volumes:
-  db-data:
-    # external: true
+  adminer:
+    image: adminer
+    depends_on: 
+      - mysql
+    
+  catalog:
+    image: ${DOCKER_REGISTRY-}catalog
+    build:
+      context: .
+      dockerfile: Services/Catalog/Dockerfile
+    depends_on: 
+      - mysql
+
+  cart:
+    image: ${DOCKER_REGISTRY-}cart
+    build:
+      context: .
+      dockerfile: Services/Cart/Dockerfile
+    depends_on: 
+      - mysql
+
+  order:
+    image: ${DOCKER_REGISTRY-}order
+    build:
+      context: .
+      dockerfile: Services/Order/Dockerfile
+    depends_on: 
+      - mysql

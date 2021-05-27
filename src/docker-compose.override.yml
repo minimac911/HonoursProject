@@ -1,0 +1,41 @@
+version: '3.4'
+
+services:
+  mysql:
+    environment:
+      - MYSQL_ROOT_PASSWORD=root
+    ports:
+      - "4000:3306"
+    volumes: 
+      - mysql-db-data:/var/lib/mysql
+      - ./_MySQL_Scripts:/docker-entrypoint-initdb.d
+
+  adminer:
+    restart: always
+    ports:
+      - 8080:8080
+
+  catalog:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - DockerConnectionString=Server=mysql;Database=honoursproject_services_catalog;User=root;Password=root
+    ports:
+      - "5101:80"
+
+  cart:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=Server=mysql;Database=honoursproject_services_cart;User=root;Password=root"
+    ports:
+      - "5102:80"
+
+  order:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:DefaultConnection=Server=mysql;Database=honoursproject_services_order;User=root;Password=root"
+    ports:
+      - "5103:80"
+
+#volumes:
+#  mysql-db-data:
+#     external: false
