@@ -10,7 +10,7 @@ using Catalog.Models;
 
 namespace Catalog.Controllers
 {
-    [Route("api/Catalog")]
+    [Route("api/catalog")]
     [ApiController]
     public class CatalogItemsController : Controller
     {

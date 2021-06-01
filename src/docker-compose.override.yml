@@ -1,7 +1,9 @@
 version: '3.4'
 
 services:
+  #MySQL 
   mysql:
+    container_name: mysql
     environment:
       - MYSQL_ROOT_PASSWORD=root
     ports:
@@ -11,27 +13,46 @@ services:
       - ./_MySQL_Scripts:/docker-entrypoint-initdb.d
 
   adminer:
+    container_name: adminer
     restart: always
     ports:
       - 8080:8080
+  
+  #Rabbit MQ
+  rabbitmq:
+    container_name: rabbitmq
+    ports:
+      - "15672:15672"
+      - "5672:5672"
 
-  catalog:
+  #API Gateway
+  webcore-api-gateway:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5200:80"
+
+  #Microservices
+  catalog-api:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
       - DockerConnectionString=Server=mysql;Database=honoursproject_services_catalog;User=root;Password=root
     ports:
       - "5101:80"
 
-  cart:
+  cart-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
       - DockerConnectionString=Server=mysql;Database=honoursproject_services_cart;User=root;Password=root
     ports:
       - "5102:80"
 
-  order:
+  order-api:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
       - DockerConnectionString=Server=mysql;Database=honoursproject_services_order;User=root;Password=root
     ports:
       - "5103:80"

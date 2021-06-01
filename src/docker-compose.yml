@@ -1,6 +1,7 @@
 version: '3.4'
 
 services:
+  #MySQL 
   mysql:
     image: mysql
 
@@ -8,8 +9,24 @@ services:
     image: adminer
     depends_on: 
       - mysql
-    
-  catalog:
+
+  #Rabbit MQ
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+
+  #API Gateway
+  webcore-api-gateway:
+    image: ${DOCKER_REGISTRY-}webcoreapi
+    build:
+      context: .
+      dockerfile: ApiGateways/WebCoreAPI/Dockerfile
+    depends_on:
+      - catalog-api
+      - cart-api
+      - order-api
+
+  #Microservices
+  catalog-api:
     image: ${DOCKER_REGISTRY-}catalog
     build:
       context: .
@@ -17,7 +34,7 @@ services:
     depends_on: 
       - mysql
 
-  cart:
+  cart-api:
     image: ${DOCKER_REGISTRY-}cart
     build:
       context: .
@@ -25,7 +42,7 @@ services:
     depends_on: 
       - mysql
 
-  order:
+  order-api:
     image: ${DOCKER_REGISTRY-}order
     build:
       context: .
