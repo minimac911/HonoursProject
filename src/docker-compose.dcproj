@@ -2,11 +2,13 @@
 <Project ToolsVersion="15.0" Sdk="Microsoft.Docker.Sdk">
   <PropertyGroup Label="Globals">
     <ProjectVersion>2.1</ProjectVersion>
-    <DockerTargetOS>Linux</DockerTargetOS>
     <ProjectGuid>0ba826a8-96b2-4ffb-9348-b062c291bbe0</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}/swagger</DockerServiceUrl>
-    <DockerServiceName>catalog</DockerServiceName>
+    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
+    <DockerServiceName>webmvc</DockerServiceName>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DockerTargetOS>Linux</DockerTargetOS>
   </PropertyGroup>
   <ItemGroup>
     <None Include="docker-compose.override.yml">

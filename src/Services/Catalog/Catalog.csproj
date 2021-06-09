@@ -8,6 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="5.0.6">
       <PrivateAssets>all</PrivateAssets>
@@ -25,6 +26,10 @@
   <ItemGroup>
     <Folder Include="IntegrationEvents\Events\" />
     <Folder Include="IntegrationEvents\EventHandling\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\EventBus\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
   </ItemGroup>
 
 </Project>

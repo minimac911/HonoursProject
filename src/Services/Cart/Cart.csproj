@@ -8,9 +8,14 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.6" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.10.14" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.1.4" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\EventBus\EventBusRabbitMQ\EventBusRabbitMQ.csproj" />
   </ItemGroup>
 
 </Project>

@@ -10,7 +10,7 @@ using System;
 *
 ***************************************************************************************/
 
-namespace EventBusRabbitMQ
+namespace EventBus.EventBusRabbitMQ
 {
     public interface IRabbitMQPersistentConnection : IDisposable
     {

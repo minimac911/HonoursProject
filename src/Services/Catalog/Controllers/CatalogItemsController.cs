@@ -22,7 +22,7 @@ namespace Catalog.Controllers
         }
 
         // GET: All catalog items
-        [HttpGet]
+        [HttpGet("items")]
         public async Task<IList<CatalogItem>> GetCatalog()
         {
             // TODO: add pagination 
@@ -59,7 +59,7 @@ namespace Catalog.Controllers
 
         // PUT: Update Catalog Item
         [HttpPut("{id}")]
-        public async Task<ActionResult<CatalogItem>> PutCatalogItem(int id, CatalogItem item)
+        public async Task<ActionResult<CatalogItem>> UpdateCatalogItem(int id, CatalogItem item)
         {
             if (id != item.Id)
             {

@@ -19,9 +19,18 @@ Project("{E53339B2-1760-4266-BCC7-CA923CBCF16C}") = "docker-compose", "docker-co
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebCoreAPI", "ApiGateways\WebCoreAPI\WebCoreAPI.csproj", "{1C39660A-0925-42CE-A1BA-7F2965C01514}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBus", "EventBus\EventBus\EventBus.csproj", "{65A2FD46-F9F4-45E6-B351-568A8B8DBE7F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBus", "EventBus\EventBus\EventBus.csproj", "{65A2FD46-F9F4-45E6-B351-568A8B8DBE7F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EventBusRabbitMQ", "EventBus\EventBusRabbitMQ\EventBusRabbitMQ.csproj", "{27E5C840-7E4C-48ED-AD0F-5116AB18279B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EventBusRabbitMQ", "EventBus\EventBusRabbitMQ\EventBusRabbitMQ.csproj", "{27E5C840-7E4C-48ED-AD0F-5116AB18279B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{11BDDEE8-308F-4871-AEA9-9BE82D3D551C}"
+	ProjectSection(SolutionItems) = preProject
+		.env = .env
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Web", "Web", "{D1D31676-BE2F-439A-8F81-35226B5B6774}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebMVC", "Web\WebMVC\WebMVC.csproj", "{5EBA1C74-F3AC-4D40-8C57-B4547155C7D6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -57,6 +66,10 @@ Global
 		{27E5C840-7E4C-48ED-AD0F-5116AB18279B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{27E5C840-7E4C-48ED-AD0F-5116AB18279B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{27E5C840-7E4C-48ED-AD0F-5116AB18279B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5EBA1C74-F3AC-4D40-8C57-B4547155C7D6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5EBA1C74-F3AC-4D40-8C57-B4547155C7D6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5EBA1C74-F3AC-4D40-8C57-B4547155C7D6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5EBA1C74-F3AC-4D40-8C57-B4547155C7D6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -68,6 +81,7 @@ Global
 		{1C39660A-0925-42CE-A1BA-7F2965C01514} = {AA863D9D-1A73-45FD-9195-592E82AE6F56}
 		{65A2FD46-F9F4-45E6-B351-568A8B8DBE7F} = {3D78ACEE-4A06-4984-AE24-6EC7B7CDDBB3}
 		{27E5C840-7E4C-48ED-AD0F-5116AB18279B} = {3D78ACEE-4A06-4984-AE24-6EC7B7CDDBB3}
+		{5EBA1C74-F3AC-4D40-8C57-B4547155C7D6} = {D1D31676-BE2F-439A-8F81-35226B5B6774}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8857D385-5E57-488B-B526-E60193302985}

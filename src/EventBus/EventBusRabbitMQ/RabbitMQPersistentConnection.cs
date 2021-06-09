@@ -17,19 +17,19 @@ using System.Net.Sockets;
 *
 ***************************************************************************************/
 
-namespace EventBusRabbitMQ
+namespace EventBus.EventBusRabbitMQ
 {
-    public class RabbitMQPerssitentConnection : IRabbitMQPersistentConnection
+    public class RabbitMQPersistentConnection : IRabbitMQPersistentConnection
     {
         private readonly IConnectionFactory _connectionFactory;
-        private readonly ILogger<RabbitMQPerssitentConnection> _logger;
+        private readonly ILogger<RabbitMQPersistentConnection> _logger;
         private readonly int _retryCount;
         IConnection _connection;
         bool _disposed;
 
         object sync_root = new object();
         
-        public RabbitMQPerssitentConnection(IConnectionFactory connectionFactory, ILogger<RabbitMQPerssitentConnection> logger, int retryCount = 5)
+        public RabbitMQPersistentConnection(IConnectionFactory connectionFactory, ILogger<RabbitMQPersistentConnection> logger, int retryCount = 5)
         {
             _connectionFactory = connectionFactory;
             _logger = logger;

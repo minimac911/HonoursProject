@@ -23,7 +23,7 @@ using System.Threading.Tasks;
 *
 ***************************************************************************************/
 
-namespace EventBusRabbitMQ
+namespace EventBus.EventBusRabbitMQ
 {
     public class EventBusRabbitMQ : IEventBus, IDisposable
     {
@@ -340,7 +340,6 @@ namespace EventBusRabbitMQ
                         await Task.Yield();
                         // invoke the handle method for the integration event
                         await (Task)concreteType.GetMethod("Handle").Invoke(handler, new object[] { integartionEvent });
-
                     }
                 }
             }

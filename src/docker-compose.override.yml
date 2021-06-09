@@ -38,6 +38,11 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - DockerConnectionString=Server=mysql;Database=honoursproject_services_catalog;User=root;Password=root
+      - EventBusConnection=${SERVICE_BUS_CONNECTION:-rabbitmq}
+      - EventBusUserName=${SERVICE_BUS_USERNAME}
+      - EventBusPassword=${SERVICE_BUS_PASSWORD}
+      - EventBusRetryCount=5
+      - SubscriptionClientName=Catalog
     ports:
       - "5101:80"
 
@@ -46,6 +51,11 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - DockerConnectionString=Server=mysql;Database=honoursproject_services_cart;User=root;Password=root
+      - EventBusConnection=${SERVICE_BUS_CONNECTION:-rabbitmq}
+      - EventBusUserName=${SERVICE_BUS_USERNAME}
+      - EventBusPassword=${SERVICE_BUS_PASSWORD}
+      - EventBusRetryCount=5
+      - SubscriptionClientName=Cart
     ports:
       - "5102:80"
 
@@ -54,9 +64,24 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - DockerConnectionString=Server=mysql;Database=honoursproject_services_order;User=root;Password=root
+      - EventBusConnection=${SERVICE_BUS_CONNECTION:-rabbitmq}
+      - EventBusUserName=${SERVICE_BUS_USERNAME}
+      - EventBusPassword=${SERVICE_BUS_PASSWORD}
+      - EventBusRetryCount=5
+      - SubscriptionClientName=Order
     ports:
       - "5103:80"
+
+  webmvc:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - ApiGatewayUrl=http://webcore-api-gateway
+    ports:
+      - "5300:80"
+
 
 volumes:
   mysql-db-data:
      external: false
+

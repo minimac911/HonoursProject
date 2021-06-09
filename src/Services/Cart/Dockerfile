@@ -6,7 +6,14 @@ EXPOSE 80
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
+
+
 COPY ["Services/Cart/Cart.csproj", "Services/Cart/"]
+
+## Copy files needed for event bus
+#COPY "EventBus/EventBus/EventBus.csproj", "EventBus/EventBus/EventBus.csproj"
+#COPY "EventBus/EventBusRabbitMQ/EventBusRabbitMQ.csproj", "EventBus/EventBusRabbitMQ/EventBusRabbitMQ.csproj"
+#
 RUN dotnet restore "Services/Cart/Cart.csproj"
 COPY . .
 WORKDIR "/src/Services/Cart"

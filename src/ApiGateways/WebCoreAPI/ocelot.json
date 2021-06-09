@@ -1,7 +1,7 @@
 ﻿{
   "Routes": [
     {
-      "DownstreamPathTemplate": "/api/catalog",
+      "DownstreamPathTemplate": "/api/catalog/items",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -9,7 +9,19 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/catalog",
+      "UpstreamPathTemplate": "/apigateway/catalog/items",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+    },
+    {
+      "DownstreamPathTemplate": "/api/cart",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "cart",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/apigateway/cart",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
     }
   ],
