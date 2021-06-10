@@ -1,4 +1,6 @@
-﻿using Catalog.Models;
+﻿using Bogus;
+using Bogus.Extensions;
+using Catalog.Models;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -12,7 +14,7 @@ namespace Catalog.Data
         public CatalogContext (DbContextOptions<CatalogContext> options) : base(options)
         {
         }
-        
+
         public DbSet<CatalogItem> CatalogItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -23,9 +25,25 @@ namespace Catalog.Data
             // Configure the PK
             modelBuilder.Entity<CatalogItem>().HasKey(itm => itm.Id).HasName("pk_item");
 
-            // Seeding test data for tables
-            modelBuilder.Entity<CatalogItem>().HasData(new CatalogItem { Id = 1, Name = "Name A", Price = 199.99m,  Description = "Description A"});
+            // make price col a Money type
+            modelBuilder.Entity<CatalogItem>()
+                .Property(i => i.Price)
+                .HasColumnType("Money");
 
+            // Generate Bogus data
+            var id = 1;
+            var catalogItems = new Faker<CatalogItem>()
+                .RuleFor(i => i.Id, f => id++)
+                .RuleFor(i => i.Name, f => f.Commerce.ProductName())
+                .RuleFor(i => i.Description, f => f.Commerce.ProductDescription())
+                .RuleFor(i => i.Price, f => f.Commerce.Price(1).First())
+                .RuleFor(i => i.CreatedAt, f => DateTime.UtcNow)
+                .RuleFor(i => i.UpdatedAt, f => DateTime.UtcNow);
+
+            // generate 10 items
+            modelBuilder
+                .Entity<CatalogItem>()
+                .HasData(catalogItems.GenerateBetween(10, 10));
         }
     }
 }

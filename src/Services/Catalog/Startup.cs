@@ -82,6 +82,11 @@ namespace Catalog
         public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
             string mySqlConnectionStr = configuration["DockerConnectionString"];
+            // if running through local host and not docker 
+            if(mySqlConnectionStr == null)
+            {
+                mySqlConnectionStr = configuration.GetSection("ConnectionStrings").GetSection("DefaultConnection").Value;
+            }
             services.AddDbContextPool<CatalogContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
             return services;
         }
