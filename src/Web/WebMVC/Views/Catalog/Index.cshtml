@@ -11,9 +11,11 @@
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
                     <h5 class="card-title">@item.Name</h5>
-                    <h5 class="card-title">R @item.Price</h5>
+                    <h5 class="card-title">
+                        R @Math.Round(item.Price, 2)
+                    </h5>
                     <p class="card-text">@item.Description</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
+                    <a href="#" class="btn btn-primary">Add To Cart</a>
                 </div>
             </div>
         </div>

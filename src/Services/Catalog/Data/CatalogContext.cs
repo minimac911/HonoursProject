@@ -25,10 +25,10 @@ namespace Catalog.Data
             // Configure the PK
             modelBuilder.Entity<CatalogItem>().HasKey(itm => itm.Id).HasName("pk_item");
 
-            // make price col a Money type
+            // Set the precision of the decimal
             modelBuilder.Entity<CatalogItem>()
                 .Property(i => i.Price)
-                .HasColumnType("Money");
+                .HasPrecision(19, 4);
 
             // Generate Bogus data
             var id = 1;

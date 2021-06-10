@@ -30,6 +30,7 @@ namespace WebMVC.Services
         {
             // get the url for the api endpoint
             var url = API.API.Catalog.GetAllItems(_serviceUrl);
+
             // get the response from the api 
             var responseString = await _httpClient.GetStringAsync(url);
 

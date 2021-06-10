@@ -58,4 +58,6 @@ services:
     build:
       context: .
       dockerfile: Web/WebMVC/Dockerfile
+    depends_on: 
+      - webcore-api-gateway
 

@@ -5,6 +5,7 @@ using EventBus;
 using EventBus.EventBusRabbitMQ;
 using EventBus.Interfaces;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -37,7 +38,8 @@ namespace Catalog
                 .AddDbContext(Configuration)
                 .AddEventBus(Configuration)
                 .AddIntegrationEvents(Configuration)
-                .AddSwagger(Configuration);
+                .AddSwagger(Configuration)
+                .AddCustomHealthChecks(Configuration);
 
             // create a container
             var container = new ContainerBuilder();
@@ -47,7 +49,7 @@ namespace Catalog
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, CatalogContext catalogContext, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -63,9 +65,37 @@ namespace Catalog
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                // add health check endpoint
+                endpoints.MapHealthChecks("/hc/ready", new HealthCheckOptions
+                {
+                    Predicate = (check) => check.Tags.Contains("ready")
+                }) ;
+                // add liveness health check endpoint
+                endpoints.MapHealthChecks("/hc/liveness", new HealthCheckOptions
+                {
+                    Predicate = (_) => false
+                });
             });
-
+            // configrue the event bus
             ConfigureEventBus(app);
+
+            // Migrate database
+            try
+            {
+                logger.LogInformation("Migration: Testing connection to database...");
+                var canConnect = await catalogContext.Database.CanConnectAsync();
+                if (canConnect)
+                {
+                    logger.LogInformation("Migration: Database conected!");
+                    logger.LogInformation("Migration: Database migration is running...");
+                    await catalogContext.Database.MigrateAsync();
+                    logger.LogInformation("Migration: Database migration successful!");
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogWarning($"Migration: Database migration failed! ({ex.Message})");
+            }
         }
 
         protected virtual void ConfigureEventBus(IApplicationBuilder app)
@@ -85,7 +115,7 @@ namespace Catalog
             // if running through local host and not docker 
             if(mySqlConnectionStr == null)
             {
-                mySqlConnectionStr = configuration.GetSection("ConnectionStrings").GetSection("DefaultConnection").Value;
+                mySqlConnectionStr = configuration["ConnectionStrings:DefaultConnection"];
             }
             services.AddDbContextPool<CatalogContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
             return services;
@@ -165,6 +195,24 @@ namespace Catalog
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Catalog", Version = "v1" });
             });
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomHealthChecks(this IServiceCollection services, IConfiguration configuration)
+        {
+            // get the health check builder
+            var healthCheckBuilder = services.AddHealthChecks();
+            // get connection string
+            var conString = configuration["DockerConnectionString"] == null
+                ? configuration["ConnectionStrings:DefaultConnection"]
+                : configuration["DockerConnectionString"];
+
+            //add health check for database
+            healthCheckBuilder.AddMySql(conString, name: "Catalog-DB-healthcheck");
+
+            // add health check for rabbit mq
+            healthCheckBuilder.AddRabbitMQ($"amqp://{configuration["EventBusConnection"]}", name: "Catalog-RabbitMQ-healtcheck");
 
             return services;
         }
