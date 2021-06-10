@@ -4,20 +4,16 @@ using EventBus.Interfaces;
 using EventBus.EventBusRabbitMQ;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.Client;
 using System;
-using System.Collections.Generic;
-using System.Data.Common;
-using System.Linq;
-using System.Threading.Tasks;
 using EventBus;
+using Cart.Data;
+using Microsoft.EntityFrameworkCore;
 
 namespace Cart
 {
@@ -37,7 +33,8 @@ namespace Cart
                 .AddDbContext(Configuration)
                 .AddEventBus(Configuration)
                 .AddIntegrationEvents(Configuration)
-                .AddSwagger(Configuration);
+                .AddSwagger(Configuration)
+                .AddCustomHealthChecks(Configuration);
 
             // create a container
             var container = new ContainerBuilder();
@@ -47,7 +44,7 @@ namespace Cart
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, CartContext cartContext, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -65,7 +62,26 @@ namespace Cart
                 endpoints.MapControllers();
             });
 
+            // Configure the event bus
             ConfigureEventBus(app);
+
+            // Migrate database
+            try
+            {
+                logger.LogInformation("Migration: Testing connection to database...");
+                var canConnect = await cartContext.Database.CanConnectAsync();
+                if (canConnect)
+                {
+                    logger.LogInformation("Migration: Database conected!");
+                    logger.LogInformation("Migration: Database migration is running...");
+                    await cartContext.Database.MigrateAsync();
+                    logger.LogInformation("Migration: Database migration successful!");
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogWarning($"Migration: Database migration failed! ({ex.Message})");
+            }
         }
 
         protected virtual void ConfigureEventBus(IApplicationBuilder app)
@@ -82,6 +98,13 @@ namespace Cart
     {
         public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
+            string mySqlConnectionStr = configuration["DockerConnectionString"];
+            // if running through local host and not docker 
+            if (mySqlConnectionStr == null)
+            {
+                mySqlConnectionStr = configuration["ConnectionStrings:DefaultConnection"];
+            }
+            services.AddDbContextPool<CartContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
             return services;
         }
 
@@ -121,7 +144,7 @@ namespace Cart
 
                 return new RabbitMQPersistentConnection(factory, logger, retryCount);
             });
-          
+
 
             return services;
         }
@@ -142,10 +165,11 @@ namespace Cart
                     retryCount = int.Parse(configuration["EventBusRetryCount"]);
                 }
 
-                return new EventBusRabbitMQ(rabbitMQPersistentConnection,logger, eventBusSubcriptionsManager, iLifetimeScope, subscriptionClientName, retryCount);
+                return new EventBusRabbitMQ(rabbitMQPersistentConnection, logger, eventBusSubcriptionsManager, iLifetimeScope, subscriptionClientName, retryCount);
             });
 
             services.AddSingleton<IEventBusSubscriptionsManager, InMemoryEventBusSubscriptionsManager>();
+            // Add Event Handlers
             //services.AddTransient<OrderStatusChangedToAwaitingValidationIntegrationEventHandler>();
             //services.AddTransient<OrderStatusChangedToPaidIntegrationEventHandler>();
 
@@ -158,6 +182,24 @@ namespace Cart
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "Cart", Version = "v1" });
             });
+
+            return services;
+        }
+
+        public static IServiceCollection AddCustomHealthChecks(this IServiceCollection services, IConfiguration configuration)
+        {
+            // get the health check builder
+            var healthCheckBuilder = services.AddHealthChecks();
+            // get connection string
+            var conString = configuration["DockerConnectionString"] == null
+                ? configuration["ConnectionStrings:DefaultConnection"]
+                : configuration["DockerConnectionString"];
+
+            //add health check for database
+            healthCheckBuilder.AddMySql(conString, name: "Cart-DB-healthcheck");
+
+            // add health check for rabbit mq
+            healthCheckBuilder.AddRabbitMQ($"amqp://{configuration["EventBusConnection"]}", name: "Cart-RabbitMQ-healtcheck");
 
             return services;
         }

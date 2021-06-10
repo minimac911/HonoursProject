@@ -10,7 +10,7 @@ services:
       - "4000:3306"
     volumes: 
       - mysql-db-data:/var/lib/mysql
-      - ./_MySQL_Scripts:/docker-entrypoint-initdb.d
+      #- ./_MySQL_Scripts:/docker-entrypoint-initdb.d
 
   adminer:
     container_name: adminer
