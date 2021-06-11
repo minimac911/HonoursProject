@@ -19,20 +19,16 @@ namespace Cart.Migrations
 
             modelBuilder.Entity("Cart.Models.CartDetails", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int?>("CartItemId")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Total")
+                        .HasPrecision(19, 4)
+                        .HasColumnType("decimal(19,4)");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id")
+                    b.HasKey("UserId")
                         .HasName("pk_cart_details");
-
-                    b.HasIndex("CartItemId");
 
                     b.ToTable("cart_details");
                 });
@@ -41,6 +37,9 @@ namespace Cart.Migrations
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<int?>("CartDetailsUserId")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("CreatedAt")
@@ -59,8 +58,8 @@ namespace Cart.Migrations
                         .HasPrecision(19, 4)
                         .HasColumnType("decimal(19,4)");
 
-                    b.Property<decimal>("Quantity")
-                        .HasColumnType("decimal(65,30)");
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime(6)");
@@ -68,16 +67,23 @@ namespace Cart.Migrations
                     b.HasKey("Id")
                         .HasName("pk_cart_item");
 
+                    b.HasIndex("CartDetailsUserId");
+
                     b.ToTable("cart_item");
+                });
+
+            modelBuilder.Entity("Cart.Models.CartItem", b =>
+                {
+                    b.HasOne("Cart.Models.CartDetails", "CartDetails")
+                        .WithMany("Items")
+                        .HasForeignKey("CartDetailsUserId");
+
+                    b.Navigation("CartDetails");
                 });
 
             modelBuilder.Entity("Cart.Models.CartDetails", b =>
                 {
-                    b.HasOne("Cart.Models.CartItem", "CartItem")
-                        .WithMany()
-                        .HasForeignKey("CartItemId");
-
-                    b.Navigation("CartItem");
+                    b.Navigation("Items");
                 });
 #pragma warning restore 612, 618
         }

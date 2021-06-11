@@ -36,6 +36,9 @@ namespace Catalog.Migrations
                         .HasPrecision(19, 4)
                         .HasColumnType("decimal(19,4)");
 
+                    b.Property<int>("UnitsLeft")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("UpdatedAt")
                         .HasColumnType("datetime(6)");
 
@@ -48,92 +51,102 @@ namespace Catalog.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 519, DateTimeKind.Utc).AddTicks(5096),
+                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 636, DateTimeKind.Utc).AddTicks(4889),
                             Description = "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
-                            Name = "Intelligent Granite Chair",
-                            Price = 50m,
-                            UpdatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 519, DateTimeKind.Utc).AddTicks(9792)
+                            Name = "Refined Granite Pants",
+                            Price = 53m,
+                            UnitsLeft = 17,
+                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 636, DateTimeKind.Utc).AddTicks(9548)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5167),
-                            Description = "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
-                            Name = "Awesome Rubber Tuna",
-                            Price = 52m,
-                            UpdatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5185)
+                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3702),
+                            Description = "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+                            Name = "Unbranded Steel Tuna",
+                            Price = 56m,
+                            UnitsLeft = 10,
+                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3708)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5257),
+                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3758),
                             Description = "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
-                            Name = "Fantastic Wooden Shoes",
-                            Price = 54m,
-                            UpdatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5260)
+                            Name = "Practical Fresh Cheese",
+                            Price = 53m,
+                            UnitsLeft = 7,
+                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3760)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5299),
-                            Description = "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
-                            Name = "Licensed Metal Computer",
-                            Price = 49m,
-                            UpdatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5302)
+                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3790),
+                            Description = "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+                            Name = "Unbranded Cotton Ball",
+                            Price = 53m,
+                            UnitsLeft = 15,
+                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3792)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5358),
-                            Description = "The Apollotech B340 is an affordable wireless mouse with reliable connectivity, 12 months battery life and modern design",
-                            Name = "Small Cotton Sausages",
-                            Price = 51m,
-                            UpdatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5362)
+                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3821),
+                            Description = "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
+                            Name = "Intelligent Granite Hat",
+                            Price = 52m,
+                            UnitsLeft = 20,
+                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3822)
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5396),
-                            Description = "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
-                            Name = "Intelligent Granite Bacon",
-                            Price = 57m,
-                            UpdatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5398)
+                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3934),
+                            Description = "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+                            Name = "Sleek Granite Fish",
+                            Price = 52m,
+                            UnitsLeft = 14,
+                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3936)
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5428),
-                            Description = "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
-                            Name = "Ergonomic Concrete Chicken",
+                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3960),
+                            Description = "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+                            Name = "Practical Rubber Pants",
                             Price = 53m,
-                            UpdatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5431)
+                            UnitsLeft = 13,
+                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3962)
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5459),
-                            Description = "New range of formal shirts are designed keeping you in mind. With fits and styling that will make you stand apart",
-                            Name = "Small Cotton Salad",
-                            Price = 53m,
-                            UpdatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5461)
+                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3997),
+                            Description = "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+                            Name = "Practical Rubber Hat",
+                            Price = 50m,
+                            UnitsLeft = 7,
+                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3999)
                         },
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5491),
-                            Description = "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
-                            Name = "Handcrafted Wooden Shirt",
-                            Price = 49m,
-                            UpdatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5493)
+                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(4023),
+                            Description = "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
+                            Name = "Small Cotton Shirt",
+                            Price = 50m,
+                            UnitsLeft = 2,
+                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(4025)
                         },
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5521),
-                            Description = "The automobile layout consists of a front-engine design, with transaxle-type transmissions mounted at the rear of the engine and four wheel drive",
-                            Name = "Unbranded Wooden Soap",
-                            Price = 56m,
-                            UpdatedAt = new DateTime(2021, 6, 10, 8, 30, 42, 520, DateTimeKind.Utc).AddTicks(5523)
+                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(4050),
+                            Description = "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
+                            Name = "Generic Soft Sausages",
+                            Price = 50m,
+                            UnitsLeft = 20,
+                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(4052)
                         });
                 });
 #pragma warning restore 612, 618

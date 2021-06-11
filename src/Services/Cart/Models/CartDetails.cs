@@ -7,9 +7,14 @@ namespace Cart.Models
 {
     public class CartDetails
     {
-        public int Id { get; set; }
-        public int UserId { get; set; }
-        public CartItem CartItem { get; set; }
+        public CartDetails()
+        {
+            this.Items = new List<CartItem>();
+        }
 
+        public int UserId { get; set; }
+        public decimal Total { get; set; }
+
+        public virtual ICollection<CartItem> Items { get; set; }
     }
 }

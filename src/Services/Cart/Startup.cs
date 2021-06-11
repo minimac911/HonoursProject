@@ -34,7 +34,8 @@ namespace Cart
                 .AddEventBus(Configuration)
                 .AddIntegrationEvents(Configuration)
                 .AddSwagger(Configuration)
-                .AddCustomHealthChecks(Configuration);
+                .AddCustomHealthChecks(Configuration)
+               ;
 
             // create a container
             var container = new ContainerBuilder();
@@ -109,7 +110,11 @@ namespace Cart
 
         public static IServiceCollection AddMVCControllers(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddControllers();
+            services
+                .AddControllers()
+                .AddNewtonsoftJson(options =>
+                   options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
             return services;
         }
 

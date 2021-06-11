@@ -63,6 +63,7 @@ namespace WebMVC
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             services.AddHttpClient<ICatalogService, CatalogService>();
+            services.AddHttpClient<ICartService, CartService>();
 
             return services;
         }

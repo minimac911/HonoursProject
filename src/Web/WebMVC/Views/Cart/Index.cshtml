@@ -1,0 +1,50 @@
+﻿@model WebMVC.Models.Cart.CartDetails
+@{
+    ViewData["Title"] = "Cart  Page";
+}
+
+
+<div class="container">
+    @if (Model != null)
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">Qty</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Unit Price</th>
+                    <th scope="col">Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Items)
+                {
+                    <tr>
+                        <th scope="row">@item.Quantity x</th>
+                        <td>@item.Name</td>
+                        <td>R @Math.Round(item.Price, 2)</td>
+                        <td>R @Math.Round(item.Price * item.Quantity, 2)</td>
+                    </tr>
+                }
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th></th>
+                    <th></th>
+                    <th></th>
+                    <th>R @Math.Round(Model.Total, 2)</th>
+                </tr>
+            </tfoot>
+        </table>
+    }
+    else
+    {
+        <div class="text-center">
+            <div class="alert alert-info" role="alert">
+                You have no items in your Cart!
+                <br />
+                <a class="btn btn-primary" role="button" asp-area="" asp-controller="Catalog" asp-action="Index">Go To Catalog</a>
+            </div>
+        </div>
+    }
+</div>

@@ -12,7 +12,24 @@ namespace WebMVC.API
         {
             public static string GetAllItems(string baseUrl)
             {
-                return $"{baseUrl}/items";
+                return $"{baseUrl}";
+            }
+            public static string GetSingleItem(string baseUrl, int id)
+            {
+                return $"{baseUrl}/{id}";
+            }
+        }
+
+        public static class Cart
+        {
+            public static string GetCart(string baseUrl, int userId)
+            {
+                return $"{baseUrl}/{userId}";
+            }
+
+            public static string AddItemToCart(string baseUrl, int userId)
+            {
+                return $"{baseUrl}/{userId}/item";
             }
         }
     }

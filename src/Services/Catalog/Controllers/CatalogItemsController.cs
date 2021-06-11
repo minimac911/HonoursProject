@@ -22,7 +22,7 @@ namespace Catalog.Controllers
         }
 
         // GET: All catalog items
-        [HttpGet("items")]
+        [HttpGet()]
         public async Task<IList<CatalogItem>> GetCatalog()
         {
             // TODO: add pagination 

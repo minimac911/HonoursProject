@@ -122,7 +122,11 @@ namespace Catalog
 
         public static IServiceCollection AddMVCControllers(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddControllers();
+            services
+                .AddControllers()
+                .AddNewtonsoftJson(options =>
+                   options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                ); 
             return services;
         }
 

@@ -12,8 +12,11 @@ namespace Cart.Models
         public string Name { get; set; }
         public string Description { get; set; }
         public decimal Price { get; set; }
-        public decimal Quantity { get; set; }
+        public int Quantity { get; set; }
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
+
+        public virtual CartDetails CartDetails { get; set; }
+
     }
 }

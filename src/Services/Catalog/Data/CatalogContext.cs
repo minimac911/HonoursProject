@@ -37,6 +37,7 @@ namespace Catalog.Data
                 .RuleFor(i => i.Name, f => f.Commerce.ProductName())
                 .RuleFor(i => i.Description, f => f.Commerce.ProductDescription())
                 .RuleFor(i => i.Price, f => f.Commerce.Price(1).First())
+                .RuleFor(i => i.UnitsLeft, f => f.Random.Number(1, 20))
                 .RuleFor(i => i.CreatedAt, f => DateTime.UtcNow)
                 .RuleFor(i => i.UpdatedAt, f => DateTime.UtcNow);
 

@@ -16,6 +16,7 @@ namespace Cart.Data
         }
 
         public DbSet<CartDetails> CartDetails { get; set; }
+        public DbSet<CartItem> CartItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -25,11 +26,14 @@ namespace Cart.Data
 
             // Configure the PK
             modelBuilder.Entity<CartItem>().HasKey(itm => itm.Id).HasName("pk_cart_item");
-            modelBuilder.Entity<CartDetails>().HasKey(x => x.Id).HasName("pk_cart_details");
+            modelBuilder.Entity<CartDetails>().HasKey(x => x.UserId).HasName("pk_cart_details");
 
             // Set the precision of the decimal
             modelBuilder.Entity<CartItem>()
                 .Property(i => i.Price)
+                .HasPrecision(19, 4);
+            modelBuilder.Entity<CartDetails>()
+                .Property(i => i.Total)
                 .HasPrecision(19, 4);
         }
     }
