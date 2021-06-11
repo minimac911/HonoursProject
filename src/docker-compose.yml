@@ -4,6 +4,11 @@ services:
   #MySQL 
   mysql:
     image: mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
 
   adminer:
     image: adminer
@@ -13,6 +18,12 @@ services:
   #Rabbit MQ
   rabbitmq:
     image: rabbitmq:3-management-alpine
+    healthcheck:
+      test: rabbitmq-diagnostics -q ping
+      interval: 30s
+      timeout: 30s
+      retries: 3
+
 
   #API Gateway
   webcore-api-gateway:
@@ -32,8 +43,10 @@ services:
       context: .
       dockerfile: Services/Catalog/Dockerfile
     depends_on: 
-      - mysql
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
 
   cart-api:
     image: ${DOCKER_REGISTRY-}cart
@@ -41,8 +54,10 @@ services:
       context: .
       dockerfile: Services/Cart/Dockerfile
     depends_on: 
-      - mysql
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
 
   order-api:
     image: ${DOCKER_REGISTRY-}order
@@ -50,8 +65,10 @@ services:
       context: .
       dockerfile: Services/Order/Dockerfile
     depends_on: 
-      - mysql
-      - rabbitmq
+      rabbitmq:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
 
   webmvc:
     image: ${DOCKER_REGISTRY-}webmvc
@@ -60,4 +77,3 @@ services:
       dockerfile: Web/WebMVC/Dockerfile
     depends_on: 
       - webcore-api-gateway
-

@@ -44,7 +44,7 @@ namespace Cart
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, CartContext cartContext, ILogger<Startup> logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, CartContext cartContext, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -69,12 +69,11 @@ namespace Cart
             try
             {
                 logger.LogInformation("Migration: Testing connection to database...");
-                var canConnect = await cartContext.Database.CanConnectAsync();
-                if (canConnect)
+                if (cartContext.Database.CanConnect())
                 {
                     logger.LogInformation("Migration: Database conected!");
                     logger.LogInformation("Migration: Database migration is running...");
-                    await cartContext.Database.MigrateAsync();
+                    cartContext.Database.Migrate();
                     logger.LogInformation("Migration: Database migration successful!");
                 }
             }

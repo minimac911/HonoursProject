@@ -49,7 +49,7 @@ namespace Catalog
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public async void Configure(IApplicationBuilder app, IWebHostEnvironment env, CatalogContext catalogContext, ILogger<Startup> logger)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, CatalogContext catalogContext, ILogger<Startup> logger)
         {
             if (env.IsDevelopment())
             {
@@ -83,12 +83,11 @@ namespace Catalog
             try
             {
                 logger.LogInformation("Migration: Testing connection to database...");
-                var canConnect = await catalogContext.Database.CanConnectAsync();
-                if (canConnect)
+                if (catalogContext.Database.CanConnect())
                 {
                     logger.LogInformation("Migration: Database conected!");
                     logger.LogInformation("Migration: Database migration is running...");
-                    await catalogContext.Database.MigrateAsync();
+                    catalogContext.Database.Migrate();
                     logger.LogInformation("Migration: Database migration successful!");
                 }
             }
