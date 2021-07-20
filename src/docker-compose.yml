@@ -30,7 +30,7 @@ services:
     image: ${DOCKER_REGISTRY-}webcoreapi
     build:
       context: .
-      dockerfile: ApiGateways/WebCoreAPI/Dockerfile
+      dockerfile: ApiGateways/Ocelot/WebCoreAPI/Dockerfile
     depends_on:
       - catalog-api
       - cart-api

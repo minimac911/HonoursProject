@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Catalog.Data;
 using Catalog.Models;
+using Microsoft.Extensions.Logging;
 
 namespace Catalog.Controllers
 {
@@ -15,18 +16,23 @@ namespace Catalog.Controllers
     public class CatalogItemsController : Controller
     {
         private readonly CatalogContext _context;
+        private readonly ILogger<CatalogItemsController> _logger;
 
-        public CatalogItemsController(CatalogContext context)
+        public CatalogItemsController(CatalogContext context, ILogger<CatalogItemsController> logger)
         {
             _context = context;
+            _logger = logger;
         }
 
         // GET: All catalog items
         [HttpGet()]
         public async Task<IList<CatalogItem>> GetCatalog()
         {
+            _logger.LogInformation("Items are going to be loaded");
             // TODO: add pagination 
-            return await _context.CatalogItems.ToListAsync();
+            var items = await _context.CatalogItems.ToListAsync();
+            _logger.LogInformation("Items have been loaded: "+items.Count()+" items");
+            return items;
         }
 
         // POST: Create a new catalog itemm

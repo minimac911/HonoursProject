@@ -78,7 +78,7 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - ApiGatewayUrl=http://webcore-api-gateway
     ports:
-      - "5300:80"
+      - "80:80"
 
 
 volumes:

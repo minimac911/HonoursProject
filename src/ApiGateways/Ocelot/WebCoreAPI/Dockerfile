@@ -7,10 +7,10 @@ EXPOSE 443
 
 FROM mcr.microsoft.com/dotnet/sdk:5.0 AS build
 WORKDIR /src
-COPY ["ApiGateways/WebCoreAPI/WebCoreAPI.csproj", "ApiGateways/WebCoreAPI/"]
-RUN dotnet restore "ApiGateways/WebCoreAPI/WebCoreAPI.csproj"
+COPY ["ApiGateways/Ocelot/WebCoreAPI/WebCoreAPI.csproj", "ApiGateways/Ocelot/WebCoreAPI/"]
+RUN dotnet restore "ApiGateways/Ocelot/WebCoreAPI/WebCoreAPI.csproj"
 COPY . .
-WORKDIR "/src/ApiGateways/WebCoreAPI"
+WORKDIR "/src/ApiGateways/Ocelot/WebCoreAPI"
 RUN dotnet build "WebCoreAPI.csproj" -c Release -o /app/build
 
 FROM build AS publish

@@ -48,6 +48,7 @@ namespace WebMVC.Controllers
                 // STEP 2: Add item to cart
                 await _cartService.AddItemToCart(userId, newCartItem);
             }
+
             return RedirectToAction("Index", "Cart");
         }
     }
