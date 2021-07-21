@@ -25,12 +25,7 @@ services:
       - "15672:15672"
       - "5672:5672"
 
-  #API Gateway
-  webcore-api-gateway:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-    ports:
-      - "5200:80"
+ 
 
   #Microservices
   catalog-api:
@@ -80,8 +75,26 @@ services:
     ports:
       - "80:80"
 
+  #API Gateway
+  webcore-api-gateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "5200:80"
 
+  web-aggregator:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - urls__cart=http://cart-api
+      - urls__catalog=http://catalog-api
+      - urls__orders=http://order-api
+      - CartUrlHC=http://cart-api/hc
+      - CatalogUrlHC=http://catalog-api/hc
+      - OrderingUrlHC=http://ordering-api/hc
+      #- IdentityUrlExternal=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5105
+    ports:
+      - "5120:80"
+ 
 volumes:
   mysql-db-data:
      external: false
-

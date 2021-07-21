@@ -1,6 +1,6 @@
 ﻿{
   "Routes": [
-    // Catalog -------------------------------------------------
+    // Catalog
     {
       "DownstreamPathTemplate": "/api/catalog",
       "DownstreamScheme": "http",
@@ -10,11 +10,12 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/apigateway/catalog",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
+      "UpstreamPathTemplate": "/api/catalog",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "Priority": 2
     },
     {
-      "DownstreamPathTemplate": "/api/catalog/{itemId}",
+      "DownstreamPathTemplate": "/api/catalog/{url}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -22,12 +23,13 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/apigateway/catalog/{itemId}",
-      "UpstreamHttpMethod": [ "GET", "PUT" ]
+      "UpstreamPathTemplate": "/api/catalog/{url}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "Priority": 1
     },
-    // CART ----------------------------------------------------
+    // Cart
     {
-      "DownstreamPathTemplate": "/api/cart/{userId}",
+      "DownstreamPathTemplate": "/api/cart",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -35,11 +37,12 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/apigateway/cart/{userId}",
-      "UpstreamHttpMethod": [ "GET", "POST" ]
+      "UpstreamPathTemplate": "/api/cart",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "Priority": 2
     },
     {
-      "DownstreamPathTemplate": "/api/cart/{userId}/item",
+      "DownstreamPathTemplate": "/api/cart/{url}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -47,8 +50,23 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/apigateway/cart/{userId}/item",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT" ]
+      "UpstreamPathTemplate": "/api/cart/{url}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "Priority": 1
+    },
+    // Aggregator
+    {
+      "DownstreamPathTemplate": "/api/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "web-aggregator",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/{url}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "Priority": 0
     }
   ],
   //"GlobalConfiguration": {

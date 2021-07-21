@@ -25,7 +25,7 @@ namespace WebMVC.Services
             _httpClient = httpClient;
             _configuration = configuration;
             var apiGatewayUrl = _configuration["ApiGatewayUrl"];
-            _serviceUrl = $"{apiGatewayUrl}/apigateway/cart";
+            _serviceUrl = $"{apiGatewayUrl}/api/cart";
         }
 
         public async Task<CartDetails> GetCart(int userId)

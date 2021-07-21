@@ -23,7 +23,7 @@ namespace WebMVC.Services
             _httpClient = httpClient;
             _configuration = configuration;
             var apiGatewayUrl = _configuration["ApiGatewayUrl"];
-            _serviceUrl = $"{apiGatewayUrl}/apigateway/catalog";
+            _serviceUrl = $"{apiGatewayUrl}/api/catalog";
         }
 
         public async Task<List<CatalogItem>> GetCatalogItems()

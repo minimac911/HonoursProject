@@ -25,16 +25,7 @@ services:
       retries: 3
 
 
-  #API Gateway
-  webcore-api-gateway:
-    image: ${DOCKER_REGISTRY-}webcoreapi
-    build:
-      context: .
-      dockerfile: ApiGateways/Ocelot/WebCoreAPI/Dockerfile
-    depends_on:
-      - catalog-api
-      - cart-api
-      - order-api
+  
 
   #Microservices
   catalog-api:
@@ -77,3 +68,20 @@ services:
       dockerfile: Web/WebMVC/Dockerfile
     depends_on: 
       - webcore-api-gateway
+
+  #API Gateway
+  webcore-api-gateway:
+    image: ${DOCKER_REGISTRY-}webcoreapi
+    build:
+      context: .
+      dockerfile: ApiGateways/Ocelot/WebCoreAPI/Dockerfile
+    depends_on:
+      - catalog-api
+      - cart-api
+      - order-api
+
+  web-aggregator:
+    image: ${DOCKER_REGISTRY-}webhttpaggregator
+    build:
+      context: .
+      dockerfile: ApiGateways/BFF/WebHttpAggregator/Dockerfile
