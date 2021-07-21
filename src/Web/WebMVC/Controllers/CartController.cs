@@ -10,8 +10,6 @@ using WebMVC.Services.Intrefaces;
 
 namespace WebMVC.Controllers
 {
-    [Route("api/catalog")]
-    [ApiController]
     public class CartController : Controller
     {
         private ICartService _cartService;
