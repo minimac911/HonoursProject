@@ -61,6 +61,16 @@ services:
       mysql:
         condition: service_healthy
 
+  # IAM Service
+  iam:
+    image: ${DOCKER_REGISTRY-}iamservice
+    build:
+      context: .
+      dockerfile: Services/IAM/Dockerfile
+    depends_on:
+      mysql:
+        condition: service_healthy
+
   webmvc:
     image: ${DOCKER_REGISTRY-}webmvc
     build:
@@ -68,6 +78,8 @@ services:
       dockerfile: Web/WebMVC/Dockerfile
     depends_on: 
       - webcore-api-gateway
+
+ 
 
   #API Gateway
   webcore-api-gateway:
@@ -85,3 +97,6 @@ services:
     build:
       context: .
       dockerfile: ApiGateways/BFF/WebHttpAggregator/Dockerfile
+
+  
+

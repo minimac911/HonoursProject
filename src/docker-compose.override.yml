@@ -67,6 +67,16 @@ services:
     ports:
       - "5103:80"
 
+  #IAM Service
+  iam:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - DockerConnectionString=Server=mysql;Database=honoursproject_services_iam;User=root;Password=root
+      - JwtSecurityKey=${JWT_SECURITY_KEY}
+    ports:
+      - "5100:80"
+
   webmvc:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
@@ -95,6 +105,8 @@ services:
     ports:
       - "5120:80"
  
+  
+
 volumes:
   mysql-db-data:
      external: false

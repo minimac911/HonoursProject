@@ -1,5 +1,32 @@
 ﻿{
   "Routes": [
+    // IAM
+    {
+      "DownstreamPathTemplate": "/api/auth/login",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "iam",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth/login",
+      "UpstreamHttpMethod": [ "POST" ],
+      "Priority": 2
+    },
+    {
+      "DownstreamPathTemplate": "/api/auth/verify",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "iam",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/auth/verify",
+      "UpstreamHttpMethod": [ "GET" ],
+      "Priority": 2
+    },
     // Catalog
     {
       "DownstreamPathTemplate": "/api/catalog",
@@ -12,7 +39,11 @@
       ],
       "UpstreamPathTemplate": "/api/catalog",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "Priority": 2
+      "Priority": 2,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "TestKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/catalog/{url}",

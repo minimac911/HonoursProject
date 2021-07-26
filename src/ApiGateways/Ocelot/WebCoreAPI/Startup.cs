@@ -34,6 +34,17 @@ namespace WebCoreAPI
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HonoursProject.Gateway.Api", Version = "v1" });
             });
 
+            // JWT auth
+            var key = "TestKey";
+
+            services
+                .AddAuthentication()
+                .AddJwtBearer(key, x =>
+                 {
+                     x.Authority = "http://iam/api/auth/verify";
+                     x.RequireHttpsMetadata = false;
+                 });
+
             services.AddOcelot(Configuration);
         }
 
