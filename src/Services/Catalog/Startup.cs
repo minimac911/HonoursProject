@@ -216,9 +216,9 @@ namespace Catalog
             // get the health check builder
             var healthCheckBuilder = services.AddHealthChecks();
             // get connection string
-            var conString = configuration["DockerConnectionString"] == null
-                ? configuration["ConnectionStrings:DefaultConnection"]
-                : configuration["DockerConnectionString"];
+            var conString = configuration.GetValue<String>("DockerConnectionString") == null
+                ? configuration.GetValue<String>("ConnectionStrings:DefaultConnection")
+                : configuration.GetValue<String>("DockerConnectionString");
 
             //add health check for database
             healthCheckBuilder.AddMySql(conString, name: "Catalog-DB-healthcheck");
