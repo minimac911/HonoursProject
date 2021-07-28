@@ -1,6 +1,7 @@
 ﻿using Cart.Data;
 using Cart.Models;
 using Cart.ViewModel;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -13,6 +14,7 @@ namespace Cart.Controllers
 {
     [Route("api/cart")]
     [ApiController]
+    [Authorize]
     public class CartController : Controller
     {
 

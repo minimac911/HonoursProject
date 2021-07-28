@@ -1,5 +1,23 @@
 ﻿{
   "Routes": [
+    // Identity Test
+    {
+      "DownstreamPathTemplate": "/identity",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "catalog-api",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/identity",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "Priority": 2,
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "IamServiceKey",
+      //  "AllowedScopes": []
+      //}
+    },
     // IAM
     {
       "DownstreamPathTemplate": "/api/auth/login",
@@ -41,7 +59,7 @@
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "Priority": 2,
       "AuthenticationOptions": {
-        "AuthenticationProviderKey": "TestKey",
+        "AuthenticationProviderKey": "IamServiceKey",
         "AllowedScopes": []
       }
     },

@@ -4,6 +4,7 @@ using Catalog.Data;
 using EventBus;
 using EventBus.EventBusRabbitMQ;
 using EventBus.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
@@ -13,10 +14,12 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using RabbitMQ.Client;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -35,7 +38,9 @@ namespace Catalog
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMVCControllers(Configuration)
+            services
+                .AddSecurity(Configuration)
+                .AddMVCControllers(Configuration)
                 .AddDbContext(Configuration)
                 .AddEventBus(Configuration)
                 .AddIntegrationEvents(Configuration)
@@ -59,7 +64,10 @@ namespace Catalog
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog v1"));
             }
 
+
             app.UseRouting();
+
+            app.UseAuthentication();
 
             app.UseAuthorization();
 
@@ -217,6 +225,46 @@ namespace Catalog
 
             // add health check for rabbit mq
             healthCheckBuilder.AddRabbitMQ($"amqp://{configuration["EventBusConnection"]}", name: "Catalog-RabbitMQ-healtcheck");
+
+            return services;
+        }
+
+        public static IServiceCollection AddSecurity(this IServiceCollection services, IConfiguration configuration)
+        {
+            // prevent mapping from the 'sub' identifier to the name identifier
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            var IamServiceUrl = configuration.GetValue<String>("IamServiceUrl");
+
+            services
+                .AddAuthentication(o =>
+                {
+                    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
+                })
+                .AddJwtBearer(o =>
+                {
+                    o.Authority = IamServiceUrl;
+                    o.Audience = "catalog";
+                    o.RequireHttpsMetadata = false;
+
+                    o.TokenValidationParameters = new TokenValidationParameters
+                    { 
+                        ValidateAudience = false
+                    };
+                });
+
+            //Authorizations
+            services
+                .AddAuthorization(options =>
+                {
+                    options.AddPolicy("ApiScope", policy =>
+                    {
+                        policy.RequireAuthenticatedUser();
+                        policy.RequireClaim("scope", "catalog");
+                    });
+                });
 
             return services;
         }

@@ -14,6 +14,9 @@ using System;
 using EventBus;
 using Cart.Data;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.IdentityModel.Tokens.Jwt;
 
 namespace Cart
 {
@@ -35,7 +38,7 @@ namespace Cart
                 .AddIntegrationEvents(Configuration)
                 .AddSwagger(Configuration)
                 .AddCustomHealthChecks(Configuration)
-               ;
+                .AddJwtAuthenticaiton(Configuration);
 
             // create a container
             var container = new ContainerBuilder();
@@ -204,6 +207,29 @@ namespace Cart
 
             // add health check for rabbit mq
             healthCheckBuilder.AddRabbitMQ($"amqp://{configuration["EventBusConnection"]}", name: "Cart-RabbitMQ-healtcheck");
+
+            return services;
+        }
+
+        public static IServiceCollection AddJwtAuthenticaiton(this IServiceCollection services, IConfiguration configuration)
+        {
+            // prevent mapping from the 'sub' identifier to the name identifier
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
+            var IamServiceUrl = configuration.GetValue<String>("IamServiceUrl");
+
+            services
+                .AddAuthentication(opts =>
+                {
+                    opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                })
+                .AddJwtBearer(opts =>
+                {
+                    opts.Authority = IamServiceUrl;
+                    opts.Audience = "cart";
+                    opts.RequireHttpsMetadata = false;
+                });
 
             return services;
         }

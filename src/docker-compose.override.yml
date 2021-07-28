@@ -25,8 +25,6 @@ services:
       - "15672:15672"
       - "5672:5672"
 
- 
-
   #Microservices
   catalog-api:
     environment:
@@ -38,6 +36,7 @@ services:
       - EventBusPassword=${SERVICE_BUS_PASSWORD}
       - EventBusRetryCount=5
       - SubscriptionClientName=Catalog
+      - IamServiceUrl=http://iam
     ports:
       - "5101:80"
 
@@ -51,6 +50,7 @@ services:
       - EventBusPassword=${SERVICE_BUS_PASSWORD}
       - EventBusRetryCount=5
       - SubscriptionClientName=Cart
+      - IamServiceUrl=http://iam
     ports:
       - "5102:80"
 
@@ -64,6 +64,7 @@ services:
       - EventBusPassword=${SERVICE_BUS_PASSWORD}
       - EventBusRetryCount=5
       - SubscriptionClientName=Order
+      - IamServiceUrl=http://iam
     ports:
       - "5103:80"
 
@@ -82,6 +83,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - ApiGatewayUrl=http://webcore-api-gateway
+      - IamServiceUrl=http://iam
+      - urls__mvc=http://localhost
     ports:
       - "80:80"
 
@@ -89,6 +92,7 @@ services:
   webcore-api-gateway:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
+      - IamServiceUrl=http://iam
     ports:
       - "5200:80"
 
@@ -104,9 +108,9 @@ services:
       #- IdentityUrlExternal=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5105
     ports:
       - "5120:80"
- 
-  
 
 volumes:
   mysql-db-data:
      external: false
+
+

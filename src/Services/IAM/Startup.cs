@@ -1,177 +1,93 @@
-using Autofac;
-using Autofac.Extensions.DependencyInjection;
-using IAM.Data;
-using IAM.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using Microsoft.IdentityModel.Tokens;
-using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
-namespace IAM
+
+using IdentityServer4;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
+using Microsoft.EntityFrameworkCore;
+using IdentityServerHost.Quickstart.UI;
+
+namespace IdentityServerAspNetIdentity
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public IWebHostEnvironment Environment { get; }
+        public IConfiguration Configuration { get; }
+
+        public Startup(IWebHostEnvironment environment, IConfiguration configuration)
         {
+            Environment = environment;
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
-
-        // This method gets called by the runtime. Use this method to add services to the container.
-        public IServiceProvider ConfigureServices(IServiceCollection services)
+        public void ConfigureServices(IServiceCollection services)
         {
-            services
-                .AddJwtAuthenticaiton(Configuration)
-                .AddMVCControllers(Configuration)
-                .AddDbContext(Configuration)
-                .AddSwagger(Configuration)
-                .AddCustomHealthChecks(Configuration);
+            services.AddControllersWithViews();
 
-            var container = new ContainerBuilder();
-            container.Populate(services);
+            var connectionString = Configuration.GetConnectionString("DefaultConnection");
 
-            return new AutofacServiceProvider(container.Build());
+            var builder = services.AddIdentityServer(options =>
+            {
+                options.Events.RaiseErrorEvents = true;
+                options.Events.RaiseInformationEvents = true;
+                options.Events.RaiseFailureEvents = true;
+                options.Events.RaiseSuccessEvents = true;
+
+                // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
+                options.EmitStaticAudienceClaim = true;
+            })
+                .AddTestUsers(TestUsers.Users)
+                // this adds the config data from DB (clients, resources, CORS)
+                .AddConfigurationStore(options =>
+                {
+                    options.ConfigureDbContext = builder => builder.UseSqlite(connectionString);
+                })
+                // this adds the operational data from DB (codes, tokens, consents)
+                .AddOperationalStore(options =>
+                {
+                    options.ConfigureDbContext = builder => builder.UseSqlite(connectionString);
+
+                    // this enables automatic token cleanup. this is optional.
+                    options.EnableTokenCleanup = true;
+                });
+
+            // not recommended for production - you need to store your key material somewhere secure
+            builder.AddDeveloperSigningCredential();
+
+            services.AddAuthentication()
+                .AddGoogle(options =>
+                {
+                    options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+
+                    // register your IdentityServer with Google at https://console.developers.google.com
+                    // enable the Google+ API
+                    // set the redirect URI to https://localhost:5001/signin-google
+                    options.ClientId = "copy client ID from Google here";
+                    options.ClientSecret = "copy client secret from Google here";
+                });
         }
 
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserContext userContext, ILogger<Startup> logger)
+        public void Configure(IApplicationBuilder app)
         {
-            if (env.IsDevelopment())
+            if (Environment.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
-                app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "IAM v1"));
+                app.UseDatabaseErrorPage();
             }
+
+            app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseIdentityServer();
             app.UseAuthorization();
-
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
-                // add health check endpoint
-                endpoints.MapHealthChecks("/hc/ready", new HealthCheckOptions
-                {
-                    Predicate = (check) => check.Tags.Contains("ready")
-                });
-                // add liveness health check endpoint
-                endpoints.MapHealthChecks("/hc/liveness", new HealthCheckOptions
-                {
-                    Predicate = (_) => false
-                });
+                endpoints.MapDefaultControllerRoute();
             });
-
-            // Migrate database
-            try
-            {
-                logger.LogInformation("Migration: Testing connection to database...");
-                if (userContext.Database.CanConnect())
-                {
-                    logger.LogInformation("Migration: Database conected!");
-                    logger.LogInformation("Migration: Database migration is running...");
-                    userContext.Database.Migrate();
-                    logger.LogInformation("Migration: Database migration successful!");
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.LogWarning($"Migration: Database migration failed! ({ex.Message})");
-            }
-        }
-    }
-
-    public static class CustomStartupExtenstions
-    {
-        public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
-        {
-            string mySqlConnectionStr = configuration["DockerConnectionString"];
-            // if running through local host and not docker 
-            if (mySqlConnectionStr == null)
-            {
-                mySqlConnectionStr = configuration["ConnectionStrings:DefaultConnection"];
-            }
-            services.AddDbContextPool<UserContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
-            return services;
-        }
-
-        public static IServiceCollection AddMVCControllers(this IServiceCollection services, IConfiguration configuration)
-        {
-            services
-                .AddControllers()
-                .AddNewtonsoftJson(options =>
-                   options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
-                );
-            return services;
-        }
-
-
-        public static IServiceCollection AddSwagger(this IServiceCollection services, IConfiguration configuration)
-        {
-            services.AddSwaggerGen(c =>
-            {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "IAM", Version = "v1" });
-            });
-
-            return services;
-        }
-
-        public static IServiceCollection AddCustomHealthChecks(this IServiceCollection services, IConfiguration configuration)
-        {
-            // get the health check builder
-            var healthCheckBuilder = services.AddHealthChecks();
-            // get connection string
-            var conString = configuration["DockerConnectionString"] == null
-                ? configuration["ConnectionStrings:DefaultConnection"]
-                : configuration["DockerConnectionString"];
-
-            //add health check for database
-            healthCheckBuilder.AddMySql(conString, name: "IAM-DB-healthcheck");
-
-            return services;
-        }
-
-        public static IServiceCollection AddJwtAuthenticaiton(this IServiceCollection services, IConfiguration configuration)
-        {
-            services
-                .AddAuthentication(opts =>
-                {
-                    opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                })
-                .AddJwtBearer(cfg =>
-                {
-                    cfg.RequireHttpsMetadata = true;
-                    cfg.SaveToken = true;
-                    cfg.TokenValidationParameters = new TokenValidationParameters()
-                    {
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["JwtSecurityKey"])),
-                        ValidateAudience = false,
-                        ValidateIssuer = false,
-                        ValidateLifetime = false,
-                        RequireExpirationTime = false,
-                        ClockSkew = TimeSpan.Zero,
-                        ValidateIssuerSigningKey = true
-                    };
-                });
-
-            services.AddScoped<ITokenBuilder, TokenBuilder>();
-    
-            return services;
         }
     }
 }

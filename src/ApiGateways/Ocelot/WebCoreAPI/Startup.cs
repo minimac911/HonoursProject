@@ -10,6 +10,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.IdentityModel.Logging;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Ocelot.DependencyInjection;
 using Ocelot.Middleware;
@@ -28,21 +30,27 @@ namespace WebCoreAPI
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            IdentityModelEventSource.ShowPII = true;
+
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "HonoursProject.Gateway.Api", Version = "v1" });
             });
 
-            // JWT auth
-            var key = "TestKey";
+            // JWT auth for IAM Service
+            var key = "IamServiceKey";
 
             services
                 .AddAuthentication()
                 .AddJwtBearer(key, x =>
                  {
-                     x.Authority = "http://iam/api/auth/verify";
+                     x.Authority = Configuration["IamServiceUrl"];
                      x.RequireHttpsMetadata = false;
+                     x.TokenValidationParameters = new TokenValidationParameters()
+                     {
+                         ValidAudiences = new[] { "order", "cart", "catalog" }
+                     };
                  });
 
             services.AddOcelot(Configuration);

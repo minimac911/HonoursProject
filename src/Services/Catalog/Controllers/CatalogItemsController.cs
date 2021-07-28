@@ -8,11 +8,13 @@ using Microsoft.EntityFrameworkCore;
 using Catalog.Data;
 using Catalog.Models;
 using Microsoft.Extensions.Logging;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Catalog.Controllers
 {
     [Route("api/catalog")]
     [ApiController]
+    [Authorize]
     public class CatalogItemsController : Controller
     {
         private readonly CatalogContext _context;

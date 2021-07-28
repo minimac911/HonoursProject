@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IAM.Data
+namespace Catalog.Data
 {
     public class UserContext : DbContext
     {
-        public UserContext(DbContextOptions<UserContext> options) : base(options)
+        public UserContext (DbContextOptions<UserContext> options) : base(options)
         {
         }
 
@@ -22,14 +22,14 @@ namespace IAM.Data
             modelBuilder.Entity<User>().ToTable("user");
 
             // Configure the PK
-            modelBuilder.Entity<User>().HasKey(usr => usr.Id).HasName("pk_user");
+            modelBuilder.Entity<User>().HasKey(itm => itm.Id).HasName("pk_user");
 
-            // Create fake users
             modelBuilder
                 .Entity<User>()
-                .HasData( 
-                new User { Id = 1, Email = "user1@gmail.com", Username = "user1", Password = PasswordHasher.HashPassword("user1")}, 
-                new User { Id = 2, Email = "user2@gmail.com", Username = "user2", Password = PasswordHasher.HashPassword("user2") });
+                .HasData(
+                    new User { Id = 1, Username = "a", Password = PasswordHasher.HashPassword("a") },
+                    new User { Id = 2, Username = "b", Password = PasswordHasher.HashPassword("b") }
+                );
         }
     }
 }

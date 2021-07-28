@@ -6,6 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
+using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using WebMVC.Services;
@@ -28,6 +29,30 @@ namespace WebMVC
             services.AddControllersWithViews()
                 .Services
                 .AddHttpClientServices(Configuration);
+
+            // Authentication
+            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+
+            services
+                .AddAuthentication(o => 
+                {
+                    o.DefaultScheme = "Cookies";
+                    o.DefaultChallengeScheme = "oidc";
+                })
+                .AddCookie("Cookies")
+                .AddOpenIdConnect("oidc", o =>
+                {
+                    o.Authority = Configuration.GetValue<String>("IamServiceUrl");
+                    
+                    o.ClientId = "mvc";
+                    o.ClientSecret = "secret";
+                    o.ResponseType = "code";
+
+                    o.SaveTokens = true;
+
+                    o.RequireHttpsMetadata = false;
+                });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -45,13 +70,17 @@ namespace WebMVC
 
             app.UseRouting();
 
+            app.UseAuthentication();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllerRoute(
-                    name: "default",
-                    pattern: "{controller=Catalog}/{action=Index}/{id?}");
+                endpoints
+                    .MapControllerRoute(
+                        name: "default",
+                        pattern: "{controller=Catalog}/{action=Index}/{id?}"
+                    );
             });
         }
     }
