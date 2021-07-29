@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace IAM.Controllers.Account
+namespace WebMVC.Controllers
 {
     public class AccountController : Controller
     {

@@ -10,7 +10,7 @@ using WebMVC.ViewModels.Catalog;
 
 namespace WebMVC.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class CatalogController : Controller
     {
         private ICatalogService _catalogService;

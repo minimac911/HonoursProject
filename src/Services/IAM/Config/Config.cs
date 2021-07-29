@@ -1,4 +1,6 @@
-﻿using IdentityServer4.Models;
+﻿using IdentityServer4;
+using IdentityServer4.Models;
+using Microsoft.Extensions.Configuration;
 using System.Collections.Generic;
 
 namespace IAM
@@ -15,40 +17,36 @@ namespace IAM
         public static IEnumerable<ApiScope> ApiScopes =>
             new ApiScope[]
             {
-                new ApiScope("scope1"),
-                new ApiScope("scope2"),
+                new ApiScope("catalog"),
+                new ApiScope("cart"),
+                new ApiScope("orders"),
             };
 
-        public static IEnumerable<Client> Clients =>
-            new Client[]
-            {
+        public static IEnumerable<Client> GetClients(IConfiguration configuration)
+        {
+            return new List<Client> {
                 // m2m client credentials flow client
                 new Client
                 {
-                    ClientId = "m2m.client",
-                    ClientName = "Client Credentials Client",
-
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                    ClientSecrets = { new Secret("511536EF-F270-4058-80CA-1C89C192F69A".Sha256()) },
-
-                    AllowedScopes = { "scope1" }
-                },
-
-                // interactive client using code flow + pkce
-                new Client
-                {
-                    ClientId = "interactive",
-                    ClientSecrets = { new Secret("49C1A7E1-0C79-4A89-A3D6-A37998FB86B0".Sha256()) },
-
-                    AllowedGrantTypes = GrantTypes.Code,
-
-                    RedirectUris = { "https://localhost:44300/signin-oidc" },
-                    FrontChannelLogoutUri = "https://localhost:44300/signout-oidc",
-                    PostLogoutRedirectUris = { "https://localhost:44300/signout-callback-oidc" },
-
-                    AllowOfflineAccess = true,
-                    AllowedScopes = { "openid", "profile", "scope2" }
-                },
+                    ClientId = "mvc",
+                    ClientName = "Main Mvc Clinet",
+                    ClientSecrets = { new Secret("secret".Sha256()) },
+                    ClientUri = $"{configuration.GetValue<string>("urls__mvc")}",
+                    AllowedGrantTypes = GrantTypes.Hybrid,
+                    RedirectUris = new List<string>{ $"{configuration.GetValue<string>("urls__mvc")}/signin-oidc" },
+                    PostLogoutRedirectUris = new List<string>{  $"{configuration.GetValue<string>("urls__mvc")}/signout-callback-oidc" },
+                    AllowedScopes = {
+                        IdentityServerConstants.StandardScopes.OpenId,
+                        IdentityServerConstants.StandardScopes.Profile,
+                        IdentityServerConstants.StandardScopes.OfflineAccess,
+                        "catalog",
+                        "cart",
+                        "orders"
+                    },
+                    AccessTokenLifetime = 60*60*2, // 2 hours
+                    IdentityTokenLifetime= 60*60*2 // 2 hours
+                }
             };
+        }
     }
 }

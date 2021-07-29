@@ -58,10 +58,10 @@
       "UpstreamPathTemplate": "/api/catalog",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "Priority": 2,
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "IamServiceKey",
-        "AllowedScopes": []
-      }
+      //"AuthenticationOptions": {
+      //  "AuthenticationProviderKey": "IamServiceKey",
+      //  "AllowedScopes": []
+      //}
     },
     {
       "DownstreamPathTemplate": "/api/catalog/{url}",

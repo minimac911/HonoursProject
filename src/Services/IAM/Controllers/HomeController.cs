@@ -1,18 +1,17 @@
-// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
-// Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
-
-
+﻿using IAM.Models;
 using IdentityServer4.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
-namespace IdentityServerHost.Quickstart.UI
+namespace IAM.Controllers
 {
-    [SecurityHeaders]
     [AllowAnonymous]
     public class HomeController : Controller
     {
@@ -39,9 +38,6 @@ namespace IdentityServerHost.Quickstart.UI
             return NotFound();
         }
 
-        /// <summary>
-        /// Shows the error page
-        /// </summary>
         public async Task<IActionResult> Error(string errorId)
         {
             var vm = new ErrorViewModel();

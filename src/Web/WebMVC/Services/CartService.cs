@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using WebMVC.Infrastructure;
 using WebMVC.Models.Cart;
 using WebMVC.Services.Intrefaces;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -31,7 +32,7 @@ namespace WebMVC.Services
         public async Task<CartDetails> GetCart(int userId)
         {
             // get the url for the api endpoint
-            var url = API.API.Cart.GetCart(_serviceUrl, userId);
+            var url = API.Cart.GetCart(_serviceUrl, userId);
 
             try
             {
@@ -54,7 +55,7 @@ namespace WebMVC.Services
         public async Task<bool> AddItemToCart(int userId, CartItemDTO newItemDto)
         {
             // get the url for the api endpoint
-            var url = API.API.Cart.AddItemToCart(_serviceUrl, userId);
+            var url = API.Cart.AddItemToCart(_serviceUrl, userId);
             // encode new item to json
             var data = new StringContent(JsonSerializer.Serialize(newItemDto), Encoding.UTF8, "application/json");
             // post data 

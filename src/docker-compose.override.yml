@@ -75,6 +75,7 @@ services:
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - DockerConnectionString=Server=mysql;Database=honoursproject_services_iam;User=root;Password=root
       - JwtSecurityKey=${JWT_SECURITY_KEY}
+      - urls__mvc=http://localhost
     ports:
       - "5100:80"
 
@@ -83,8 +84,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - ApiGatewayUrl=http://webcore-api-gateway
-      - IamServiceUrl=http://iam
-      - urls__mvc=http://localhost
+      - IamServiceUrl=http://localhost:5100
+      - CallBackUrl=http://localhost:80
     ports:
       - "80:80"
 

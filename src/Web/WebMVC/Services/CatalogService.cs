@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
+using WebMVC.Infrastructure;
 using WebMVC.Models;
 using WebMVC.Services.Intrefaces;
 
@@ -29,7 +30,7 @@ namespace WebMVC.Services
         public async Task<List<CatalogItem>> GetCatalogItems()
         {
             // get the url for the api endpoint
-            var url = API.API.Catalog.GetAllItems(_serviceUrl);
+            var url = API.Catalog.GetAllItems(_serviceUrl);
 
             // get the response from the api 
             var responseString = await _httpClient.GetStringAsync(url);
@@ -45,7 +46,7 @@ namespace WebMVC.Services
         public async Task<CatalogItem> GetSingleCatalogItemById(int id)
         {
             // get the url for the api endpoint
-            var url = API.API.Catalog.GetSingleItem(_serviceUrl, id);
+            var url = API.Catalog.GetSingleItem(_serviceUrl, id);
 
             // get the response from the api 
             var responseString = await _httpClient.GetStringAsync(url);
