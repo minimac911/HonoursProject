@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +11,16 @@ namespace WebMVC.Controllers
 {
     public class AccountController : Controller
     {
-        public IActionResult Index()
+        // Post logout form
+        [HttpPost]
+        public async Task<IActionResult> Logout()
         {
-            return View();
+            return new SignOutResult(new[]
+            {
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                OpenIdConnectDefaults.AuthenticationScheme
+            });
+
         }
     }
 }

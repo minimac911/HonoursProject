@@ -4,7 +4,7 @@
     <ProjectVersion>2.1</ProjectVersion>
     <ProjectGuid>0ba826a8-96b2-4ffb-9348-b062c291bbe0</ProjectGuid>
     <DockerLaunchAction>LaunchBrowser</DockerLaunchAction>
-    <DockerServiceUrl>{Scheme}://localhost:{ServicePort}</DockerServiceUrl>
+    <DockerServiceUrl>http://host.docker.internal</DockerServiceUrl>
     <DockerServiceName>webmvc</DockerServiceName>
   </PropertyGroup>
   <PropertyGroup>
