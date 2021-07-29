@@ -74,8 +74,12 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - DockerConnectionString=Server=mysql;Database=honoursproject_services_iam;User=root;Password=root
-      - JwtSecurityKey=${JWT_SECURITY_KEY}
-      - urls__mvc=http://localhost
+      - MvcClient=http://${EXTERNAL_DNS_NAME_OR_IP}
+      - url__MvcClient=http://${EXTERNAL_DNS_NAME_OR_IP}
+      - url__CatlogApiClient=http://${EXTERNAL_DNS_NAME_OR_IP}:5101
+      - url__CartApiClient=http://${EXTERNAL_DNS_NAME_OR_IP}:5102
+      - url__OrderApiClient=http://${EXTERNAL_DNS_NAME_OR_IP}:5103
+      - IDENTITY_ISSUER=http://${EXTERNAL_DNS_NAME_OR_IP}:5100
     ports:
       - "5100:80"
 
@@ -84,8 +88,8 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - ApiGatewayUrl=http://webcore-api-gateway
-      - IamServiceUrl=http://localhost:5100
-      - CallBackUrl=http://localhost:80
+      - IamServiceUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5100
+      - CallBackUrl=http://${EXTERNAL_DNS_NAME_OR_IP}
     ports:
       - "80:80"
 
@@ -93,7 +97,7 @@ services:
   webcore-api-gateway:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - IamServiceUrl=http://iam
+      - IamServiceUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5100
     ports:
       - "5200:80"
 

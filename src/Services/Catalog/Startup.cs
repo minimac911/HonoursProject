@@ -68,12 +68,13 @@ namespace Catalog
             app.UseRouting();
 
             app.UseAuthentication();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                    // require authorization for all controllers
+                    //.RequireAuthorization("ApiScope");
                 // add health check endpoint
                 endpoints.MapHealthChecks("/hc/ready", new HealthCheckOptions
                 {

@@ -18,33 +18,6 @@
       //  "AllowedScopes": []
       //}
     },
-    // IAM
-    {
-      "DownstreamPathTemplate": "/api/auth/login",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "iam",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/auth/login",
-      "UpstreamHttpMethod": [ "POST" ],
-      "Priority": 2
-    },
-    {
-      "DownstreamPathTemplate": "/api/auth/verify",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "iam",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/auth/verify",
-      "UpstreamHttpMethod": [ "GET" ],
-      "Priority": 2
-    },
     // Catalog
     {
       "DownstreamPathTemplate": "/api/catalog",
@@ -58,10 +31,10 @@
       "UpstreamPathTemplate": "/api/catalog",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "Priority": 2,
-      //"AuthenticationOptions": {
-      //  "AuthenticationProviderKey": "IamServiceKey",
-      //  "AllowedScopes": []
-      //}
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IamServiceKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/catalog/{url}",
@@ -74,7 +47,11 @@
       ],
       "UpstreamPathTemplate": "/api/catalog/{url}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "Priority": 1
+      "Priority": 1,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IamServiceKey",
+        "AllowedScopes": []
+      }
     },
     // Cart
     {
@@ -88,7 +65,11 @@
       ],
       "UpstreamPathTemplate": "/api/cart",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "Priority": 2
+      "Priority": 2,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IamServiceKey",
+        "AllowedScopes": []
+      }
     },
     {
       "DownstreamPathTemplate": "/api/cart/{url}",
@@ -101,7 +82,11 @@
       ],
       "UpstreamPathTemplate": "/api/cart/{url}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "Priority": 1
+      "Priority": 1,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IamServiceKey",
+        "AllowedScopes": []
+      }
     },
     // Aggregator
     {

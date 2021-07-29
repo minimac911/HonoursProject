@@ -19,4 +19,4 @@ RUN dotnet publish "IAM.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "IAM.dll"]
+ENTRYPOINT ["dotnet", "IAM.dll /seed",]

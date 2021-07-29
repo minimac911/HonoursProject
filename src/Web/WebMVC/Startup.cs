@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.IdentityModel.Logging;
 using System;
 using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
@@ -31,13 +32,22 @@ namespace WebMVC
         {
             services.AddControllersWithViews()
                 .Services
-                .AddHttpClientServices(Configuration)
-                .AddCustomAuthentication(Configuration);
+                .AddCustomMvc(Configuration)
+                .AddHttpClientServices(Configuration);
+
+            IdentityModelEventSource.ShowPII = true;       // Caution! Do NOT use in production: https://aka.ms/IdentityModel/PII
+
+            services.AddControllers();
+
+            services.AddCustomAuthentication(Configuration);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Remove("sub");
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -48,10 +58,14 @@ namespace WebMVC
             }
             app.UseStaticFiles();
 
+            app.UseSession();
+
+            // Needed for chrome redirection when using docker compose
+            app.UseCookiePolicy(new CookiePolicyOptions { MinimumSameSitePolicy = Microsoft.AspNetCore.Http.SameSiteMode.Lax });
+
             app.UseRouting();
 
             app.UseAuthentication();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -68,6 +82,15 @@ namespace WebMVC
 
     static class ServiceExtension
     {
+        public static IServiceCollection AddCustomMvc(this IServiceCollection services, IConfiguration configuration)
+        {
+            services.AddOptions();
+            services.AddSession();
+            services.AddDistributedMemoryCache();
+
+            return services;
+        }
+
         public static IServiceCollection AddHttpClientServices(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -87,37 +110,59 @@ namespace WebMVC
 
         public static IServiceCollection AddCustomAuthentication(this IServiceCollection services, IConfiguration configuration)
         {
-            var identityUrl = configuration.GetValue<string>("IamServiceUrl");
-            var callBackUrl = configuration.GetValue<string>("CallBackUrl");
+            var identityUrl = configuration.GetValue<String>("IamServiceUrl");
+            var callBackUrl = configuration.GetValue<String>("CallBackUrl");
             var sessionCookieLifetime = configuration.GetValue("SessionCookieLifetimeMinutes", 60);
 
             // Add Authentication services          
-            JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
-
+            //JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+            
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
                 options.DefaultChallengeScheme = "oidc";
             })
-            .AddCookie("Cookies", setup => setup.ExpireTimeSpan = TimeSpan.FromMinutes(sessionCookieLifetime))
+            .AddCookie("Cookies")
             .AddOpenIdConnect("oidc", options =>
             {
                 options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
-                options.Authority = identityUrl.ToString();
-                options.SignedOutRedirectUri = callBackUrl.ToString();
+                options.Authority = identityUrl;
+                options.SignedOutRedirectUri = callBackUrl;
                 options.ClientId = "mvc";
                 options.ClientSecret = "secret";
-                options.ResponseType = "code id_token";
+                options.ResponseType = "code";
+                //options.UsePkce = true;
                 options.SaveTokens = true;
                 options.GetClaimsFromUserInfoEndpoint = true;
                 options.RequireHttpsMetadata = false;
                 options.Scope.Add("openid");
                 options.Scope.Add("profile");
                 options.Scope.Add("catalog");
-                options.Scope.Add("orders");
                 options.Scope.Add("cart");
-                options.Scope.Add("webshoppingagg");
+                //options.Scope.Add("orders");
             });
+            //JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
+
+            //services.AddAuthentication(options =>
+            //{
+            //    options.DefaultScheme = "Cookies";
+            //    options.DefaultChallengeScheme = "oidc";
+            //})
+            //.AddCookie("Cookies")
+            //.AddOpenIdConnect("oidc", options =>
+            //{
+            //    options.Authority = identityUrl;
+
+            //    options.RequireHttpsMetadata = false;
+
+            //    options.ClientId = "mvc";
+            //    options.ClientSecret = "secret";
+            //    options.ResponseType = "code";
+
+            //    options.Scope.Add("catalog");
+
+            //    options.SaveTokens = true;
+            //});
 
             return services;
         }

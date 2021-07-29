@@ -38,7 +38,7 @@ namespace Cart
                 .AddIntegrationEvents(Configuration)
                 .AddSwagger(Configuration)
                 .AddCustomHealthChecks(Configuration)
-                .AddJwtAuthenticaiton(Configuration);
+                .AddSecurity(Configuration);
 
             // create a container
             var container = new ContainerBuilder();
@@ -59,11 +59,13 @@ namespace Cart
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapControllers();
+                endpoints
+                    .MapControllers();
             });
 
             // Configure the event bus
@@ -210,8 +212,7 @@ namespace Cart
 
             return services;
         }
-
-        public static IServiceCollection AddJwtAuthenticaiton(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddSecurity(this IServiceCollection services, IConfiguration configuration)
         {
             // prevent mapping from the 'sub' identifier to the name identifier
             JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
@@ -219,16 +220,33 @@ namespace Cart
             var IamServiceUrl = configuration.GetValue<String>("IamServiceUrl");
 
             services
-                .AddAuthentication(opts =>
+                .AddAuthentication(o =>
                 {
-                    opts.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                    opts.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    o.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    o.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+
                 })
-                .AddJwtBearer(opts =>
+                .AddJwtBearer(o =>
                 {
-                    opts.Authority = IamServiceUrl;
-                    opts.Audience = "cart";
-                    opts.RequireHttpsMetadata = false;
+                    o.Authority = IamServiceUrl;
+                    o.Audience = "cart";
+                    o.RequireHttpsMetadata = false;
+
+                    o.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateAudience = false
+                    };
+                });
+
+            //Authorizations
+            services
+                .AddAuthorization(options =>
+                {
+                    options.AddPolicy("ApiScope", policy =>
+                    {
+                        policy.RequireAuthenticatedUser();
+                        policy.RequireClaim("scope", "cart");
+                    });
                 });
 
             return services;

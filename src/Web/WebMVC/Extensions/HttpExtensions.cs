@@ -15,7 +15,7 @@ namespace WebMVC.Extensions
             client.SetBearerToken(accessToken);
         }
 
-        private static async Task<string> GetRefreshTokenAsync(this HttpClient client, string authority, string clientId, string secret, string apiName)
+        private static async Task<String> GetRefreshTokenAsync(this HttpClient client, string authority, string clientId, string secret, string apiName)
         {
             var disco = await client.GetDiscoveryDocumentAsync(authority);
             if (disco.IsError) throw new Exception(disco.Error);
