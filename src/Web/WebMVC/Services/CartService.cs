@@ -8,6 +8,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WebMVC.Infrastructure;
+using WebMVC.Models;
 using WebMVC.Models.Cart;
 using WebMVC.Services.Intrefaces;
 using JsonSerializer = System.Text.Json.JsonSerializer;
@@ -29,10 +30,10 @@ namespace WebMVC.Services
             _serviceUrl = $"{apiGatewayUrl}/api/cart";
         }
 
-        public async Task<CartDetails> GetCart(int userId)
+        public async Task<CartDetails> GetCart(ApplicationUser user)
         {
             // get the url for the api endpoint
-            var url = API.Cart.GetCart(_serviceUrl, userId);
+            var url = API.Cart.GetCart(_serviceUrl, user.Id);
 
             try
             {
@@ -52,10 +53,10 @@ namespace WebMVC.Services
             }
         }
 
-        public async Task<bool> AddItemToCart(int userId, CartItemDTO newItemDto)
+        public async Task<bool> AddItemToCart(ApplicationUser user, CartItemDTO newItemDto)
         {
             // get the url for the api endpoint
-            var url = API.Cart.AddItemToCart(_serviceUrl, userId);
+            var url = API.Cart.AddItemToCart(_serviceUrl, user.Id);
             // encode new item to json
             var data = new StringContent(JsonSerializer.Serialize(newItemDto), Encoding.UTF8, "application/json");
             // post data 

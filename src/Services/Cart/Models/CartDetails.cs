@@ -12,7 +12,7 @@ namespace Cart.Models
             this.Items = new List<CartItem>();
         }
 
-        public int UserId { get; set; }
+        public string UserId { get; set; }
         public decimal Total { get; set; }
 
         public virtual ICollection<CartItem> Items { get; set; }

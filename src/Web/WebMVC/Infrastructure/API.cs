@@ -22,12 +22,12 @@ namespace WebMVC.Infrastructure
 
         public static class Cart
         {
-            public static string GetCart(string baseUrl, int userId)
+            public static string GetCart(string baseUrl, string userId)
             {
                 return $"{baseUrl}/{userId}";
             }
 
-            public static string AddItemToCart(string baseUrl, int userId)
+            public static string AddItemToCart(string baseUrl, string userId)
             {
                 return $"{baseUrl}/{userId}/item";
             }

@@ -14,6 +14,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
 using WebMVC.Infrastructure.Http;
+using WebMVC.Models;
 using WebMVC.Services;
 using WebMVC.Services.Intrefaces;
 
@@ -75,8 +76,7 @@ namespace WebMVC
                     .MapControllerRoute(
                         name: "default",
                         pattern: "{controller=Catalog}/{action=Index}/{id?}"
-                    )
-                    .RequireAuthorization();
+                    );
             });
         }
     }
@@ -106,6 +106,9 @@ namespace WebMVC
             services.AddHttpClient<ICartService, CartService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
 
+            // add identity parser
+            services.AddTransient<IIdentityParser<ApplicationUser>, IdentityParser>();
+
             return services;
         }
 
@@ -117,7 +120,8 @@ namespace WebMVC
 
             // Add Authentication services          
             //JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
-            
+            JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
+
             services.AddAuthentication(options =>
             {
                 options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;

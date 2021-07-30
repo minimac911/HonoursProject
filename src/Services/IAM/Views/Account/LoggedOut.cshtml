@@ -6,23 +6,20 @@
 }
 
 <div class="logged-out-page">
-    <h1>
-        Logout
-        <small>You are now logged out</small>
-    </h1>
+    <div class="row justify-content-md-center">
+        <div class="col-sm-6">
+            <div class="card">
+                <div class="card-header">
+                    <h2>Logged Out</h2>
+                </div>
 
-    @if (Model.PostLogoutRedirectUri != null)
-    {
-        <div>
-            Click <a class="PostLogoutRedirectUri" href="@Model.PostLogoutRedirectUri">here</a> to return to the
-            <span>@Model.ClientName</span> application.
+                <div class="card-body">
+                    <p>You are logged out!</p>
+                    <a class="btn btn-primary" asp-area="" asp-controller="Account" asp-action="Login">Go To Login Page</a>
+                </div>
+            </div>
         </div>
-    }
-
-    @if (Model.SignOutIframeUrl != null)
-    {
-        <iframe width="0" height="0" class="signout" src="@Model.SignOutIframeUrl"></iframe>
-    }
+    </div>
 </div>
 
 @section scripts

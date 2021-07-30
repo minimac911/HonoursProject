@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authentication.OpenIdConnect;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,23 +12,28 @@ using WebMVC.Services.Intrefaces;
 
 namespace WebMVC.Controllers
 {
-    [Authorize]
+    [Authorize(AuthenticationSchemes = OpenIdConnectDefaults.AuthenticationScheme)]
     public class CartController : Controller
     {
         private ICartService _cartService;
         private ICatalogService _catalogService;
+        private IIdentityParser<ApplicationUser> _identityParser;
 
-        public CartController(ICartService cartService, ICatalogService catalogService)
+        public CartController(
+            ICartService cartService, 
+            ICatalogService catalogService,
+            IIdentityParser<ApplicationUser> identityParser)
         {
             _cartService = cartService;
             _catalogService = catalogService;
+            _identityParser = identityParser;
         }
 
         public async Task<IActionResult> Index()
         {
-            // TODO: Change user id 
-            var userId = 1;
-            var cartDetails = await _cartService.GetCart(userId);
+            // get the user id 
+            var user = _identityParser.Parse(HttpContext.User);
+            var cartDetails = await _cartService.GetCart(user);
             return View(cartDetails);
         }
 
@@ -38,7 +44,8 @@ namespace WebMVC.Controllers
             var item = await _catalogService.GetSingleCatalogItemById(id);
             if(item?.Id != null)
             {
-                var userId = 1;
+                // get the user id 
+                var user = _identityParser.Parse(HttpContext.User);
                 var newCartItem = new CartItemDTO
                 {
                     ItemId = item.Id,
@@ -48,7 +55,7 @@ namespace WebMVC.Controllers
                     Quantity = qty
                 };
                 // STEP 2: Add item to cart
-                await _cartService.AddItemToCart(userId, newCartItem);
+                await _cartService.AddItemToCart(user, newCartItem);
             }
 
             return RedirectToAction("Index", "Cart");

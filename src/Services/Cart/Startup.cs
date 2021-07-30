@@ -17,6 +17,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
+using Microsoft.AspNetCore.Http;
+using Cart.Services;
 
 namespace Cart
 {
@@ -39,6 +41,10 @@ namespace Cart
                 .AddSwagger(Configuration)
                 .AddCustomHealthChecks(Configuration)
                 .AddSecurity(Configuration);
+
+            // add transient services
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IIdentityService, IdentityService>();
 
             // create a container
             var container = new ContainerBuilder();

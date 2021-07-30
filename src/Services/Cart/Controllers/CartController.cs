@@ -27,7 +27,7 @@ namespace Cart.Controllers
 
         // GET: The cart inforamtion for the user
         [HttpGet("{userId}")]
-        public async Task<ActionResult<CartDetails>> GetCart(int userId)
+        public async Task<ActionResult<CartDetails>> GetCart(string userId)
         {
             // get the cart details for the user
             var foundCart = await _context.CartDetails
@@ -47,7 +47,7 @@ namespace Cart.Controllers
 
         // POST: Add item to cart
         [HttpPost("{userId}/item")]
-        public async Task<ActionResult> AddItemToCart(int userId, CartItemDTO newItemDto)
+        public async Task<ActionResult> AddItemToCart(string userId, CartItemDTO newItemDto)
         {
             var foundCartDetails = await _context.CartDetails.FindAsync(userId);
 
@@ -96,7 +96,7 @@ namespace Cart.Controllers
 
         // GET: The cart inforamtion for the user
         [HttpGet("{userId}/item/{cartItemId}")]
-        public async Task<ActionResult<CartItem>> GetCartItem(int userId, int cartItemId)
+        public async Task<ActionResult<CartItem>> GetCartItem(string userId, int cartItemId)
         {
             // get teh details of the item
             var foundItem = await _context.CartItems.FindAsync(cartItemId);
