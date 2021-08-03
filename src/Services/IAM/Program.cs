@@ -13,7 +13,7 @@ using Serilog.Sinks.SystemConsole.Themes;
 using System;
 using System.Linq;
 
-namespace IdentityServerAspNetIdentity
+namespace IAM
 {
     public class Program
     {

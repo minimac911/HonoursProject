@@ -1,4 +1,4 @@
-﻿@model LoggedOutViewModel
+﻿@model IAM.ViewModels.Account.LoggedOutViewModel
 
 @{ 
     // set this so the layout rendering sees an anonymous user
@@ -21,11 +21,3 @@
         </div>
     </div>
 </div>
-
-@section scripts
-{
-    @if (Model.AutomaticRedirectAfterSignOut)
-    {
-        <script src="~/js/signout-redirect.js"></script>
-    }
-}

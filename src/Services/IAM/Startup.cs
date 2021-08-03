@@ -2,9 +2,10 @@
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 
+using IAM.Data;
+using IAM.Models;
+using IAM.Services;
 using IdentityServer4;
-using IdentityServerAspNetIdentity.Data;
-using IdentityServerAspNetIdentity.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Builder;
@@ -17,7 +18,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 
-namespace IdentityServerAspNetIdentity
+namespace IAM
 {
     public class Startup
     {
@@ -48,10 +49,10 @@ namespace IdentityServerAspNetIdentity
 
             var builder = services.AddIdentityServer(options =>
             {
-                options.Events.RaiseErrorEvents = true;
-                options.Events.RaiseInformationEvents = true;
-                options.Events.RaiseFailureEvents = true;
-                options.Events.RaiseSuccessEvents = true;
+                //options.Events.RaiseErrorEvents = true;
+                //options.Events.RaiseInformationEvents = true;
+                //options.Events.RaiseFailureEvents = true;
+                //options.Events.RaiseSuccessEvents = true;
 
                 // see https://identityserver4.readthedocs.io/en/latest/topics/resources.html
                 options.EmitStaticAudienceClaim = true;
@@ -66,6 +67,9 @@ namespace IdentityServerAspNetIdentity
 
             // not recommended for production - you need to store your key material somewhere secure
             builder.AddDeveloperSigningCredential();
+
+            // add services
+            services.AddTransient<ILoginService<ApplicationUser>, LoginService>();
         }
 
         public void Configure(IApplicationBuilder app)

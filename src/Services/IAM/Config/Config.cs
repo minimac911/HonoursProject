@@ -8,7 +8,7 @@ using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 
-namespace IdentityServerAspNetIdentity
+namespace IAM
 {
     public static class Config
     {
