@@ -19,6 +19,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Http;
 using Cart.Services;
+using Cart.Helper;
 
 namespace Cart
 {
@@ -38,13 +39,10 @@ namespace Cart
                 .AddDbContext(Configuration)
                 .AddEventBus(Configuration)
                 .AddIntegrationEvents(Configuration)
+                .AddIdentityService(Configuration)
                 .AddSwagger(Configuration)
                 .AddCustomHealthChecks(Configuration)
                 .AddSecurity(Configuration);
-
-            // add transient services
-            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
-            services.AddTransient<IIdentityService, IdentityService>();
 
             // create a container
             var container = new ContainerBuilder();
@@ -109,12 +107,7 @@ namespace Cart
     {
         public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            string mySqlConnectionStr = configuration["DockerConnectionString"];
-            // if running through local host and not docker 
-            if (mySqlConnectionStr == null)
-            {
-                mySqlConnectionStr = configuration["ConnectionStrings:DefaultConnection"];
-            }
+            string mySqlConnectionStr = ConnectionStringHelper.GetConnectionString(configuration);
             services.AddDbContextPool<CartContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
             return services;
         }
@@ -206,9 +199,7 @@ namespace Cart
             // get the health check builder
             var healthCheckBuilder = services.AddHealthChecks();
             // get connection string
-            var conString = configuration["DockerConnectionString"] == null
-                ? configuration["ConnectionStrings:DefaultConnection"]
-                : configuration["DockerConnectionString"];
+            var conString = ConnectionStringHelper.GetConnectionString(configuration);
 
             //add health check for database
             healthCheckBuilder.AddMySql(conString, name: "Cart-DB-healthcheck");
@@ -254,6 +245,14 @@ namespace Cart
                         policy.RequireClaim("scope", "cart");
                     });
                 });
+
+            return services;
+        }
+        public static IServiceCollection AddIdentityService(this IServiceCollection services, IConfiguration configuration)
+        {
+            // add transient services
+            services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddTransient<IIdentityService, IdentityService>();
 
             return services;
         }

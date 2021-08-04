@@ -15,7 +15,7 @@ namespace Catalog.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
-                .HasAnnotation("ProductVersion", "5.0.6");
+                .HasAnnotation("ProductVersion", "5.0.8");
 
             modelBuilder.Entity("Catalog.Models.CatalogItem", b =>
                 {
@@ -51,102 +51,102 @@ namespace Catalog.Migrations
                         new
                         {
                             Id = 1,
-                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 636, DateTimeKind.Utc).AddTicks(4889),
-                            Description = "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
-                            Name = "Refined Granite Pants",
-                            Price = 53m,
-                            UnitsLeft = 17,
-                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 636, DateTimeKind.Utc).AddTicks(9548)
+                            CreatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 689, DateTimeKind.Utc).AddTicks(4466),
+                            Description = "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
+                            Name = "Handcrafted Plastic Chicken",
+                            Price = 49m,
+                            UnitsLeft = 12,
+                            UpdatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 689, DateTimeKind.Utc).AddTicks(9191)
                         },
                         new
                         {
                             Id = 2,
-                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3702),
-                            Description = "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
-                            Name = "Unbranded Steel Tuna",
-                            Price = 56m,
-                            UnitsLeft = 10,
-                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3708)
+                            CreatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4117),
+                            Description = "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+                            Name = "Ergonomic Soft Car",
+                            Price = 54m,
+                            UnitsLeft = 1,
+                            UpdatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4125)
                         },
                         new
                         {
                             Id = 3,
-                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3758),
-                            Description = "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
-                            Name = "Practical Fresh Cheese",
-                            Price = 53m,
-                            UnitsLeft = 7,
-                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3760)
+                            CreatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4176),
+                            Description = "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+                            Name = "Generic Metal Pizza",
+                            Price = 50m,
+                            UnitsLeft = 9,
+                            UpdatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4178)
                         },
                         new
                         {
                             Id = 4,
-                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3790),
-                            Description = "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
-                            Name = "Unbranded Cotton Ball",
-                            Price = 53m,
-                            UnitsLeft = 15,
-                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3792)
+                            CreatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4207),
+                            Description = "The Football Is Good For Training And Recreational Purposes",
+                            Name = "Generic Cotton Bacon",
+                            Price = 52m,
+                            UnitsLeft = 1,
+                            UpdatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4209)
                         },
                         new
                         {
                             Id = 5,
-                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3821),
-                            Description = "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
-                            Name = "Intelligent Granite Hat",
-                            Price = 52m,
-                            UnitsLeft = 20,
-                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3822)
+                            CreatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4239),
+                            Description = "The beautiful range of Apple Naturalé that has an exciting mix of natural ingredients. With the Goodness of 100% Natural Ingredients",
+                            Name = "Fantastic Concrete Fish",
+                            Price = 50m,
+                            UnitsLeft = 7,
+                            UpdatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4241)
                         },
                         new
                         {
                             Id = 6,
-                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3934),
-                            Description = "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
-                            Name = "Sleek Granite Fish",
-                            Price = 52m,
-                            UnitsLeft = 14,
-                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3936)
+                            CreatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4267),
+                            Description = "Andy shoes are designed to keeping in mind durability as well as trends, the most stylish range of shoes & sandals",
+                            Name = "Fantastic Plastic Chips",
+                            Price = 57m,
+                            UnitsLeft = 11,
+                            UpdatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4268)
                         },
                         new
                         {
                             Id = 7,
-                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3960),
+                            CreatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4294),
                             Description = "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
-                            Name = "Practical Rubber Pants",
-                            Price = 53m,
-                            UnitsLeft = 13,
-                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3962)
+                            Name = "Practical Soft Pizza",
+                            Price = 54m,
+                            UnitsLeft = 14,
+                            UpdatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4296)
                         },
                         new
                         {
                             Id = 8,
-                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3997),
-                            Description = "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
-                            Name = "Practical Rubber Hat",
-                            Price = 50m,
-                            UnitsLeft = 7,
-                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(3999)
+                            CreatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4323),
+                            Description = "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+                            Name = "Handcrafted Fresh Fish",
+                            Price = 55m,
+                            UnitsLeft = 20,
+                            UpdatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4325)
                         },
                         new
                         {
                             Id = 9,
-                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(4023),
-                            Description = "Ergonomic executive chair upholstered in bonded black leather and PVC padded seat and back for all-day comfort and support",
-                            Name = "Small Cotton Shirt",
-                            Price = 50m,
-                            UnitsLeft = 2,
-                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(4025)
+                            CreatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4360),
+                            Description = "The Nagasaki Lander is the trademarked name of several series of Nagasaki sport bikes, that started with the 1984 ABC800J",
+                            Name = "Sleek Metal Ball",
+                            Price = 52m,
+                            UnitsLeft = 5,
+                            UpdatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4362)
                         },
                         new
                         {
                             Id = 10,
-                            CreatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(4050),
-                            Description = "Carbonite web goalkeeper gloves are ergonomically designed to give easy fit",
-                            Name = "Generic Soft Sausages",
+                            CreatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4388),
+                            Description = "Boston's most advanced compression wear technology increases muscle oxygenation, stabilizes active muscles",
+                            Name = "Licensed Wooden Ball",
                             Price = 50m,
-                            UnitsLeft = 20,
-                            UpdatedAt = new DateTime(2021, 6, 11, 13, 46, 35, 637, DateTimeKind.Utc).AddTicks(4052)
+                            UnitsLeft = 18,
+                            UpdatedAt = new DateTime(2021, 8, 4, 20, 4, 50, 690, DateTimeKind.Utc).AddTicks(4390)
                         });
                 });
 #pragma warning restore 612, 618

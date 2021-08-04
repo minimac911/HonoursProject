@@ -1,4 +1,13 @@
-CREATE DATABASE IF NOT EXISTS `honoursproject_services_catalog`;
-CREATE DATABASE IF NOT EXISTS `honoursproject_services_cart`;
-CREATE DATABASE IF NOT EXISTS `honoursproject_services_order`;
-CREATE DATABASE IF NOT EXISTS `honoursproject_services_iam`;
+CREATE DATABASE IF NOT EXISTS `iam`;
+
+CREATE DATABASE IF NOT EXISTS `debug:catalog`;
+CREATE DATABASE IF NOT EXISTS `debug:cart`;
+CREATE DATABASE IF NOT EXISTS `debug:order`;
+
+CREATE DATABASE IF NOT EXISTS `one:catalog`;
+CREATE DATABASE IF NOT EXISTS `one:cart`;
+CREATE DATABASE IF NOT EXISTS `one:order`;
+
+CREATE DATABASE IF NOT EXISTS `two:catalog`;
+CREATE DATABASE IF NOT EXISTS `two:cart`;
+CREATE DATABASE IF NOT EXISTS `two:order`;

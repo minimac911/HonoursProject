@@ -1,7 +1,10 @@
 ﻿using Bogus;
 using Bogus.Extensions;
+using Catalog.Helper;
 using Catalog.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,11 +14,11 @@ namespace Catalog.Data
 {
     public class CatalogContext : DbContext
     {
-        public CatalogContext (DbContextOptions<CatalogContext> options) : base(options)
+        public DbSet<CatalogItem> CatalogItems { get; set; }
+
+        public CatalogContext (DbContextOptions<CatalogContext> options): base(options)
         {
         }
-
-        public DbSet<CatalogItem> CatalogItems { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

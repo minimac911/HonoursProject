@@ -1,6 +1,8 @@
 using Autofac;
 using Autofac.Extensions.DependencyInjection;
 using Catalog.Data;
+using Catalog.Helper;
+using Catalog.Infastrucutre.Tenancy;
 using EventBus;
 using EventBus.EventBusRabbitMQ;
 using EventBus.Interfaces;
@@ -8,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -44,6 +47,7 @@ namespace Catalog
                 .AddDbContext(Configuration)
                 .AddEventBus(Configuration)
                 .AddIntegrationEvents(Configuration)
+                .AddTenancy(Configuration)
                 .AddSwagger(Configuration)
                 .AddCustomHealthChecks(Configuration);
 
@@ -64,11 +68,13 @@ namespace Catalog
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Catalog v1"));
             }
 
-
             app.UseRouting();
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            // Add tenancy middleware
+            app.UseMiddleware<TenantInfoMiddleware>();
 
             app.UseEndpoints(endpoints =>
             {
@@ -86,6 +92,8 @@ namespace Catalog
                     Predicate = (_) => false
                 });
             });
+
+
             // configrue the event bus
             ConfigureEventBus(app);
 
@@ -120,13 +128,9 @@ namespace Catalog
     {
         public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            string mySqlConnectionStr = configuration["DockerConnectionString"];
-            // if running through local host and not docker 
-            if(mySqlConnectionStr == null)
-            {
-                mySqlConnectionStr = configuration["ConnectionStrings:DefaultConnection"];
-            }
+            string mySqlConnectionStr = ConnectionStringHelper.GetConnectionString(configuration);
             services.AddDbContextPool<CatalogContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
+
             return services;
         }
 
@@ -217,9 +221,7 @@ namespace Catalog
             // get the health check builder
             var healthCheckBuilder = services.AddHealthChecks();
             // get connection string
-            var conString = configuration.GetValue<String>("DockerConnectionString") == null
-                ? configuration.GetValue<String>("ConnectionStrings:DefaultConnection")
-                : configuration.GetValue<String>("DockerConnectionString");
+            var conString = ConnectionStringHelper.GetConnectionString(configuration, null);
 
             //add health check for database
             healthCheckBuilder.AddMySql(conString, name: "Catalog-DB-healthcheck");
@@ -269,5 +271,33 @@ namespace Catalog
 
             return services;
         }
+
+        // Used to add multi tenant services
+        public static IServiceCollection AddTenancy(this IServiceCollection services, IConfiguration configuration)
+        {
+            // add a scoped tenant object 
+            services.AddScoped<TenantInfo>();
+
+            // Use a connection per tenant
+            // Add for all db context
+            services.AddScoped<CatalogContext>((serviceProvider) =>
+            {
+                // get the tenant info
+                var tenant = serviceProvider.GetRequiredService<TenantInfo>();
+                // create the tenants connection string
+                var connString = ConnectionStringHelper.GetConnectionString(configuration, tenant.Name);
+                // create new options with the tenants connection string
+                var options = new DbContextOptionsBuilder<CatalogContext>()
+                    .UseMySql(connString, ServerVersion.AutoDetect(connString))
+                    .Options;
+
+                var context = new CatalogContext(options);
+
+                return context;
+            });
+
+            return services;
+        }
+
     }
 }
