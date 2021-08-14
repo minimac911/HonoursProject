@@ -74,6 +74,22 @@ services:
     ports:
       - "5103:80"
 
+  tenant-manager:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - ConnectionString_debug=Server=mysql;Database=debug:tenant_manager;User=root;Password=root;
+      - ConnectionString_one=Server=mysql;Database=one:tenant_manager;User=root;Password=root;
+      - ConnectionString_two=Server=mysql;Database=two:tenant_manager;User=root;Password=root;
+      - EventBusConnection=${SERVICE_BUS_CONNECTION:-rabbitmq}
+      - EventBusUserName=${SERVICE_BUS_USERNAME}
+      - EventBusPassword=${SERVICE_BUS_PASSWORD}
+      - EventBusRetryCount=5
+      - SubscriptionClientName=TenantManager
+      - IamServiceUrl=http://iam
+    ports:
+      - "5300:80"
+
   #IAM Service
   iam:
     environment:
@@ -123,5 +139,6 @@ services:
 volumes:
   mysql-db-data:
      external: false
+
 
 

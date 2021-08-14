@@ -24,9 +24,6 @@ services:
       timeout: 30s
       retries: 3
 
-
-  
-
   #Microservices
   catalog-api:
     image: ${DOCKER_REGISTRY-}catalog
@@ -55,6 +52,17 @@ services:
     build:
       context: .
       dockerfile: Services/Order/Dockerfile
+    depends_on: 
+      rabbitmq:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy
+
+  tenant-manager:
+    image: ${DOCKER_REGISTRY-}tenantmanager
+    build:
+      context: .
+      dockerfile: Services/TenantManager/Dockerfile
     depends_on: 
       rabbitmq:
         condition: service_healthy
