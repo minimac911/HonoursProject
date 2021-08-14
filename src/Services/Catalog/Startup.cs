@@ -96,23 +96,6 @@ namespace Catalog
 
             // configrue the event bus
             ConfigureEventBus(app);
-
-            // Migrate database
-            try
-            {
-                logger.LogInformation("Migration: Testing connection to database...");
-                if (catalogContext.Database.CanConnect())
-                {
-                    logger.LogInformation("Migration: Database conected!");
-                    logger.LogInformation("Migration: Database migration is running...");
-                    catalogContext.Database.Migrate();
-                    logger.LogInformation("Migration: Database migration successful!");
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.LogWarning($"Migration: Database migration failed! ({ex.Message})");
-            }
         }
 
         protected virtual void ConfigureEventBus(IApplicationBuilder app)

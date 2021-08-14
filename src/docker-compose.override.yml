@@ -30,9 +30,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - ConnectionString_debug=Server=mysql;Database=debug:catalog;User=root;Password=root
-      - ConnectionString_one=Server=mysql;Database=one:catalog;User=root;Password=root
-      - ConnectionString_two=Server=mysql;Database=two:catalog;User=root;Password=root
+      - ConnectionString_debug=Server=mysql;Database=debug:catalog;User=root;Password=root;
+      - ConnectionString_one=Server=mysql;Database=one:catalog;User=root;Password=root;
+      - ConnectionString_two=Server=mysql;Database=two:catalog;User=root;Password=root;
       - EventBusConnection=${SERVICE_BUS_CONNECTION:-rabbitmq}
       - EventBusUserName=${SERVICE_BUS_USERNAME}
       - EventBusPassword=${SERVICE_BUS_PASSWORD}
@@ -46,9 +46,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - ConnectionString_debug=Server=mysql;Database=debug:cart;User=root;Password=root
-      - ConnectionString_one=Server=mysql;Database=one:cart;User=root;Password=root
-      - ConnectionString_two=Server=mysql;Database=two:cart;User=root;Password=root
+      - ConnectionString_debug=Server=mysql;Database=debug:cart;User=root;Password=root;
+      - ConnectionString_one=Server=mysql;Database=one:cart;User=root;Password=root;
+      - ConnectionString_two=Server=mysql;Database=two:cart;User=root;Password=root;
       - EventBusConnection=${SERVICE_BUS_CONNECTION:-rabbitmq}
       - EventBusUserName=${SERVICE_BUS_USERNAME}
       - EventBusPassword=${SERVICE_BUS_PASSWORD}
@@ -62,9 +62,9 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - ConnectionString_debug=Server=mysql;Database=debug:order;User=root;Password=root
-      - ConnectionString_one=Server=mysql;Database=one:order;User=root;Password=root
-      - ConnectionString_two=Server=mysql;Database=two:order;User=root;Password=root
+      - ConnectionString_debug=Server=mysql;Database=debug:order;User=root;Password=root;
+      - ConnectionString_one=Server=mysql;Database=one:order;User=root;Password=root;
+      - ConnectionString_two=Server=mysql;Database=two:order;User=root;Password=root;
       - EventBusConnection=${SERVICE_BUS_CONNECTION:-rabbitmq}
       - EventBusUserName=${SERVICE_BUS_USERNAME}
       - EventBusPassword=${SERVICE_BUS_PASSWORD}
@@ -79,7 +79,7 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - DockerConnectionString=Server=mysql;Database=iam;User=root;Password=root
+      - DockerConnectionString=Server=mysql;Database=iam;User=root;Password=root;
       - MvcClient=http://${EXTERNAL_DNS_NAME_OR_IP}
       - url__MvcClient=http://${EXTERNAL_DNS_NAME_OR_IP}
       - url__CatlogApiClient=http://${EXTERNAL_DNS_NAME_OR_IP}:5101

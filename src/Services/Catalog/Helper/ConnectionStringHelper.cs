@@ -14,7 +14,7 @@ namespace Catalog.Helper
             // if there is a tenant name
             if (tenantName != null)
             {
-                connectionString = configuration.GetValue<string>($"ConnectionString_{tenantName}") ?? configuration.GetValue<string>("ConnectionString_debug");
+                connectionString = configuration.GetValue<string>($"ConnectionString_{tenantName.ToLower()}") ?? configuration.GetValue<string>("ConnectionString_debug");
             }
 
             if (connectionString == null) connectionString = configuration.GetValue<string>("ConnectionStrings:DefaultConnection");
