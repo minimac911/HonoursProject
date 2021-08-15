@@ -32,5 +32,13 @@ namespace WebMVC.Infrastructure
                 return $"{baseUrl}/{userId}/item";
             }
         }
+
+        public static class TenantManager
+        {
+            public static string GetTenatCustomization(string baseUrl, string ControllerName, string MethodName)
+            {
+                return $"{baseUrl}/{ControllerName}/{MethodName}";
+            }
+        }
     }
 }

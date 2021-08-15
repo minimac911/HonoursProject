@@ -144,30 +144,9 @@ namespace WebMVC
                 options.Scope.Add("profile");
                 options.Scope.Add("catalog");
                 options.Scope.Add("cart");
+                options.Scope.Add("tenant_manager");
                 //options.Scope.Add("orders");
             });
-            //JwtSecurityTokenHandler.DefaultMapInboundClaims = false;
-
-            //services.AddAuthentication(options =>
-            //{
-            //    options.DefaultScheme = "Cookies";
-            //    options.DefaultChallengeScheme = "oidc";
-            //})
-            //.AddCookie("Cookies")
-            //.AddOpenIdConnect("oidc", options =>
-            //{
-            //    options.Authority = identityUrl;
-
-            //    options.RequireHttpsMetadata = false;
-
-            //    options.ClientId = "mvc";
-            //    options.ClientSecret = "secret";
-            //    options.ResponseType = "code";
-
-            //    options.Scope.Add("catalog");
-
-            //    options.SaveTokens = true;
-            //});
 
             return services;
         }

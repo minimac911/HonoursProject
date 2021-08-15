@@ -54,7 +54,7 @@ namespace TenantManager.Infastrucutre.Seed
             // get a builder with the current
             var builder = new ConfigurationBuilder()
                 .SetBasePath(baseDirectory)
-                .AddJsonFile("appSettings.json", optional: false);
+                .AddJsonFile("appsettings.json", optional: false);
 
             IConfiguration config = builder.Build();
 

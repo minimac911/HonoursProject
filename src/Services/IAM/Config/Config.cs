@@ -24,7 +24,8 @@ namespace IAM
             new List<ApiScope>
             {
                 new ApiScope("catalog"),
-                new ApiScope("cart")
+                new ApiScope("cart"),
+                new ApiScope("tenant_manager")
             };
 
         public static IEnumerable<ApiResource> ApiResources =>
@@ -38,6 +39,11 @@ namespace IAM
                 new ApiResource("cart")
                 {
                     Scopes = new List<string>{ "cart" },
+                    ApiSecrets = new List<Secret>{ new Secret("secret".Sha256()) }
+                },
+                new ApiResource("tenant_manager")
+                {
+                    Scopes = new List<string>{ "tenant_manager" },
                     ApiSecrets = new List<Secret>{ new Secret("secret".Sha256()) }
                 }
             };
@@ -69,7 +75,8 @@ namespace IAM
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         "catalog",
-                        "cart"
+                        "cart",
+                        "tenant_manager"
                     },
                     AccessTokenLifetime = 60*60*2, // 2 hours
                     IdentityTokenLifetime= 60*60*2 // 2 hours

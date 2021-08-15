@@ -20,8 +20,9 @@ namespace Cart.Infastrucutre.Tenancy
         {
             var tenant = context.RequestServices.GetRequiredService<TenantInfo>();
             // get the tenant id and tenant name
-            var tenantId = context.Request.Headers["tenant"];
-            var tenantName = context.Request.Headers["tenant_name"];
+            var tenantId = context.User.Claims.FirstOrDefault(x => x.Type == "tenant")?.Value ?? throw new ArgumentException("tenant not in claims");
+            var tenantName = context.User.Claims.FirstOrDefault(x => x.Type == "tenant_name")?.Value ?? throw new ArgumentException("tenant_name not in claims");
+
             // set the tenant id anbd th
             tenant.Id = new Guid(tenantId);
             tenant.Name = tenantName;

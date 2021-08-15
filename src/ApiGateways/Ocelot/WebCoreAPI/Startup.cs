@@ -49,7 +49,7 @@ namespace WebCoreAPI
                      x.RequireHttpsMetadata = false;
                      x.TokenValidationParameters = new TokenValidationParameters()
                      {
-                         ValidAudiences = new[] { "order", "cart", "catalog" }
+                         ValidAudiences = new[] { "order", "cart", "catalog", "tenant_manager" }
                      };
                  });
 

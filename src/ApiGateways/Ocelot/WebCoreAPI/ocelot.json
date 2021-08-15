@@ -12,7 +12,7 @@
       ],
       "UpstreamPathTemplate": "/identity",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "Priority": 2,
+      "Priority": 2
       //"AuthenticationOptions": {
       //  "AuthenticationProviderKey": "IamServiceKey",
       //  "AllowedScopes": []
@@ -81,6 +81,75 @@
         }
       ],
       "UpstreamPathTemplate": "/api/cart/{url}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "Priority": 1,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IamServiceKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/cart",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "cart-api",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/cart",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "Priority": 2,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IamServiceKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/cart/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "cart-api",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/cart/{url}",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "Priority": 1,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IamServiceKey",
+        "AllowedScopes": []
+      }
+    },
+    //Tenant Manager
+    {
+      "DownstreamPathTemplate": "/api/tenant_manager",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tenant-manager",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/tenant_manager",
+      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
+      "Priority": 2,
+      "AuthenticationOptions": {
+        "AuthenticationProviderKey": "IamServiceKey",
+        "AllowedScopes": []
+      }
+    },
+    {
+      "DownstreamPathTemplate": "/api/tenant_manager/{url}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "tenant-manager",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/tenant_manager/{url}",
       "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
       "Priority": 1,
       "AuthenticationOptions": {

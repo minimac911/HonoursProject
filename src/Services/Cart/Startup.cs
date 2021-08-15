@@ -20,6 +20,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.AspNetCore.Http;
 using Cart.Services;
 using Cart.Helper;
+using Cart.Infastrucutre.Tenancy;
 
 namespace Cart
 {
@@ -35,14 +36,16 @@ namespace Cart
         // This method gets called by the runtime. Use this method to add services to the container.
         public IServiceProvider ConfigureServices(IServiceCollection services)
         {
-            services.AddMVCControllers(Configuration)
+            services
+                .AddSecurity(Configuration)
+                .AddMVCControllers(Configuration)
                 .AddDbContext(Configuration)
                 .AddEventBus(Configuration)
                 .AddIntegrationEvents(Configuration)
                 .AddIdentityService(Configuration)
+                .AddTenancy(Configuration)
                 .AddSwagger(Configuration)
-                .AddCustomHealthChecks(Configuration)
-                .AddSecurity(Configuration);
+                .AddCustomHealthChecks(Configuration);
 
             // create a container
             var container = new ContainerBuilder();
@@ -66,6 +69,9 @@ namespace Cart
             app.UseAuthentication();
             app.UseAuthorization();
 
+            // Add tenancy middleware
+            app.UseMiddleware<TenantInfoMiddleware>();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints
@@ -74,23 +80,6 @@ namespace Cart
 
             // Configure the event bus
             ConfigureEventBus(app);
-
-            // Migrate database
-            try
-            {
-                logger.LogInformation("Migration: Testing connection to database...");
-                if (cartContext.Database.CanConnect())
-                {
-                    logger.LogInformation("Migration: Database conected!");
-                    logger.LogInformation("Migration: Database migration is running...");
-                    cartContext.Database.Migrate();
-                    logger.LogInformation("Migration: Database migration successful!");
-                }
-            }
-            catch (Exception ex)
-            {
-                logger.LogWarning($"Migration: Database migration failed! ({ex.Message})");
-            }
         }
 
         protected virtual void ConfigureEventBus(IApplicationBuilder app)
@@ -253,6 +242,33 @@ namespace Cart
             // add transient services
             services.AddTransient<IHttpContextAccessor, HttpContextAccessor>();
             services.AddTransient<IIdentityService, IdentityService>();
+
+            return services;
+        }
+
+        // Used to add multi tenant services
+        public static IServiceCollection AddTenancy(this IServiceCollection services, IConfiguration configuration)
+        {
+            // add a scoped tenant object 
+            services.AddScoped<TenantInfo>();
+
+            // Use a connection per tenant
+            // Add for all db context
+            services.AddScoped<CartContext>((serviceProvider) =>
+            {
+                // get the tenant info
+                var tenant = serviceProvider.GetRequiredService<TenantInfo>();
+                // create the tenants connection string
+                var connString = ConnectionStringHelper.GetConnectionString(configuration, tenant.Name);
+                // create new options with the tenants connection string
+                var options = new DbContextOptionsBuilder<CartContext>()
+                    .UseMySql(connString, ServerVersion.AutoDetect(connString))
+                    .Options;
+
+                var context = new CartContext(options);
+
+                return context;
+            });
 
             return services;
         }

@@ -3,12 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace TenantManager.Models
+namespace WebMVC.Models.TenantManager
 {
     public class TenantCustomization
     {
         public int Id { get; set; }
-        //public Guid TenantId { get; set; }
 
         // ControllerName is used to store the name of the controller that is being customized
         public string ControllerName { get; set; }
@@ -18,6 +17,5 @@ namespace TenantManager.Models
         public string ApiEndpoint { get; set; }
         // is the customization active
         public bool IsActive { get; set; }
-
     }
 }

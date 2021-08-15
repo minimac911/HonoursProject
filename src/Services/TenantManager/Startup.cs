@@ -21,6 +21,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
+using TenantManager.Data;
 using TenantManager.Helper;
 using TenantManager.Infastrucutre.Tenancy;
 
@@ -108,9 +109,8 @@ namespace TenantManager
     {
         public static IServiceCollection AddDbContext(this IServiceCollection services, IConfiguration configuration)
         {
-            //string mySqlConnectionStr = ConnectionStringHelper.GetConnectionString(configuration);
-            //services.AddDbContextPool<CatalogContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
-
+            string mySqlConnectionStr = ConnectionStringHelper.GetConnectionString(configuration);
+            services.AddDbContextPool<TenantCustomizationContext>(options => options.UseMySql(mySqlConnectionStr, ServerVersion.AutoDetect(mySqlConnectionStr)));
             return services;
         }
 
@@ -255,26 +255,26 @@ namespace TenantManager
         // Used to add multi tenant services
         public static IServiceCollection AddTenancy(this IServiceCollection services, IConfiguration configuration)
         {
-            //// add a scoped tenant object 
-            //services.AddScoped<TenantInfo>();
+            // add a scoped tenant object 
+            services.AddScoped<TenantInfo>();
 
-            //// Use a connection per tenant
-            //// Add for all db context
-            //services.AddScoped<CatalogContext>((serviceProvider) =>
-            //{
-            //    // get the tenant info
-            //    var tenant = serviceProvider.GetRequiredService<TenantInfo>();
-            //    // create the tenants connection string
-            //    var connString = ConnectionStringHelper.GetConnectionString(configuration, tenant.Name);
-            //    // create new options with the tenants connection string
-            //    var options = new DbContextOptionsBuilder<CatalogContext>()
-            //        .UseMySql(connString, ServerVersion.AutoDetect(connString))
-            //        .Options;
+            // Use a connection per tenant
+            // Add for all db context
+            services.AddScoped<TenantCustomizationContext>((serviceProvider) =>
+            {
+                // get the tenant info
+                var tenant = serviceProvider.GetRequiredService<TenantInfo>();
+                // create the tenants connection string
+                var connString = ConnectionStringHelper.GetConnectionString(configuration, tenant.Name);
+                // create new options with the tenants connection string
+                var options = new DbContextOptionsBuilder<TenantCustomizationContext>()
+                    .UseMySql(connString, ServerVersion.AutoDetect(connString))
+                    .Options;
 
-            //    var context = new CatalogContext(options);
+                var context = new TenantCustomizationContext(options);
 
-            //    return context;
-            //});
+                return context;
+            });
 
             return services;
         }

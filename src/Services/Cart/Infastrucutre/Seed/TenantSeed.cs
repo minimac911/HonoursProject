@@ -1,5 +1,4 @@
-﻿using Catalog.Data;
-using Catalog.Helper;
+﻿using Cart.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Serilog;
@@ -9,7 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Catalog.Infastrucutre.Seed
+namespace Cart.Infastrucutre.Seed
 {
     public class TenantSeed
     {
@@ -37,12 +36,12 @@ namespace Catalog.Infastrucutre.Seed
 
         private static async Task MigrateDatabase(MigrateTenantInfo t)
         {
-            var options = new DbContextOptionsBuilder<CatalogContext>()
+            var options = new DbContextOptionsBuilder<CartContext>()
                 .UseMySql(t.ConnectionString, ServerVersion.AutoDetect(t.ConnectionString))
                 .Options;
             try
             {
-                var context = new CatalogContext(options);
+                var context = new CartContext(options);
 
                 await context.Database.MigrateAsync();
             }catch(Exception ex)
