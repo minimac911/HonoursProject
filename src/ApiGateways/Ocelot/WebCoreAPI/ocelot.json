@@ -88,40 +88,6 @@
         "AllowedScopes": []
       }
     },
-    {
-      "DownstreamPathTemplate": "/api/cart",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "cart-api",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/cart",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "Priority": 2,
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "IamServiceKey",
-        "AllowedScopes": []
-      }
-    },
-    {
-      "DownstreamPathTemplate": "/api/cart/{url}",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "cart-api",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/cart/{url}",
-      "UpstreamHttpMethod": [ "GET", "POST", "PUT", "DELETE" ],
-      "Priority": 1,
-      "AuthenticationOptions": {
-        "AuthenticationProviderKey": "IamServiceKey",
-        "AllowedScopes": []
-      }
-    },
     //Tenant Manager
     {
       "DownstreamPathTemplate": "/api/tenant_manager",

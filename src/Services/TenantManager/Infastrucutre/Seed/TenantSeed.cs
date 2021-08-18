@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using TenantManager.Data;
 
 namespace TenantManager.Infastrucutre.Seed
 {
@@ -13,6 +14,7 @@ namespace TenantManager.Infastrucutre.Seed
     {
         public static async void RunMigrations(string baseDirectory)
         {
+            // TODO: Change To Get From Docker Config
             // get the configured tenants
             List<MigrateTenantInfo> tenants = GetConfiguredTenants(baseDirectory);
 
@@ -35,18 +37,19 @@ namespace TenantManager.Infastrucutre.Seed
 
         private static async Task MigrateDatabase(MigrateTenantInfo t)
         {
-            //var options = new DbContextOptionsBuilder<CatalogContext>()
-            //    .UseMySql(t.ConnectionString, ServerVersion.AutoDetect(t.ConnectionString))
-            //    .Options;
-            //try
-            //{
-            //    var context = new CatalogContext(options);
+            var options = new DbContextOptionsBuilder<TenantCustomizationContext>()
+                .UseMySql(t.ConnectionString, ServerVersion.AutoDetect(t.ConnectionString))
+                .Options;
+            try
+            {
+                var context = new TenantCustomizationContext(options);
 
-            //    await context.Database.MigrateAsync();
-            //}catch(Exception ex)
-            //{
-            //    Log.Error(ex, "Error has occured during migration", ex.Message);
-            //}
+                await context.Database.MigrateAsync();
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex, "Error has occured during migration", ex.Message);
+            }
         }
 
         private static List<MigrateTenantInfo> GetConfiguredTenants(string baseDirectory)

@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication.OpenIdConnect;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using WebMVC.Infrastructure;
 using WebMVC.Models;
 using WebMVC.Models.Cart;
 using WebMVC.Services.Intrefaces;
@@ -13,7 +15,7 @@ using WebMVC.Services.Intrefaces;
 namespace WebMVC.Controllers
 {
     [Authorize(AuthenticationSchemes = OpenIdConnectDefaults.AuthenticationScheme)]
-    public class CartController : Controller
+    public class CartController : BaseController
     {
         private ICartService _cartService;
         private ICatalogService _catalogService;
@@ -22,7 +24,10 @@ namespace WebMVC.Controllers
         public CartController(
             ICartService cartService, 
             ICatalogService catalogService,
-            IIdentityParser<ApplicationUser> identityParser)
+            ITenantManagerService tenantManagerService,
+            IIdentityParser<ApplicationUser> identityParser,
+            ILogger<BaseController> logger) 
+            : base(tenantManagerService, identityParser, logger)
         {
             _cartService = cartService;
             _catalogService = catalogService;

@@ -6,7 +6,7 @@ using WebMVC.Models.TenantManager;
 
 namespace WebMVC.Services.Intrefaces
 {
-    interface ITenantManagerService
+    public interface ITenantManagerService
     {
         Task<TenantCustomization> GetTenantCustomizaiton(TenantCustomizationRequest dto);
     }

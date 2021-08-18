@@ -139,6 +139,3 @@ services:
 volumes:
   mysql-db-data:
      external: false
-
-
-

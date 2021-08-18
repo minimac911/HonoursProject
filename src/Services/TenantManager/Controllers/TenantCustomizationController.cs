@@ -24,6 +24,7 @@ namespace TenantManager.Controllers
             _context = context;
             _logger = logger;
         }
+        
         // GET: Tenat Customization
         [HttpGet("{ControllerName}/{MethodName}")]
         public async Task<ActionResult<TenantCustomization>> GetTenantCustomization(string ControllerName, string MethodName)

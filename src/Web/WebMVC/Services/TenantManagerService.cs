@@ -3,6 +3,7 @@ using Serilog;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
@@ -44,10 +45,14 @@ namespace WebMVC.Services
 
                 return cartDetials;
             }
-            catch (HttpRequestException ex)
+            catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
             {
                 Log.Logger.Error(ex.Message);
                 return null;
+            }
+            catch (HttpRequestException ex)
+            {
+                throw;
             }
         }
     }
