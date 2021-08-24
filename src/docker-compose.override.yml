@@ -110,6 +110,7 @@ services:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
       - ApiGatewayUrl=http://webcore-api-gateway
+      - CustomizationApiGatewayUrl=http://customization-api-gateway
       - IamServiceUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5100
       - CallBackUrl=http://${EXTERNAL_DNS_NAME_OR_IP}
     ports:
@@ -135,7 +136,31 @@ services:
       #- IdentityUrlExternal=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5105
     ports:
       - "5120:80"
+      
+  customization-api-gateway:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - IamServiceUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5100
+    ports:
+      - "5201:80"
+
+  test:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - ConnectionString_debug=Server=mysql;Database=debug:cart;User=root;Password=root;
+      - ConnectionString_one=Server=mysql;Database=one:cart;User=root;Password=root;
+      - ConnectionString_two=Server=mysql;Database=two:cart;User=root;Password=root;
+      - EventBusConnection=${SERVICE_BUS_CONNECTION:-rabbitmq}
+      - EventBusUserName=${SERVICE_BUS_USERNAME}
+      - EventBusPassword=${SERVICE_BUS_PASSWORD}
+      - EventBusRetryCount=5
+      - SubscriptionClientName=Cart
+      - IamServiceUrl=http://iam
+    ports:
+      - "5401:80"
 
 volumes:
   mysql-db-data:
      external: false
+

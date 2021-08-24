@@ -103,3 +103,22 @@ services:
     build:
       context: .
       dockerfile: ApiGateways/BFF/WebHttpAggregator/Dockerfile
+
+  customization-api-gateway:
+    image: ${DOCKER_REGISTRY-}customizationapigateway
+    build:
+      context: .
+      dockerfile: ApiGateways/Ocelot/CustomizationApiGateway/Dockerfile
+    depends_on:
+      - test
+
+  test:
+    image: ${DOCKER_REGISTRY-}test
+    build:
+      context: .
+      dockerfile: CustomizationServices/Test/Dockerfile
+    depends_on: 
+      rabbitmq:
+        condition: service_healthy
+      mysql:
+        condition: service_healthy

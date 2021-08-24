@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -42,6 +44,7 @@ namespace WebMVC.Infrastructure
             {
                 // get customization using method name and controller name
                 var customizationInfo = await _tenantManagerService.GetTenantCustomizaiton(tenantCustomiztionRequestInfo);
+                return;
             }
             catch (HttpRequestException ex)
             {

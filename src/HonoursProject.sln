@@ -40,7 +40,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebHttpAggregator", "ApiGat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IAM", "Services\IAM\IAM.csproj", "{4943E1CE-5451-4158-867B-796B1F661B07}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TenantManager", "Services\TenantManager\TenantManager.csproj", "{19F2DB33-472F-4297-9824-E5B3377FCD8E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TenantManager", "Services\TenantManager\TenantManager.csproj", "{19F2DB33-472F-4297-9824-E5B3377FCD8E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "CustomizationServices", "CustomizationServices", "{884B78FD-8969-46E9-841D-4F3B5FE6B12C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "CustomizationServices\Test\Test.csproj", "{399AEA68-1037-4352-9EA9-6920C7A31E67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CustomizationApiGateway", "ApiGateways\Ocelot\CustomizationApiGateway\CustomizationApiGateway.csproj", "{AE2C8082-127B-431C-B75D-A599F5D6DC50}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -92,6 +98,14 @@ Global
 		{19F2DB33-472F-4297-9824-E5B3377FCD8E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{19F2DB33-472F-4297-9824-E5B3377FCD8E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{19F2DB33-472F-4297-9824-E5B3377FCD8E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{399AEA68-1037-4352-9EA9-6920C7A31E67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{399AEA68-1037-4352-9EA9-6920C7A31E67}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{399AEA68-1037-4352-9EA9-6920C7A31E67}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{399AEA68-1037-4352-9EA9-6920C7A31E67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE2C8082-127B-431C-B75D-A599F5D6DC50}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE2C8082-127B-431C-B75D-A599F5D6DC50}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE2C8082-127B-431C-B75D-A599F5D6DC50}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE2C8082-127B-431C-B75D-A599F5D6DC50}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +123,8 @@ Global
 		{53C256AD-D8F3-45FC-9624-0FA34E35FF8D} = {F0A02248-E3C5-49EC-B215-13E54FC3F4CB}
 		{4943E1CE-5451-4158-867B-796B1F661B07} = {012185B7-918F-4895-8CEE-C8A7E829875B}
 		{19F2DB33-472F-4297-9824-E5B3377FCD8E} = {012185B7-918F-4895-8CEE-C8A7E829875B}
+		{399AEA68-1037-4352-9EA9-6920C7A31E67} = {884B78FD-8969-46E9-841D-4F3B5FE6B12C}
+		{AE2C8082-127B-431C-B75D-A599F5D6DC50} = {1FCA7A3A-EB4A-4ED4-9055-3CF8F713DDAE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8857D385-5E57-488B-B526-E60193302985}
