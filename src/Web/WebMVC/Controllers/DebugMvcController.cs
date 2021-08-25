@@ -28,5 +28,11 @@ namespace WebMVC.Controllers
         {
             return View();
         }
+
+        [Authorize(AuthenticationSchemes = OpenIdConnectDefaults.AuthenticationScheme)]
+        public IActionResult Test()
+        {
+            return View();
+        }
     }
 }

@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Test.Controllers
 {
-    [Route("api/test")]
+    [Route("customization")]
     [ApiController]
     public class TestController : Controller
     {

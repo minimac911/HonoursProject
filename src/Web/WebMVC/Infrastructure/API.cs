@@ -39,6 +39,12 @@ namespace WebMVC.Infrastructure
             {
                 return $"{baseUrl}/{ControllerName}/{MethodName}";
             }
+
+            // posibly add query data
+            public static string RunTenantCustomizaton(string baseUrl, string serviceName)
+            {
+                return $"{baseUrl}/{serviceName}/customization";
+            }
         }
     }
 }

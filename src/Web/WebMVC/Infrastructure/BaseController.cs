@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using WebMVC.Models;
 using WebMVC.Models.TenantManager;
 using WebMVC.Services.Intrefaces;
+using WebMVC.ViewModels.Customization;
 
 namespace WebMVC.Infrastructure
 {
@@ -43,16 +44,25 @@ namespace WebMVC.Infrastructure
             try
             {
                 // get customization using method name and controller name
-                var customizationInfo = await _tenantManagerService.GetTenantCustomizaiton(tenantCustomiztionRequestInfo);
-                return;
+                var foundCustomization = await _tenantManagerService.GetTenantCustomizaiton(tenantCustomiztionRequestInfo);
+
+                // if there is no customization then continue
+                // else run customization and display new web page
+                if (foundCustomization == null)
+                {
+                    await next();
+                }
+                else
+                {
+                    var html = await _tenantManagerService.RunCustomization(foundCustomization);
+                    context.Result = View("CustomizationTemplate", new LoadCustomizationViewModel { HTML = html });
+                }
             }
             catch (HttpRequestException ex)
             {
                 _logger.LogWarning(ex, "Error when checking for customization", ex.Message);
                 context.Result = new BadRequestObjectResult("Invalid!");
-            }
-            finally
-            {
+                // go to next
                 await next();
             }
         }

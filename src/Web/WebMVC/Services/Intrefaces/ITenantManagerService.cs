@@ -9,5 +9,6 @@ namespace WebMVC.Services.Intrefaces
     public interface ITenantManagerService
     {
         Task<TenantCustomization> GetTenantCustomizaiton(TenantCustomizationRequest dto);
+        Task<string> RunCustomization(TenantCustomization customization);
     }
 }

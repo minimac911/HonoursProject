@@ -19,13 +19,18 @@ namespace WebMVC.Services
         private readonly IConfiguration _configuration;
 
         private readonly string _serviceUrl;
+        private readonly string _customizationApiGatewayUrl;
 
         public TenantManagerService(HttpClient httpClient, IConfiguration configuration)
         {
             _httpClient = httpClient;
             _configuration = configuration;
+            // get the main BL api gateway
             var apiGatewayUrl = _configuration["ApiGatewayUrl"];
             _serviceUrl = $"{apiGatewayUrl}/api/tenant_manager";
+            // get the customization service gateway
+            var customizationApiGatewayUrl = _configuration["CustomizationApiGatewayUrl"];
+            _customizationApiGatewayUrl = $"{customizationApiGatewayUrl}";
         }
 
         public async Task<TenantCustomization> GetTenantCustomizaiton(TenantCustomizationRequest dto)
@@ -52,6 +57,25 @@ namespace WebMVC.Services
             }
             catch (HttpRequestException ex)
             {
+                Log.Logger.Error(ex.Message);
+                throw;
+            }
+        }
+
+        public async Task<string> RunCustomization(TenantCustomization customization)
+        {
+            var url = API.TenantManager.RunTenantCustomizaton(_customizationApiGatewayUrl, customization.ServiceName);
+
+            try
+            {
+                // get the response from the api 
+                var responseString = await _httpClient.GetStringAsync(url);
+
+                return responseString;
+            }
+            catch (HttpRequestException ex) 
+            {
+                Log.Logger.Error(ex.Message);
                 throw;
             }
         }

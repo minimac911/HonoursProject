@@ -14,8 +14,8 @@ namespace TenantManager.Models
         public string ControllerName { get; set; }
         // MethodName used to store the name of the method that is being customized
         public string MethodName { get; set; }
-        // store the api endpoint for the new microservice
-        public string ApiEndpoint { get; set; }
+        // store name of customization service for service discovery and dynamic service routing for ocelot
+        public string ServiceName { get; set; }
         // is the customization active
         public bool IsActive { get; set; }
 

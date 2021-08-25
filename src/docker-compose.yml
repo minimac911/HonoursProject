@@ -112,6 +112,13 @@ services:
     depends_on:
       - test
 
+#CONSUL
+  consul:
+    image: consul:latest
+    command: consul agent -dev -log-level=warn -ui -client=0.0.0.0
+    hostname: consul
+    container_name: consul
+
   test:
     image: ${DOCKER_REGISTRY-}test
     build:

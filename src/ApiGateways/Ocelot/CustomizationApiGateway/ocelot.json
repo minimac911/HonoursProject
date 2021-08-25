@@ -1,9 +1,43 @@
-﻿{
-  "Routes": [
-    
-  ],
-  //"GlobalConfiguration": {
-  //  "RequestIdKey": "OcRequestId",
-  //  "AdministrationPath": "/administration"
-  //}
+﻿// Ocelot file for dynamic routing 
+// Example http://customizationapigateway/test/route
+// take the first path and use it as the service name, in this case "test"
+// then take the rest of the uri and pass it as the route to the service
+{
+  "Routes": [],
+  "Aggregates": [],
+  "GlobalConfiguration": {
+    "RequestIdKey": null,
+    "ServiceDiscoveryProvider": {
+      //Docker container name
+      "Host": "consul",
+      "Port": 8500,
+      "Type": "Consul",
+      "Token": null,
+      "ConfigurationKey": null
+    },
+    "RateLimitOptions": {
+      "ClientIdHeader": "ClientId",
+      "QuotaExceededMessage": null,
+      "RateLimitCounterPrefix": "ocelot",
+      "DisableRateLimitHeaders": false,
+      "HttpStatusCode": 429
+    },
+    "QoSOptions": {
+      "ExceptionsAllowedBeforeBreaking": 0,
+      "DurationOfBreak": 0,
+      "TimeoutValue": 0
+    },
+    "BaseUrl": null,
+    "LoadBalancerOptions": {
+      "Type": "LeastConnection",
+      "Key": null,
+      "Expiry": 0
+    },
+    "DownstreamScheme": "http",
+    "HttpHandlerOptions": {
+      "AllowAutoRedirect": false,
+      "UseCookieContainer": false,
+      "UseTracing": false
+    }
+  }
 }
