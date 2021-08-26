@@ -243,7 +243,7 @@ namespace CatalogCustomization.Infastrucutre.Startup
 
             var serviceUrl = new Uri(configuration.GetValue<string>("ServiceUrl", "http://localhost:5401"));
             // TODO: Set tenant name on creation
-            var TenantName = "one";
+            var TenantName = configuration.GetValue<string>("TenantName");
             var ContainerName = configuration.GetValue<string>("ContainerName");
             var serviceName = $"{TenantName}:{ContainerName}";
             var randUuid = Guid.NewGuid();

@@ -15,6 +15,8 @@ namespace WebMVC.Models.TenantManager
         public string MethodName { get; set; }
         // store the api endpoint for the new microservice
         public string ServiceName { get; set; }
+        // The service end point 
+        public string ServiceEndPoint { get; set; }
         // is the customization active
         public bool IsActive { get; set; }
     }

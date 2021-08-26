@@ -8,90 +8,89 @@ SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 SET NAMES utf8mb4;
 
 DROP DATABASE IF EXISTS `debug:tenant_manager`;
-CREATE DATABASE `debug:tenant_manager` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ ;
+CREATE DATABASE `debug:tenant_manager` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `debug:tenant_manager`;
 
 DROP TABLE IF EXISTS `__EFMigrationsHistory`;
 CREATE TABLE `__EFMigrationsHistory` (
-  `MigrationId` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `ProductVersion` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `MigrationId` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ProductVersion` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`MigrationId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 TRUNCATE `__EFMigrationsHistory`;
 INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`) VALUES
-('20210825144318_init',	'5.0.8');
+('20210826121712_init',	'5.0.8');
 
 DROP TABLE IF EXISTS `tenant_manager_customization`;
 CREATE TABLE `tenant_manager_customization` (
   `Id` int NOT NULL AUTO_INCREMENT,
-  `ControllerName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
-  `MethodName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
-  `ServiceName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `ControllerName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `MethodName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `ServiceName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `ServiceEndPoint` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `IsActive` tinyint(1) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-# TRUNCATE `tenant_manager_customization`;
-# INSERT INTO `tenant_manager_customization` (`Id`, `ControllerName`, `MethodName`, `ServiceName`, `IsActive`) VALUES
-# (1,	'TestTenantCustomization',	'Index',	'debug:test',	1);
+TRUNCATE `tenant_manager_customization`;
+INSERT INTO `tenant_manager_customization` (`Id`, `ControllerName`, `MethodName`, `ServiceName`, `ServiceEndPoint`, `IsActive`) VALUES
+(1,	'TestTenantCustomization',	'Index',	'debug:test',	'/TestTenantCustomization',	1);
 
 DROP DATABASE IF EXISTS `one:tenant_manager`;
-CREATE DATABASE `one:tenant_manager` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ ;
+CREATE DATABASE `one:tenant_manager` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `one:tenant_manager`;
 
 DROP TABLE IF EXISTS `__EFMigrationsHistory`;
 CREATE TABLE `__EFMigrationsHistory` (
-  `MigrationId` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `ProductVersion` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `MigrationId` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ProductVersion` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`MigrationId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 TRUNCATE `__EFMigrationsHistory`;
 INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`) VALUES
-('20210825144318_init',	'5.0.8');
+('20210826121712_init',	'5.0.8');
 
 DROP TABLE IF EXISTS `tenant_manager_customization`;
 CREATE TABLE `tenant_manager_customization` (
   `Id` int NOT NULL AUTO_INCREMENT,
-  `ControllerName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
-  `MethodName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
-  `ServiceName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `ControllerName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `MethodName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `ServiceName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `ServiceEndPoint` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `IsActive` tinyint(1) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 TRUNCATE `tenant_manager_customization`;
-INSERT INTO `tenant_manager_customization` (`Id`, `ControllerName`, `MethodName`, `ServiceName`, `IsActive`) VALUES
-(1,	'Catalog',	'Index',	'one:CatalogCustomization',	1);
+INSERT INTO `tenant_manager_customization` (`Id`, `ControllerName`, `MethodName`, `ServiceName`, `ServiceEndPoint`, `IsActive`) VALUES
+(1,	'Catalog',	'Index',	'one:CatalogCustomization',	'/catalog',	1);
 
 DROP DATABASE IF EXISTS `two:tenant_manager`;
-CREATE DATABASE `two:tenant_manager` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci */ ;
+CREATE DATABASE `two:tenant_manager` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
 USE `two:tenant_manager`;
 
 DROP TABLE IF EXISTS `__EFMigrationsHistory`;
 CREATE TABLE `__EFMigrationsHistory` (
-  `MigrationId` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `ProductVersion` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `MigrationId` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
+  `ProductVersion` varchar(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL,
   PRIMARY KEY (`MigrationId`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 TRUNCATE `__EFMigrationsHistory`;
 INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`) VALUES
-('20210825144318_init',	'5.0.8');
+('20210826121712_init',	'5.0.8');
 
 DROP TABLE IF EXISTS `tenant_manager_customization`;
 CREATE TABLE `tenant_manager_customization` (
   `Id` int NOT NULL AUTO_INCREMENT,
-  `ControllerName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
-  `MethodName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
-  `ServiceName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci,
+  `ControllerName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `MethodName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `ServiceName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `ServiceEndPoint` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `IsActive` tinyint(1) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
-# TRUNCATE `tenant_manager_customization`;
-# INSERT INTO `tenant_manager_customization` (`Id`, `ControllerName`, `MethodName`, `ServiceName`, `IsActive`) VALUES
-# (1,	'TestTenantCustomization',	'Index',	'one:test',	1);
-
--- 2021-08-25 16:49:49
+-- 2021-08-26 12:19:29

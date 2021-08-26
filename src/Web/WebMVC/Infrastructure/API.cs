@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebMVC.Models.TenantManager;
 
 namespace WebMVC.Infrastructure
 {
@@ -41,14 +42,14 @@ namespace WebMVC.Infrastructure
             }
 
             // posibly add query data
-            public static string RunTenantCustomizaton(string baseUrl, string serviceName, string ControllerName, string MethodName = null)
+            public static string RunTenantCustomizaton(string baseUrl, TenantCustomization customization)
             {
-                var url = $"{baseUrl}/{serviceName}/{ControllerName}";
+                // make sure that the service end point starts with a slash
+                customization.ServiceEndPoint = 
+                    customization.ServiceEndPoint.Substring(0,1) == "/" 
+                    ? customization.ServiceEndPoint : "/"+customization.ServiceEndPoint;
 
-                if (MethodName != null && MethodName != "Index")
-                {
-                    url += $"{MethodName}";
-                }
+                var url = $"{baseUrl}/{customization.ServiceName + customization.ServiceEndPoint}";
 
                 return url;
             }

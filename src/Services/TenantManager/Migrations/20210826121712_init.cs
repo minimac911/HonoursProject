@@ -22,6 +22,8 @@ namespace TenantManager.Migrations
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     ServiceName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
+                    ServiceEndPoint = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     IsActive = table.Column<bool>(type: "tinyint(1)", nullable: false)
                 },
                 constraints: table =>
@@ -32,8 +34,8 @@ namespace TenantManager.Migrations
 
             migrationBuilder.InsertData(
                 table: "tenant_manager_customization",
-                columns: new[] { "Id", "ControllerName", "IsActive", "MethodName", "ServiceName" },
-                values: new object[] { 1, "TestTenantCustomization", true, "Index", "one:test" });
+                columns: new[] { "Id", "ControllerName", "IsActive", "MethodName", "ServiceEndPoint", "ServiceName" },
+                values: new object[] { 1, "TestTenantCustomization", true, "Index", "/TestTenantCustomization", "debug:test" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

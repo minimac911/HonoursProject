@@ -8,7 +8,6 @@ namespace TenantManager.Models
     public class TenantCustomization
     {
         public int Id { get; set; }
-        //public Guid TenantId { get; set; }
 
         // ControllerName is used to store the name of the controller that is being customized
         public string ControllerName { get; set; }
@@ -16,6 +15,8 @@ namespace TenantManager.Models
         public string MethodName { get; set; }
         // store name of customization service for service discovery and dynamic service routing for ocelot
         public string ServiceName { get; set; }
+        // The service end point 
+        public string ServiceEndPoint{ get; set; }
         // is the customization active
         public bool IsActive { get; set; }
 

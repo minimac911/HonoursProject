@@ -44,12 +44,12 @@ namespace WebMVC.Services
                 // get the response from the api 
                 var responseString = await _httpClient.GetStringAsync(url);
 
-                var cartDetials = JsonSerializer.Deserialize<TenantCustomization>(responseString, new JsonSerializerOptions
+                var customizationDetails = JsonSerializer.Deserialize<TenantCustomization>(responseString, new JsonSerializerOptions
                 {
                     PropertyNameCaseInsensitive = true
                 });
 
-                return cartDetials;
+                return customizationDetails;
             }
             catch (HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
             {
@@ -66,10 +66,8 @@ namespace WebMVC.Services
         public async Task<string> RunCustomizationGET(TenantCustomization customization)
         {
             var url = API.TenantManager.RunTenantCustomizaton(
-                _customizationApiGatewayUrl, 
-                customization.ServiceName, 
-                customization.ControllerName, 
-                customization.MethodName);
+                _customizationApiGatewayUrl,
+                customization);
 
             try
             {
@@ -88,9 +86,7 @@ namespace WebMVC.Services
         {
             var url = API.TenantManager.RunTenantCustomizaton(
                 _customizationApiGatewayUrl,
-                customization.ServiceName,
-                customization.ControllerName,
-                customization.MethodName);
+                customization);
 
             try
             {

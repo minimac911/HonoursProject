@@ -184,6 +184,7 @@ services:
       - ServiceUrl=http://catalogcustomization:80
       - ApiGatewayUrl=http://webcore-api-gateway:80
       - ContainerName=CatalogCustomization
+      - TenantName=one
     ports:
       - "5402:80"
 
