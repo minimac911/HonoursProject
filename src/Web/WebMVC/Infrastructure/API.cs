@@ -34,6 +34,23 @@ namespace WebMVC.Infrastructure
             }
         }
 
+        public static class Order
+        {
+            public static string GetAllOrders(string baseUrl)
+            {
+                return $"{baseUrl}";
+            }
+            public static string GetSingleOrder(string baseUrl, int OrderId)
+            {
+                return $"{baseUrl}/{OrderId}";
+            }
+
+            public static string CreateOrder(string baseUrl)
+            {
+                return $"{baseUrl}";
+            }
+        }
+
         public static class TenantManager
         {
             public static string GetTenatCustomization(string baseUrl, string ControllerName, string MethodName)

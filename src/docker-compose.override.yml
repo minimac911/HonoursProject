@@ -38,7 +38,7 @@ services:
       - EventBusPassword=${SERVICE_BUS_PASSWORD}
       - EventBusRetryCount=5
       - SubscriptionClientName=Catalog
-      - IamServiceUrl=http://iam
+      - IamServiceUrl=http://iam:80
     ports:
       - "5101:80"
 
@@ -54,7 +54,7 @@ services:
       - EventBusPassword=${SERVICE_BUS_PASSWORD}
       - EventBusRetryCount=5
       - SubscriptionClientName=Cart
-      - IamServiceUrl=http://iam
+      - IamServiceUrl=http://iam:80
     ports:
       - "5102:80"
 
@@ -70,7 +70,7 @@ services:
       - EventBusPassword=${SERVICE_BUS_PASSWORD}
       - EventBusRetryCount=5
       - SubscriptionClientName=Order
-      - IamServiceUrl=http://iam
+      - IamServiceUrl=http://iam:80
     ports:
       - "5103:80"
 
@@ -86,7 +86,7 @@ services:
       - EventBusPassword=${SERVICE_BUS_PASSWORD}
       - EventBusRetryCount=5
       - SubscriptionClientName=TenantManager
-      - IamServiceUrl=http://iam
+      - IamServiceUrl=http://iam:80
     ports:
       - "5300:80"
 
@@ -109,8 +109,8 @@ services:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
       - ASPNETCORE_URLS=http://0.0.0.0:80
-      - ApiGatewayUrl=http://webcore-api-gateway
-      - CustomizationApiGatewayUrl=http://customization-api-gateway
+      - ApiGatewayUrl=http://webcore-api-gateway:80
+      - CustomizationApiGatewayUrl=http://customization-api-gateway:80
       - IamServiceUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5100
       - CallBackUrl=http://${EXTERNAL_DNS_NAME_OR_IP}
     ports:
@@ -127,12 +127,12 @@ services:
   web-aggregator:
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
-      - urls__cart=http://cart-api
-      - urls__catalog=http://catalog-api
-      - urls__orders=http://order-api
-      - CartUrlHC=http://cart-api/hc
-      - CatalogUrlHC=http://catalog-api/hc
-      - OrderingUrlHC=http://ordering-api/hc
+      - urls__cart=http://cart-api:80
+      - urls__catalog=http://catalog-api:80
+      - urls__orders=http://order-api:80
+      - CartUrlHC=http://cart-api:80/hc
+      - CatalogUrlHC=http://catalog-api:80/hc
+      - OrderingUrlHC=http://ordering-api:80/hc
       #- IdentityUrlExternal=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5105
     ports:
       - "5120:80"

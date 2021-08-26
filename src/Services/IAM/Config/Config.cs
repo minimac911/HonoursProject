@@ -25,6 +25,7 @@ namespace IAM
             {
                 new ApiScope("catalog"),
                 new ApiScope("cart"),
+                new ApiScope("order"),
                 new ApiScope("tenant_manager"),
                 new ApiScope("tenant_customization"),
             };
@@ -40,6 +41,11 @@ namespace IAM
                 new ApiResource("cart")
                 {
                     Scopes = new List<string>{ "cart" },
+                    ApiSecrets = new List<Secret>{ new Secret("secret".Sha256()) }
+                },
+                new ApiResource("order")
+                {
+                    Scopes = new List<string>{ "order" },
                     ApiSecrets = new List<Secret>{ new Secret("secret".Sha256()) }
                 },
                 new ApiResource("tenant_manager")
@@ -82,6 +88,7 @@ namespace IAM
                         IdentityServerConstants.StandardScopes.Profile,
                         "catalog",
                         "cart",
+                        "order",
                         "tenant_manager",
                         "tenant_customization"
                     },

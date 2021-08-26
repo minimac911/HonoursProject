@@ -18,10 +18,15 @@ namespace WebMVC.Controllers
             ILogger<MyController> logger)
             : base(tenantManagerService, identityParser, logger)
         { }
+        /**
+         * This route is used to catch all routes that are not mathced
+         * It is used so that the Tenant Manager can still be checked through the parent class
+         * if no customization was found then a NotFound page will be shown
+         */
         [Route("/{**catchAll}", Order = int.MaxValue)]
         public IActionResult Index()
         {
-            return View();
+            return View("NotFound");
         }
     }
 }

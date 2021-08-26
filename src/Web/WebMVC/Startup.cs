@@ -148,9 +148,9 @@ namespace WebMVC
                 options.Scope.Add("profile");
                 options.Scope.Add("catalog");
                 options.Scope.Add("cart");
+                options.Scope.Add("order");
                 options.Scope.Add("tenant_manager");
                 options.Scope.Add("tenant_customization");
-                //options.Scope.Add("orders");
             });
 
             return services;
