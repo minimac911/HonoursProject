@@ -13,6 +13,7 @@ using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Threading.Tasks;
+using WebMVC.Infrastructure;
 using WebMVC.Infrastructure.Http;
 using WebMVC.Models;
 using WebMVC.Services;
@@ -148,6 +149,7 @@ namespace WebMVC
                 options.Scope.Add("catalog");
                 options.Scope.Add("cart");
                 options.Scope.Add("tenant_manager");
+                options.Scope.Add("tenant_customization");
                 //options.Scope.Add("orders");
             });
 

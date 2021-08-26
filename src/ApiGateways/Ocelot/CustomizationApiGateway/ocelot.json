@@ -38,6 +38,10 @@
       "AllowAutoRedirect": false,
       "UseCookieContainer": false,
       "UseTracing": false
+    },
+    "AuthenticationOptions": {
+      "AuthenticationProviderKey": "IamServiceKey",
+      "AllowedScopes": []
     }
   }
 }

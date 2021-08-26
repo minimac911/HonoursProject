@@ -15,7 +15,7 @@ using WebMVC.ViewModels.Catalog;
 namespace WebMVC.Controllers
 {
     [Authorize(AuthenticationSchemes = OpenIdConnectDefaults.AuthenticationScheme)]
-    public class CatalogController : BaseController
+    public class CatalogController : MyController
     {
         private ICatalogService _catalogService;
 
@@ -23,7 +23,7 @@ namespace WebMVC.Controllers
             ICatalogService catalogService, 
             ITenantManagerService tenantManagerService, 
             IIdentityParser<ApplicationUser> identityParser, 
-            ILogger<BaseController> logger)
+            ILogger<MyController> logger)
             : base(tenantManagerService, identityParser, logger)
         {
             _catalogService = catalogService; 

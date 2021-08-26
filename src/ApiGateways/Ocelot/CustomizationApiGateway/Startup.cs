@@ -35,23 +35,23 @@ namespace CustomizationApiGateway
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "HonoursProject.Gateway.Api", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "HonoursProject.Customization.Gateway.Api", Version = "v1" });
             });
 
             // JWT auth for IAM Service
             var key = "IamServiceKey";
 
             services
-                .AddAuthentication();
-                //.AddJwtBearer(key, x =>
-                //{
-                //    x.Authority = Configuration["IamServiceUrl"];
-                //    x.RequireHttpsMetadata = false;
-                //    x.TokenValidationParameters = new TokenValidationParameters()
-                //    {
-                //        ValidAudiences = new[] { "order", "cart", "catalog", "tenant_manager" }
-                //    };
-                //});
+                .AddAuthentication()
+                .AddJwtBearer(key, x =>
+                {
+                    x.Authority = Configuration["IamServiceUrl"];
+                    x.RequireHttpsMetadata = false;
+                    x.TokenValidationParameters = new TokenValidationParameters()
+                    {
+                        ValidAudiences = new[] { "tenant_customization" }
+                    };
+                });
 
             // add ocelot and add consul 
             services.AddOcelot(Configuration).AddConsul();

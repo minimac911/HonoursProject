@@ -44,9 +44,9 @@ namespace TenantManager.Migrations
                         {
                             Id = 1,
                             ControllerName = "TestTenantCustomization",
-                            IsActive = false,
+                            IsActive = true,
                             MethodName = "Index",
-                            ServiceName = "test"
+                            ServiceName = "one:test"
                         });
                 });
 #pragma warning restore 612, 618

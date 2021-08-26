@@ -16,9 +16,6 @@ namespace Test
     {
         public static void Main(string[] args)
         {
-            // run migrations for all tenants
-            TenantSeed.RunMigrations(Directory.GetCurrentDirectory());
-
             CreateHostBuilder(args).Build().Run();
         }
 

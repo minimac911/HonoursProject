@@ -1,0 +1,26 @@
+﻿@model CatalogItem
+@{
+    ViewData["Title"] = "Catalog  Page";
+    var hasNoUnitsLeft = (Model.UnitsLeft == 0);
+}
+
+<form action="Cart/AddItemToCart">
+    <div class="col-auto">
+        <div class="card @(hasNoUnitsLeft ? "border-danger" : "")" style="width: 18rem;">
+            <div class="card-body @(hasNoUnitsLeft ? "text-danger" : "")">
+                <h5 class="card-title">@Model.Name</h5>
+                <h5 class="card-title">
+                    R @Math.Round(Model.Price, 2)
+                </h5>
+                <p class="card-text">@Model.Description</p>
+                <h5 class="card-title text-danger">@Model.UnitsLeft Left</h5>
+                @if (!hasNoUnitsLeft)
+                {
+                    <input type="hidden" asp-for="@Model.Id" name="id" />
+                    <input type="hidden" value="1" name="qty" />
+                    <button type="submit" class="btn btn-primary">ADD TO CART</button>
+                }
+            </div>
+        </div>
+    </div>
+</form>

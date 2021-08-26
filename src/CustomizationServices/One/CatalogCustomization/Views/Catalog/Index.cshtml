@@ -1,0 +1,13 @@
+﻿@model CatalogCustomization.ViewModels.Catalog.IndexViewModel
+@{
+    ViewData["Title"] = "Catalog  Page";
+}
+
+<div class="text-center">
+    <div class="row">
+        @foreach (var item in Model.CatalogItems)
+        {
+            <partial name="_item" model="item"/>
+        }
+    </div>
+</div>

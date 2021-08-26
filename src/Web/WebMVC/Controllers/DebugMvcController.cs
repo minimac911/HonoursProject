@@ -12,12 +12,12 @@ using WebMVC.Services.Intrefaces;
 
 namespace WebMVC.Controllers
 {
-    public class DebugMvcController : BaseController
+    public class DebugMvcController : MyController
     {
         public DebugMvcController(
             ITenantManagerService tenantManagerService, 
             IIdentityParser<ApplicationUser> identityParser, 
-            ILogger<BaseController> logger)
+            ILogger<MyController> logger)
             : base(tenantManagerService, identityParser, logger)
         {
 

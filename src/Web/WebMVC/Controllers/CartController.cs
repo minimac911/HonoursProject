@@ -15,7 +15,7 @@ using WebMVC.Services.Intrefaces;
 namespace WebMVC.Controllers
 {
     [Authorize(AuthenticationSchemes = OpenIdConnectDefaults.AuthenticationScheme)]
-    public class CartController : BaseController
+    public class CartController : MyController
     {
         private ICartService _cartService;
         private ICatalogService _catalogService;
@@ -26,7 +26,7 @@ namespace WebMVC.Controllers
             ICatalogService catalogService,
             ITenantManagerService tenantManagerService,
             IIdentityParser<ApplicationUser> identityParser,
-            ILogger<BaseController> logger) 
+            ILogger<MyController> logger) 
             : base(tenantManagerService, identityParser, logger)
         {
             _cartService = cartService;

@@ -109,7 +109,9 @@ namespace Test.Infastrucutre.Startup
         {
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "Test", Version = "v1" });
+                var ContainerName = configuration.GetValue<string>("ContainerName");
+
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = ContainerName, Version = "v1" });
             });
 
             return services;
@@ -122,11 +124,13 @@ namespace Test.Infastrucutre.Startup
             // get connection string
             var conString = ConnectionStringHelper.GetConnectionString(configuration);
 
+            var ContainerName = configuration.GetValue<string>("ContainerName");
+
             //add health check for database
-            healthCheckBuilder.AddMySql(conString, name: "Cart-DB-healthcheck");
+            healthCheckBuilder.AddMySql(conString, name: $"{ContainerName}-DB-healthcheck");
 
             // add health check for rabbit mq
-            healthCheckBuilder.AddRabbitMQ($"amqp://{configuration["EventBusConnection"]}", name: "Cart-RabbitMQ-healtcheck");
+            healthCheckBuilder.AddRabbitMQ($"amqp://{configuration["EventBusConnection"]}", name: $"{ContainerName}-RabbitMQ-healtcheck");
 
             return services;
         }
@@ -147,7 +151,8 @@ namespace Test.Infastrucutre.Startup
                 .AddJwtBearer(o =>
                 {
                     o.Authority = IamServiceUrl;
-                    o.Audience = "test";
+                    var ContainerName = configuration.GetValue<string>("ContainerName");
+                    o.Audience = $"{ContainerName}";
                     o.RequireHttpsMetadata = false;
 
                     o.TokenValidationParameters = new TokenValidationParameters
@@ -163,7 +168,8 @@ namespace Test.Infastrucutre.Startup
                     options.AddPolicy("ApiScope", policy =>
                     {
                         policy.RequireAuthenticatedUser();
-                        policy.RequireClaim("scope", "test");
+                        var ContainerName = configuration.GetValue<string>("ContainerName");
+                        policy.RequireClaim("scope", $"{ContainerName}");
                     });
                 });
 
@@ -219,7 +225,7 @@ namespace Test.Infastrucutre.Startup
         public static IServiceCollection AddConsul(this IServiceCollection services, IConfiguration configuration)
         {
             //register service with cosnul
-            services.AddSingleton<IConsulClient, ConsulClient>(c => new ConsulClient(config => 
+            services.AddSingleton<IConsulClient, ConsulClient>(c => new ConsulClient(config =>
             {
                 var consulUrl = configuration.GetValue<string>("ConsulUrl");
                 config.Address = new Uri(consulUrl);
@@ -238,7 +244,10 @@ namespace Test.Infastrucutre.Startup
             var appLifetime = application.ApplicationServices.GetRequiredService<IApplicationLifetime>();
 
             var serviceUrl = new Uri(configuration.GetValue<string>("ServiceUrl", "http://localhost:5401"));
-            var serviceName = "test";
+            // TODO: Set tenant name on creation
+            var TenantName = "one";
+            var ContainerName = configuration.GetValue<string>("ContainerName");
+            var serviceName = $"{TenantName}:{ContainerName}";
             var randUuid = Guid.NewGuid();
             var uniqueServiceId = $"{serviceName}:RandomID";
             // consul registartion

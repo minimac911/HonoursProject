@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WebMVC.Infrastructure;
@@ -62,18 +63,49 @@ namespace WebMVC.Services
             }
         }
 
-        public async Task<string> RunCustomization(TenantCustomization customization)
+        public async Task<string> RunCustomizationGET(TenantCustomization customization)
         {
-            var url = API.TenantManager.RunTenantCustomizaton(_customizationApiGatewayUrl, customization.ServiceName);
+            var url = API.TenantManager.RunTenantCustomizaton(
+                _customizationApiGatewayUrl, 
+                customization.ServiceName, 
+                customization.ControllerName, 
+                customization.MethodName);
 
             try
             {
                 // get the response from the api 
                 var responseString = await _httpClient.GetStringAsync(url);
-
                 return responseString;
             }
             catch (HttpRequestException ex) 
+            {
+                Log.Logger.Error(ex.Message);
+                throw;
+            }
+        }
+
+        public async Task<string> RunCustomizationPOST(TenantCustomization customization, Object obj)
+        {
+            var url = API.TenantManager.RunTenantCustomizaton(
+                _customizationApiGatewayUrl,
+                customization.ServiceName,
+                customization.ControllerName,
+                customization.MethodName);
+
+            try
+            {
+                var data = new StringContent(JsonSerializer.Serialize(obj), Encoding.UTF8, "application/json");
+                // Post data to url
+                var response = await _httpClient.PostAsync(url, data);
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    throw new Exception(response.ReasonPhrase);
+                }
+
+                return response.Content.ReadAsStringAsync().Result;
+            }
+            catch (HttpRequestException ex)
             {
                 Log.Logger.Error(ex.Message);
                 throw;

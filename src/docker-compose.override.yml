@@ -167,7 +167,26 @@ services:
     ports:
       - "5401:80"
 
+  catalogcustomization:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://0.0.0.0:80
+      - ConnectionString_debug=Server=mysql;Database=debug:test;User=root;Password=root;
+      - ConnectionString_one=Server=mysql;Database=one:test;User=root;Password=root;
+      - ConnectionString_two=Server=mysql;Database=two:test;User=root;Password=root;
+      - EventBusConnection=${SERVICE_BUS_CONNECTION:-rabbitmq}
+      - EventBusUserName=${SERVICE_BUS_USERNAME}
+      - EventBusPassword=${SERVICE_BUS_PASSWORD}
+      - EventBusRetryCount=5
+      - SubscriptionClientName=catalogcustomization
+      - IamServiceUrl=http://iam:80
+      - ConsulUrl=http://consul:8500
+      - ServiceUrl=http://catalogcustomization:80
+      - ApiGatewayUrl=http://webcore-api-gateway:80
+      - ContainerName=CatalogCustomization
+    ports:
+      - "5402:80"
+
 volumes:
   mysql-db-data:
      external: false
-

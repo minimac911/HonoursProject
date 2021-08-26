@@ -25,7 +25,7 @@ namespace TenantManager.Data
 
             // Seed test data
             modelBuilder.Entity<TenantCustomization>().HasData(
-                new TenantCustomization { Id = 1, ControllerName = "TestTenantCustomization", MethodName = "Index", ServiceName = "test" }
+                new TenantCustomization { Id = 1, ControllerName = "TestTenantCustomization", MethodName = "Index", ServiceName = "one:test", IsActive = true }
                 );
         }
     }

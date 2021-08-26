@@ -33,7 +33,7 @@ namespace TenantManager.Migrations
             migrationBuilder.InsertData(
                 table: "tenant_manager_customization",
                 columns: new[] { "Id", "ControllerName", "IsActive", "MethodName", "ServiceName" },
-                values: new object[] { 1, "TestTenantCustomization", true, "Index", "test" });
+                values: new object[] { 1, "TestTenantCustomization", true, "Index", "one:test" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

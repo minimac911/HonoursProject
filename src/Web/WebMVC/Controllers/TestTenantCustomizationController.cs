@@ -10,12 +10,12 @@ using WebMVC.Services.Intrefaces;
 
 namespace WebMVC.Controllers
 {
-    public class TestTenantCustomizationController : BaseController
+    public class TestTenantCustomizationController : MyController
     {
         public TestTenantCustomizationController(
             ITenantManagerService tenantManagerService,
             IIdentityParser<ApplicationUser> identityParser,
-            ILogger<BaseController> logger)
+            ILogger<MyController> logger)
             : base(tenantManagerService, identityParser, logger)
         {}
 
