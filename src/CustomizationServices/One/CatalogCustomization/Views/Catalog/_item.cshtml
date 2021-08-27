@@ -17,8 +17,12 @@
                 @if (!hasNoUnitsLeft)
                 {
                     <input type="hidden" asp-for="@Model.Id" name="id" />
-                    <input type="hidden" value="1" name="qty" />
-                    <button type="submit" class="btn btn-primary">ADD TO CART</button>
+                    <div class="input-group mb-3">
+                        <input class="form-control" type="number" name="qty" min="1" value="1">
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-primary">ADD TO CART</button>
+                        </div>
+                    </div>
                 }
             </div>
         </div>
