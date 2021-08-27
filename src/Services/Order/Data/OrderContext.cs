@@ -24,7 +24,17 @@ namespace Order.Data
 
             // Configure the PK
             modelBuilder.Entity<OrderItem>().HasKey(itm => itm.Id).HasName("pk_order_item");
-            modelBuilder.Entity<OrderDetails>().HasKey(x => x.UserId).HasName("pk_order_details");
+            modelBuilder.Entity<OrderDetails>().HasKey(x => x.Id).HasName("pk_order_details");
+
+            // Auto increments
+            modelBuilder
+                .Entity<OrderItem>()
+                .Property(itm => itm.Id)
+                .ValueGeneratedOnAdd();
+            modelBuilder
+                .Entity<OrderDetails>()
+                .Property(o => o.Id)
+                .ValueGeneratedOnAdd();
 
             // Set the precision of the decimal
             modelBuilder.Entity<OrderItem>()

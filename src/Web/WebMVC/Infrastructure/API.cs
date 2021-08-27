@@ -32,11 +32,20 @@ namespace WebMVC.Infrastructure
             {
                 return $"{baseUrl}/{userId}/item";
             }
+
+            public static string DeleteCart(string baseUrl, string userId)
+            {
+                return $"{baseUrl}/{userId}";
+            }
+            public static string UpdateCart(string baseUrl, string userId)
+            {
+                return $"{baseUrl}/{userId}";
+            }
         }
 
         public static class Order
         {
-            public static string GetAllOrders(string baseUrl)
+            public static string GetAllOrdersForUser(string baseUrl)
             {
                 return $"{baseUrl}";
             }

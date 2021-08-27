@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using WebMVC.Infrastructure;
 using WebMVC.Models;
 using WebMVC.Models.Cart;
+using WebMVC.Models.Cart.DTO;
 using WebMVC.Services.Intrefaces;
 using JsonSerializer = System.Text.Json.JsonSerializer;
 
@@ -70,5 +71,36 @@ namespace WebMVC.Services
             return true;
         }
 
+        public async Task<bool> DeleteCart(ApplicationUser user)
+        {
+            // get the url for the api endpoint
+            var url = API.Cart.DeleteCart(_serviceUrl, user.Id);
+            // Delete
+            var response = await _httpClient.DeleteAsync(url);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception(response.ReasonPhrase);
+            }
+
+            return true;
+        }
+
+        public async Task<bool> UpdateCart(ApplicationUser user, CartDetails updateCart)
+        {
+            // get the url for the api endpoint
+            var url = API.Cart.UpdateCart(_serviceUrl, user.Id);
+
+            var data = new StringContent(JsonSerializer.Serialize(updateCart), Encoding.UTF8, "application/json");
+            // get the response from the api 
+            var response = await _httpClient.PutAsync(url, data);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                throw new Exception(response.ReasonPhrase);
+            }
+
+            return true;
+        }
     }
 }

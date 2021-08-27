@@ -107,6 +107,9 @@ namespace WebMVC
             services.AddHttpClient<ICartService, CartService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
 
+            services.AddHttpClient<IOrderService, OrderService>()
+                .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+
             services.AddHttpClient<ITenantManagerService, TenantManagerService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
 

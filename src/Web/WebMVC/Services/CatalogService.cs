@@ -8,6 +8,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using WebMVC.Infrastructure;
 using WebMVC.Models;
+using WebMVC.Models.Cart.DTO;
 using WebMVC.Services.Intrefaces;
 
 namespace WebMVC.Services

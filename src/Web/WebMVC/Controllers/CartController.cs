@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using WebMVC.Infrastructure;
 using WebMVC.Models;
 using WebMVC.Models.Cart;
+using WebMVC.Models.Cart.DTO;
 using WebMVC.Services.Intrefaces;
 
 namespace WebMVC.Controllers
@@ -62,6 +63,27 @@ namespace WebMVC.Controllers
                 // STEP 2: Add item to cart
                 await _cartService.AddItemToCart(user, newCartItem);
             }
+
+            return RedirectToAction("Index", "Cart");
+        }
+
+        public async Task<IActionResult> UpdateCart(UpdateCartItemDTO[] items)
+        {
+            if(items.Length == 0)
+            {
+                return RedirectToAction("Index", "Cart");
+            }
+            // get the user id 
+            var user = _identityParser.Parse(HttpContext.User);
+            var cartDetails = await _cartService.GetCart(user);
+
+            foreach (UpdateCartItemDTO itm in items)
+            {
+                var cartItem = cartDetails.Items.FirstOrDefault(i => i.Id == itm.Id);
+                cartItem.Quantity = itm.Quantity;
+            }
+
+            await _cartService.UpdateCart(user, cartDetails);
 
             return RedirectToAction("Index", "Cart");
         }

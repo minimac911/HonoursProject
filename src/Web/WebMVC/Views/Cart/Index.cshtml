@@ -7,37 +7,47 @@
 <div class="container">
     @if (Model != null)
     {
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">Qty</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Unit Price</th>
-                    <th scope="col">Price</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model.Items)
-                {
+        <form asp-action="UpdateCart" asp-controller="Cart">
+            <table class="table">
+                <thead>
                     <tr>
-                        <th scope="row">@item.Quantity x</th>
-                        <td>@item.Name</td>
-                        <td>R @Math.Round(item.Price, 2)</td>
-                        <td>R @Math.Round(item.Price * item.Quantity, 2)</td>
+                        <th scope="col">Qty</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Unit Price</th>
+                        <th scope="col">Price</th>
                     </tr>
-                }
-            </tbody>
-            <tfoot>
-                <tr>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th>R @Math.Round(Model.Total, 2)</th>
-                </tr>
-            </tfoot>
-        </table>
+                </thead>
+                <tbody>
+                    @{int i = 0;}
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <th scope="row">
+                                <input type="hidden" value="@item.Id" name="items[@i].Id" />
+                                <input type="number" name="items[@i].Quantity" min="1" value="@item.Quantity">
+                            </th>
+                            <td>@item.Name</td>
+                            <td>R @Math.Round(item.Price, 2)</td>
+                            <td>R @Math.Round(item.Price * item.Quantity, 2)</td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th><button type="submit" class="btn btn-primary float-right">Update Cart</button></th>
+                        <th>R @Math.Round(Model.Total, 2)</th>
+                    </tr>
+                </tfoot>
+            </table>
+
+        </form>
         <div>
-            <button type="submit" class="btn btn-primary float-right">Complete Order</button>
+            <form asp-action="CreateOrder" asp-controller="Order">
+                <button type="submit" class="btn btn-primary float-right">Complete Order</button>
+            </form>
         </div>
     }
     else

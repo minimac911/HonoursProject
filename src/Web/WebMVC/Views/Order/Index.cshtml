@@ -1,5 +1,53 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model WebMVC.ViewModels.Order.OrdersViewModel
+
+<div class="container">
+    @if (Model.Orders != null)
+    {
+        @foreach (var order in Model.Orders)
+        {
+
+            <div class="card mb-3">
+                <h1>Order: No. @order.Id</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Qty</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Unit Price</th>
+                            <th scope="col">Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in order.Items)
+                        {
+                            <tr>
+                                <th scope="row">@item.Quantity x</th>
+                                <td>@item.Name</td>
+                                <td>R @Math.Round(item.Price, 2)</td>
+                                <td>R @Math.Round(item.Price * item.Quantity, 2)</td>
+                            </tr>
+                        }
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th></th>
+                            <th></th>
+                            <th></th>
+                            <th>R @Math.Round(order.TotalPaid, 2)</th>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="text-center">
+            <div class="alert alert-info" role="alert">
+                You have no orders!
+                <br />
+                <a class="btn btn-primary" role="button" asp-area="" asp-controller="Catalog" asp-action="Index">Go To Catalog</a>
+            </div>
+        </div>
+    }
+</div>

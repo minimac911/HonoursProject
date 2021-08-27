@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Order.Services
 {
-    interface IIdentityService
+    public interface IIdentityService
     {
         string GetUserId();
     }

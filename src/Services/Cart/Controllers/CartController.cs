@@ -31,6 +31,7 @@ namespace Cart.Controllers
         {
             // get the cart details for the user
             var foundCart = await _context.CartDetails
+                .Include(a => a.Items)
                 .FirstOrDefaultAsync(cd => cd.UserId == userId);
 
             // if there was no cart found
@@ -38,9 +39,6 @@ namespace Cart.Controllers
             {
                 return NotFound();
             }
-
-            // load the items in the cart
-            _context.Entry(foundCart).Collection(s => s.Items).Load();
 
             return foundCart;
         }
@@ -114,6 +112,70 @@ namespace Cart.Controllers
             }
 
             return foundItem;
+        }
+
+        // GET: The cart inforamtion for the user
+        [HttpDelete("{userId}")]
+        public async Task<IActionResult> DeleteCart(string userId)
+        {
+            // get teh details of the item
+            var foundCart = await _context.CartDetails.FindAsync(userId);
+
+            // if there was no item found
+            if (foundCart == null)
+            {
+                return NotFound();
+            }
+
+            var itemsInCart = await _context.CartItems.Where(i => i.CartDetails.UserId == userId).ToListAsync();
+
+            foreach(CartItem item in itemsInCart)
+            {
+                _context.CartItems.Remove(item);
+            }
+            await _context.SaveChangesAsync();
+
+            _context.CartDetails.Remove(foundCart);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+    
+        [HttpPut("{userId}")]
+        public async Task<ActionResult<CartDetails>> UpdateCart(string userId, CartDetails cartDetails)
+        {
+            // get teh details of the item
+            var foundCart = await _context.CartDetails.FindAsync(userId);
+
+            // if there was no item found
+            if (foundCart == null)
+            {
+                return NotFound();
+            }
+
+            foundCart.Items = cartDetails.Items;
+
+            foundCart.Total = CalculateCartTotal(foundCart);
+
+            _context.CartDetails.Update(foundCart);
+
+            await _context.SaveChangesAsync();
+
+            return foundCart;
+        }
+
+        private decimal CalculateCartTotal(CartDetails cart)
+        {
+            decimal total = 0;
+            
+            foreach(CartItem item in cart.Items)
+            {
+                total += (item.Price * item.Quantity);
+            }
+
+            return total;
         }
 
         private async Task<bool> DoesCartExsist(int userId)
