@@ -7,7 +7,7 @@
 <div class="container">
     @if (Model != null)
     {
-        <form asp-action="UpdateCart" asp-controller="Cart">
+        <form action="/Cart/UpdateCart" method="post">
             <table class="table">
                 <thead>
                     <tr>
@@ -42,7 +42,7 @@
                     </tr>
                 </tfoot>
             </table>
-            <button type="submit" class="btn btn-primary float-right">Update Cart</button>
+            <button type="submit" class="btn btn-primary float-right ml-3 mr-3">Update Cart</button>
         </form>
         <div>
             <form asp-action="CreateOrder" asp-controller="Order">

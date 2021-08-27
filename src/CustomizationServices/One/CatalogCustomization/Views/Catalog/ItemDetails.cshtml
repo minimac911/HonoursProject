@@ -2,8 +2,8 @@
 @{
     var hasNoUnitsLeft = (Model.UnitsLeft == 0);
 }
-
-<form action="Cart/AddItemToCart" method="post">
+<a class="btn btn-primary" href="/" role="button">Back To Catalog</a>
+<form action="Cart/AddItemToCart">
     <div class="col-auto">
         <div class="card @(hasNoUnitsLeft ? "border-danger" : "")" style="width: 18rem;">
             <div class="card-body @(hasNoUnitsLeft ? "text-danger" : "")">
@@ -13,7 +13,6 @@
                 </h5>
                 <p class="card-text">@Model.Description</p>
                 <h5 class="card-title text-danger">@Model.UnitsLeft Left</h5>
-                @*<a class="btn btn-primary" href="/catalog/@Model.Id" role="button">View Item</a>*@
                 @if (!hasNoUnitsLeft)
                 {
                     <input type="hidden" asp-for="@Model.Id" name="id" />

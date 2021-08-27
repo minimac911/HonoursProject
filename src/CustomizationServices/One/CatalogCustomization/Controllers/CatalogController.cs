@@ -34,5 +34,13 @@ namespace CatalogCustomization.Controllers
 
             return View(data);
         }
+
+        [HttpGet("{itemId}")]
+        public async Task<IActionResult> ViewItem(int ItemId)
+        {
+            var singleItem = await _catalogService.GetSingleCatalogItemById(ItemId);
+
+            return View(singleItem);
+        }
     }
 }

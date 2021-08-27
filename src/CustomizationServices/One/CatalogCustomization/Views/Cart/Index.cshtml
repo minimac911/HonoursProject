@@ -1,0 +1,64 @@
+﻿@model CatalogCustomization.Models.Cart.CartDetails
+
+<div class="alert alert-primary" role="alert">
+    <p>
+        This customization allows for the quantity to be set to 0. Once the item is updated with a quantity of zero then it will be removed from the cart.
+    </p>
+</div>
+<div class="container">
+    @if (Model != null)
+    {
+        <form action="/Cart/UpdateCart" method="post">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">Qty</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Unit Price</th>
+                        <th scope="col">Price</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @{int i = 0;}
+                    @foreach (var item in Model.Items)
+                    {
+                        <tr>
+                            <th scope="row">
+                                <input type="hidden" value="@item.Id" name="items[@i].Id" />
+                                <input type="number" name="items[@i].Quantity" min="0" value="@item.Quantity">
+                            </th>
+                            <td>@item.Name</td>
+                            <td>R @Math.Round(item.Price, 2)</td>
+                            <td>R @Math.Round(item.Price * item.Quantity, 2)</td>
+                        </tr>
+                        i++;
+                    }
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th></th>
+                        <th>R @Math.Round(Model.Total, 2)</th>
+                    </tr>
+                </tfoot>
+            </table>
+            <button type="submit" class="btn btn-primary float-right ml-3 mr-3">Update Cart</button>
+        </form>
+        <div>
+            <form action="/Order/CreateOrder" method="post">
+                <button type="submit" class="btn btn-primary float-right">Complete Order</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <div class="text-center">
+            <div class="alert alert-info" role="alert">
+                You have no items in your Cart!
+                <br />
+                <a class="btn btn-primary" role="button" href="/">Go To Catalog</a>
+            </div>
+        </div>
+    }
+</div>

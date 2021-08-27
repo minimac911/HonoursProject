@@ -38,6 +38,9 @@ namespace CatalogCustomization
             services.AddHttpClient<ICatalogService, CatalogService>()
                 .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
 
+            services.AddHttpClient<ICartService, CartService>()
+               .AddHttpMessageHandler<HttpClientAuthorizationDelegatingHandler>();
+
             services
                 .AddSecurity(Configuration)
                 .AddMVCControllers(Configuration)
@@ -73,6 +76,11 @@ namespace CatalogCustomization
 
             // Add tenancy middleware
             //app.UseMiddleware<TenantInfoMiddleware>();
+            app.Use(next => context =>
+            {
+                context.Request.EnableBuffering();
+                return next(context);
+            });
 
             app.UseEndpoints(endpoints =>
             {

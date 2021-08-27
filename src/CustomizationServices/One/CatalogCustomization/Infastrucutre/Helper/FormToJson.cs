@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace CatalogCustomization.Services
+namespace CatalogCustomization.Infastrucutre.Helper
 {
-    public interface IIdentityService
+    public class FormToJson
     {
-        string GetUserId();
     }
 }

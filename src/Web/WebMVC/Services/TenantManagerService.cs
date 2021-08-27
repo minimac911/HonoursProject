@@ -1,7 +1,9 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 using Serilog;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -82,7 +84,7 @@ namespace WebMVC.Services
             }
         }
 
-        public async Task<string> RunCustomizationPOST(TenantCustomization customization, Object obj)
+        public async Task<string> RunCustomizationPOST(TenantCustomization customization, HttpRequest req)
         {
             var url = API.TenantManager.RunTenantCustomizaton(
                 _customizationApiGatewayUrl,
@@ -90,9 +92,33 @@ namespace WebMVC.Services
 
             try
             {
-                var data = new StringContent(JsonSerializer.Serialize(obj), Encoding.UTF8, "application/json");
+                string stringContent = string.Empty;
+
+                try
+                {
+                    req.EnableBuffering();
+                    req.Body.Position = 0;
+
+                    using (var reader = new StreamReader(req.Body))
+                    {
+                        stringContent = await reader.ReadToEndAsync();
+
+                        req.Body.Position = 0;
+                    }
+
+                    stringContent = Uri.UnescapeDataString(stringContent);
+
+                }
+                catch (Exception)
+                {
+                    throw;
+                }
+
+                var json = JsonSerializer.Serialize(stringContent);
+                var reqData = new StringContent(json, Encoding.UTF8, "application/json");
+
                 // Post data to url
-                var response = await _httpClient.PostAsync(url, data);
+                var response = await _httpClient.PostAsync(url, reqData);
 
                 if (!response.IsSuccessStatusCode)
                 {

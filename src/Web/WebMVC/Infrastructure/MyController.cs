@@ -5,9 +5,12 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
+using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using WebMVC.Exceptions;
 using WebMVC.Models;
@@ -37,7 +40,6 @@ namespace WebMVC.Infrastructure
         {
             var controllerName = context.ActionDescriptor.RouteValues["controller"].ToString();
             var method = context.ActionDescriptor.RouteValues["action"].ToString();
-
             var tenantCustomiztionRequestInfo = new TenantCustomizationRequest
             {
                 ControllerName = controllerName,
@@ -85,7 +87,7 @@ namespace WebMVC.Infrastructure
                         html = await _tenantManagerService.RunCustomizationGET(foundCustomization);
                         break;
                     case "POST":
-                        var requestBody = context.HttpContext.Request.Form;
+                        var requestBody = context.HttpContext.Request;
                         html = await _tenantManagerService.RunCustomizationPOST(foundCustomization, requestBody);
                         break;
                     default:

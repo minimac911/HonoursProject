@@ -71,6 +71,12 @@ namespace WebMVC
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.Use(next => context =>
+            {
+                context.Request.EnableBuffering();
+                return next(context);
+            });
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints

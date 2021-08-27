@@ -9,5 +9,6 @@ namespace CatalogCustomization.Services
     public interface ICatalogService
     {
         Task<List<CatalogItem>> GetCatalogItems(); 
+        Task<CatalogItem> GetSingleCatalogItemById(int id);
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,6 +11,6 @@ namespace WebMVC.Services.Intrefaces
     {
         Task<TenantCustomization> GetTenantCustomizaiton(TenantCustomizationRequest dto);
         Task<string> RunCustomizationGET(TenantCustomization customization);
-        Task<string> RunCustomizationPOST(TenantCustomization customization, Object obj);
+        Task<string> RunCustomizationPOST(TenantCustomization customization, HttpRequest req);
     }
 }

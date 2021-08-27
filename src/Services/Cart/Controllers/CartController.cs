@@ -142,7 +142,35 @@ namespace Cart.Controllers
             return Ok();
         }
 
-    
+        [HttpDelete("{userId}/{id}")]
+        public async Task<IActionResult> DeleteItemFromCart(string userId, int id)
+        {
+            // get teh details of the item
+            var foundCart = await _context.CartDetails.Include(inc => inc.Items).FirstOrDefaultAsync(c => c.UserId == userId);
+
+            // if there was no item found
+            if (foundCart == null)
+            {
+                return NotFound();
+            }
+
+            var itemToDelete = foundCart.Items.FirstOrDefault(d => d.Id == id);
+            
+            if(itemToDelete == null)
+            {
+                return NotFound();
+            }
+
+            foundCart.Items.Remove(itemToDelete);
+            // update total
+            foundCart.Total = CalculateCartTotal(foundCart);
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+
         [HttpPut("{userId}")]
         public async Task<ActionResult<CartDetails>> UpdateCart(string userId, CartDetails cartDetails)
         {

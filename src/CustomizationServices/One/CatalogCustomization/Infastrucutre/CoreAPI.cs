@@ -30,6 +30,15 @@ namespace CatalogCustomization.Infrastructure
             {
                 return $"{baseUrl}/{userId}/item";
             }
+            public static string UpdateCart(string baseUrl, string userId)
+            {
+                return $"{baseUrl}/{userId}";
+            }
+
+            public static string DeleteItemFromCart(string baseUrl, string userId, int id)
+            {
+                return $"{baseUrl}/{userId}/{id}";
+            }
         }
 
         public static class TenantManager

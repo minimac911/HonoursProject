@@ -40,5 +40,20 @@ namespace CatalogCustomization.Services
 
             return items;
         }
+        public async Task<CatalogItem> GetSingleCatalogItemById(int id)
+        {
+            // get the url for the api endpoint
+            var url = CoreAPI.Catalog.GetSingleItem(_serviceUrl, id);
+
+            // get the response from the api 
+            var responseString = await _httpClient.GetStringAsync(url);
+
+            var item = JsonSerializer.Deserialize<CatalogItem>(responseString, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            return item;
+        }
     }
 }
