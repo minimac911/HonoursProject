@@ -106,17 +106,15 @@ namespace WebMVC.Services
                         req.Body.Position = 0;
                     }
 
-                    stringContent = Uri.UnescapeDataString(stringContent);
-
                 }
                 catch (Exception)
                 {
                     throw;
                 }
 
-                var json = JsonSerializer.Serialize(stringContent);
-                var reqData = new StringContent(json, Encoding.UTF8, "application/json");
-
+                var unescapedUrlData = Uri.UnescapeDataString(stringContent);
+                var reqData = new StringContent(unescapedUrlData, Encoding.UTF8, "application/x-www-form-urlencoded");
+                
                 // Post data to url
                 var response = await _httpClient.PostAsync(url, reqData);
 

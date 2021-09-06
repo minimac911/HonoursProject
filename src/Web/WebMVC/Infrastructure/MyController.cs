@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using WebMVC.Exceptions;
+using WebMVC.Helpers;
 using WebMVC.Models;
 using WebMVC.Models.TenantManager;
 using WebMVC.Services.Intrefaces;
@@ -88,7 +89,23 @@ namespace WebMVC.Infrastructure
                         break;
                     case "POST":
                         var requestBody = context.HttpContext.Request;
-                        html = await _tenantManagerService.RunCustomizationPOST(foundCustomization, requestBody);
+                        var resp = await _tenantManagerService.RunCustomizationPOST(foundCustomization, requestBody);
+                        try
+                        {
+                            var redirectResponse = JsonSerializer.Deserialize<RedirectResponse>(resp);
+                            if(redirectResponse.data != null)
+                            {
+                                return RedirectToAction(redirectResponse.controller, redirectResponse.action, redirectResponse.data);
+                            }
+                            else
+                            {
+                                return RedirectToAction(redirectResponse.controller, redirectResponse.action);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            
+                        }
                         break;
                     default:
                         return NotFound();

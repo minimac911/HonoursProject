@@ -1,4 +1,6 @@
-﻿using CatalogCustomization.Models.Cart.DTO;
+﻿using CatalogCustomization.Infastrucutre;
+using CatalogCustomization.Infastrucutre.Helper;
+using CatalogCustomization.Models.Cart.DTO;
 using CatalogCustomization.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -34,11 +36,12 @@ namespace CatalogCustomization.Controllers
         }
 
         [HttpPost("update")]
-        public async Task<IActionResult> UpdateCart(UpdateCartItemDTO[] items)
+        [Consumes("application/x-www-form-urlencoded")]
+        public async Task<ActionResult<RedirectResponse>> UpdateCart([FromForm] UpdateCartItemDTO[] items)
         {
             if (items.Length == 0)
             {
-                return RedirectToAction("Index", "Cart");
+                return new RedirectResponse("Index", "Cart");
             }
             // get the user id 
             var userId = _identityService.GetUserId();
@@ -57,7 +60,7 @@ namespace CatalogCustomization.Controllers
 
             await _cartService.UpdateCart(userId, cartDetails);
 
-            return RedirectToAction("Index", "Cart");
+            return new RedirectResponse("Index", "Cart");
         }
     }
 }
