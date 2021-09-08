@@ -80,44 +80,39 @@ namespace WebMVC.Infrastructure
             // get the http method e.g. GET, POST, DELETE , PUT
             var httpMethodFromRequest = context.HttpContext.Request.Method;
             var html = "";
-            try 
+            try
             {
+                // get the tenant name
+                var tenantName = JwtClaimHelper.GetTenantName(HttpContext);
                 switch (httpMethodFromRequest)
                 {
                     case "GET":
-                        html = await _tenantManagerService.RunCustomizationGET(foundCustomization);
+                        html = await _tenantManagerService.RunCustomizationGET(foundCustomization, tenantName);
                         break;
                     case "POST":
                         var requestBody = context.HttpContext.Request;
-                        var resp = await _tenantManagerService.RunCustomizationPOST(foundCustomization, requestBody);
-                        try
+                        var resp = await _tenantManagerService.RunCustomizationPOST(foundCustomization, tenantName, requestBody);
+                        var redirectResponse = JsonSerializer.Deserialize<RedirectResponse>(resp);
+                        if(redirectResponse.data != null)
                         {
-                            var redirectResponse = JsonSerializer.Deserialize<RedirectResponse>(resp);
-                            if(redirectResponse.data != null)
-                            {
-                                return RedirectToAction(redirectResponse.controller, redirectResponse.action, redirectResponse.data);
-                            }
-                            else
-                            {
-                                return RedirectToAction(redirectResponse.controller, redirectResponse.action);
-                            }
+                            return RedirectToAction(redirectResponse.controller, redirectResponse.action, redirectResponse.data);
                         }
-                        catch (Exception ex)
+                        else
                         {
-                            
+                            return RedirectToAction(redirectResponse.controller, redirectResponse.action);
                         }
-                        break;
                     default:
                         return NotFound();
                 }
             }
             catch(HttpRequestException ex) when (ex.StatusCode == HttpStatusCode.NotFound)
             {
-                return NotFound();
+                return View("TenantCustomizationNotAvailable");
             }
             
             return View("CustomizationTemplate", new LoadCustomizationViewModel { HTML = html });
 
         }
+
     }
 }

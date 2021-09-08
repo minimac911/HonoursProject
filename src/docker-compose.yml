@@ -129,15 +129,3 @@ services:
         condition: service_healthy
       mysql:
         condition: service_healthy
-
-  catalogcustomization:
-    image: ${DOCKER_REGISTRY-}catalogcustomization
-    build:
-      context: .
-      dockerfile: CustomizationServices/One/CatalogCustomization/Dockerfile
-    depends_on: 
-      rabbitmq:
-        condition: service_healthy
-      mysql:
-        condition: service_healthy
-

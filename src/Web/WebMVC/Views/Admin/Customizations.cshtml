@@ -1,4 +1,30 @@
-﻿<div>
-    <partial name="_sidebar" />
-    This is where all the customizations will go
+﻿@model WebMVC.ViewModels.Customization.IndexViewModel
+@{ 
+    var sideData = new ViewDataDictionary(ViewData)
+    {
+        { "active", "customizations" }
+    };
+}
+<div class="row">
+    <partial name="_sidebar" view-data="sideData" />
+    <div class="col">
+        <div class="text-center">
+            <h1>Tenant Customizations</h1>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Title</th>
+                        <th>Service Name</th>
+                        <th>Controller Name</th>
+                        <th>Method Name</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                @foreach (var cust in Model.Customizations)
+                {
+                    <partial name="_SingleCustomization" model="cust" />
+                }
+            </table>
+        </div>
+    </div>
 </div>

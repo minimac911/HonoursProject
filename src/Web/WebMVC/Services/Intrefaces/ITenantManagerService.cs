@@ -10,7 +10,8 @@ namespace WebMVC.Services.Intrefaces
     public interface ITenantManagerService
     {
         Task<TenantCustomization> GetTenantCustomizaiton(TenantCustomizationRequest dto);
-        Task<string> RunCustomizationGET(TenantCustomization customization);
-        Task<string> RunCustomizationPOST(TenantCustomization customization, HttpRequest req);
+        Task<IList<TenantCustomization>> GetAllCustomizations();
+        Task<string> RunCustomizationGET(TenantCustomization customization, string TenantName);
+        Task<string> RunCustomizationPOST(TenantCustomization customization, string TenantName, HttpRequest req);
     }
 }

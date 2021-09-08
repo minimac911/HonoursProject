@@ -16,6 +16,10 @@ namespace TenantManager.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("MySql:ValueGenerationStrategy", MySqlValueGenerationStrategy.IdentityColumn),
+                    Title = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
+                    Description = table.Column<string>(type: "longtext", nullable: true)
+                        .Annotation("MySql:CharSet", "utf8mb4"),
                     ControllerName = table.Column<string>(type: "longtext", nullable: true)
                         .Annotation("MySql:CharSet", "utf8mb4"),
                     MethodName = table.Column<string>(type: "longtext", nullable: true)
@@ -31,11 +35,6 @@ namespace TenantManager.Migrations
                     table.PrimaryKey("tenant_manager_customization", x => x.Id);
                 })
                 .Annotation("MySql:CharSet", "utf8mb4");
-
-            migrationBuilder.InsertData(
-                table: "tenant_manager_customization",
-                columns: new[] { "Id", "ControllerName", "IsActive", "MethodName", "ServiceEndPoint", "ServiceName" },
-                values: new object[] { 1, "TestTenantCustomization", true, "Index", "/TestTenantCustomization", "debug:test" });
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)

@@ -8,6 +8,8 @@ namespace TenantManager.Models
     public class TenantCustomization
     {
         public int Id { get; set; }
+        public string Title { get; set; }
+        public string Description { get; set; }
 
         // ControllerName is used to store the name of the controller that is being customized
         public string ControllerName { get; set; }

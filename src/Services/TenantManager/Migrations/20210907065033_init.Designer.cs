@@ -8,7 +8,7 @@ using TenantManager.Data;
 namespace TenantManager.Migrations
 {
     [DbContext(typeof(TenantCustomizationContext))]
-    [Migration("20210826121712_init")]
+    [Migration("20210907065033_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -27,6 +27,9 @@ namespace TenantManager.Migrations
                     b.Property<string>("ControllerName")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
                     b.Property<bool>("IsActive")
                         .HasColumnType("tinyint(1)");
 
@@ -39,21 +42,13 @@ namespace TenantManager.Migrations
                     b.Property<string>("ServiceName")
                         .HasColumnType("longtext");
 
+                    b.Property<string>("Title")
+                        .HasColumnType("longtext");
+
                     b.HasKey("Id")
                         .HasName("tenant_manager_customization");
 
                     b.ToTable("tenant_manager_customization");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            ControllerName = "TestTenantCustomization",
-                            IsActive = true,
-                            MethodName = "Index",
-                            ServiceEndPoint = "/TestTenantCustomization",
-                            ServiceName = "debug:test"
-                        });
                 });
 #pragma warning restore 612, 618
         }

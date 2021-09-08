@@ -25,17 +25,17 @@ INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`) VALUES
 DROP TABLE IF EXISTS `tenant_manager_customization`;
 CREATE TABLE `tenant_manager_customization` (
   `Id` int NOT NULL AUTO_INCREMENT,
+  `Title` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `Description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `ControllerName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `MethodName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `ServiceName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `ServiceEndPoint` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `IsActive` tinyint(1) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 TRUNCATE `tenant_manager_customization`;
-INSERT INTO `tenant_manager_customization` (`Id`, `ControllerName`, `MethodName`, `ServiceName`, `ServiceEndPoint`, `IsActive`) VALUES
-(1,	'TestTenantCustomization',	'Index',	'debug:test',	'/TestTenantCustomization',	1);
 
 DROP DATABASE IF EXISTS `one:tenant_manager`;
 CREATE DATABASE `one:tenant_manager` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
@@ -55,20 +55,22 @@ INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`) VALUES
 DROP TABLE IF EXISTS `tenant_manager_customization`;
 CREATE TABLE `tenant_manager_customization` (
   `Id` int NOT NULL AUTO_INCREMENT,
+  `Title` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `Description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `ControllerName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `MethodName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `ServiceName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `ServiceEndPoint` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `IsActive` tinyint(1) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 TRUNCATE `tenant_manager_customization`;
-INSERT INTO `tenant_manager_customization` (`Id`, `ControllerName`, `MethodName`, `ServiceName`, `ServiceEndPoint`, `IsActive`) VALUES
-(1,	'Catalog',	'Index',	'one:CatalogCustomization',	'/catalog',	1),
-(2,	'Catalog',	'ViewItem',	'one:CatalogCustomization',	'/catalog/{id}',1),
-(3,	'Cart',	'Index',	'one:CatalogCustomization',	'/cart',1),
-(4,	'Cart',	'UpdateCart',	'one:CatalogCustomization',	'/cart/update',1);
+INSERT INTO `tenant_manager_customization` (`Id`, `Title`, `Description`, `ControllerName`, `MethodName`, `ServiceName`, `ServiceEndPoint`, `IsActive`) VALUES
+(1,	'Custom Catalog Page', '', 'Catalog',	'Index',	'CatalogCustomization',	'/catalog',	1),
+(2,	'View Catalog Item Page', '', 'Catalog',	'ViewItem',	'CatalogCustomization',	'/catalog/{id}',1),
+(3,	'Custom Cart Page', '', 'Cart',	'Index',	'CatalogCustomization',	'/cart',1),
+(4,	'Custom Update Cart Functionality', '', 'Cart',	'UpdateCart',	'CatalogCustomization',	'/cart/update',1);
 
 DROP DATABASE IF EXISTS `two:tenant_manager`;
 CREATE DATABASE `two:tenant_manager` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
@@ -88,12 +90,14 @@ INSERT INTO `__EFMigrationsHistory` (`MigrationId`, `ProductVersion`) VALUES
 DROP TABLE IF EXISTS `tenant_manager_customization`;
 CREATE TABLE `tenant_manager_customization` (
   `Id` int NOT NULL AUTO_INCREMENT,
+  `Title` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
+  `Description` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `ControllerName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `MethodName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `ServiceName` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `ServiceEndPoint` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci,
   `IsActive` tinyint(1) NOT NULL,
   PRIMARY KEY (`Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- 2021-08-26 12:19:29

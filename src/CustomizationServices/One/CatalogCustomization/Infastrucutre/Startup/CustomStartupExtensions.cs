@@ -188,24 +188,6 @@ namespace CatalogCustomization.Infastrucutre.Startup
             // add a scoped tenant object 
             services.AddScoped<TenantInfo>();
 
-            // Use a connection per tenant
-            // Add for all db context
-            //services.AddScoped<CartContext>((serviceProvider) =>
-            //{
-            //    // get the tenant info
-            //    var tenant = serviceProvider.GetRequiredService<TenantInfo>();
-            //    // create the tenants connection string
-            //    var connString = ConnectionStringHelper.GetConnectionString(configuration, tenant.Name);
-            //    // create new options with the tenants connection string
-            //    var options = new DbContextOptionsBuilder<CartContext>()
-            //        .UseMySql(connString, ServerVersion.AutoDetect(connString))
-            //        .Options;
-
-            //    var context = new CartContext(options);
-
-            //    return context;
-            //});
-
             return services;
         }
 

@@ -11,19 +11,25 @@ services:
     volumes: 
       #- mysql-db-data:/var/lib/mysql
       - ./_MySQL_Scripts:/docker-entrypoint-initdb.d
+    networks:
+      - app-network
 
   adminer:
     container_name: adminer
     restart: always
     ports:
       - 8080:8080
-  
+    networks:
+      - app-network
+
   #Rabbit MQ
   rabbitmq:
     container_name: rabbitmq
     ports:
       - "15672:15672"
       - "5672:5672"
+    networks:
+      - app-network
 
   #Microservices
   catalog-api:
@@ -41,6 +47,8 @@ services:
       - IamServiceUrl=http://iam:80
     ports:
       - "5101:80"
+    networks:
+      - app-network
 
   cart-api:
     environment:
@@ -57,6 +65,8 @@ services:
       - IamServiceUrl=http://iam:80
     ports:
       - "5102:80"
+    networks:
+      - app-network
 
   order-api:
     environment:
@@ -73,6 +83,8 @@ services:
       - IamServiceUrl=http://iam:80
     ports:
       - "5103:80"
+    networks:
+      - app-network
 
   tenant-manager:
     environment:
@@ -89,6 +101,8 @@ services:
       - IamServiceUrl=http://iam:80
     ports:
       - "5300:80"
+    networks:
+      - app-network
 
   #IAM Service
   iam:
@@ -104,6 +118,8 @@ services:
       - IDENTITY_ISSUER=http://${EXTERNAL_DNS_NAME_OR_IP}:5100
     ports:
       - "5100:80"
+    networks:
+      - app-network
 
   webmvc:
     environment:
@@ -115,6 +131,8 @@ services:
       - CallBackUrl=http://${EXTERNAL_DNS_NAME_OR_IP}
     ports:
       - "80:80"
+    networks:
+      - app-network
 
   #API Gateway
   webcore-api-gateway:
@@ -123,6 +141,8 @@ services:
       - IamServiceUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5100
     ports:
       - "5200:80"
+    networks:
+      - app-network
 
   web-aggregator:
     environment:
@@ -136,6 +156,8 @@ services:
       #- IdentityUrlExternal=http://${ESHOP_EXTERNAL_DNS_NAME_OR_IP}:5105
     ports:
       - "5120:80"
+    networks:
+      - app-network
       
   customization-api-gateway:
     environment:
@@ -143,11 +165,15 @@ services:
       - IamServiceUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5100
     ports:
       - "5201:80"
+    networks:
+      - app-network
 
 #CONSUL
   consul:
     ports: 
       - "8500"
+    networks:
+      - app-network
 
   test:
     environment:
@@ -166,28 +192,13 @@ services:
       - ServiceUrl=http://test:80
     ports:
       - "5401:80"
-
-  catalogcustomization:
-    environment:
-      - ASPNETCORE_ENVIRONMENT=Development
-      - ASPNETCORE_URLS=http://0.0.0.0:80
-      - ConnectionString_debug=Server=mysql;Database=debug:test;User=root;Password=root;
-      - ConnectionString_one=Server=mysql;Database=one:test;User=root;Password=root;
-      - ConnectionString_two=Server=mysql;Database=two:test;User=root;Password=root;
-      - EventBusConnection=${SERVICE_BUS_CONNECTION:-rabbitmq}
-      - EventBusUserName=${SERVICE_BUS_USERNAME}
-      - EventBusPassword=${SERVICE_BUS_PASSWORD}
-      - EventBusRetryCount=5
-      - SubscriptionClientName=catalogcustomization
-      - IamServiceUrl=http://iam:80
-      - ConsulUrl=http://consul:8500
-      - ServiceUrl=http://catalogcustomization:80
-      - ApiGatewayUrl=http://webcore-api-gateway:80
-      - ContainerName=CatalogCustomization
-      - TenantName=one
-    ports:
-      - "5402:80"
+    networks:
+      - app-network
 
 volumes:
   mysql-db-data:
      external: false
+
+networks:
+  app-network:
+    name: "honours_project_network"

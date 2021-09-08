@@ -67,15 +67,20 @@ namespace WebMVC.Infrastructure
                 return $"{baseUrl}/{ControllerName}/{MethodName}";
             }
 
+            public static string GetAllCustomizations(string baseUrl)
+            {
+                return $"{baseUrl}";
+            }
+
             // posibly add query data
-            public static string RunTenantCustomizaton(string baseUrl, TenantCustomization customization)
+            public static string RunTenantCustomizaton(string baseUrl, string TenantName, TenantCustomization customization)
             {
                 // make sure that the service end point starts with a slash
                 customization.ServiceEndPoint = 
                     customization.ServiceEndPoint.Substring(0,1) == "/" 
                     ? customization.ServiceEndPoint : "/"+customization.ServiceEndPoint;
 
-                var url = $"{baseUrl}/{customization.ServiceName + customization.ServiceEndPoint}";
+                var url = $"{baseUrl}/{TenantName}:{customization.ServiceName + customization.ServiceEndPoint}";
 
                 return url;
             }

@@ -49,5 +49,16 @@ namespace TenantManager.Controllers
             _logger.LogDebug($"Customization was found (C: {ControllerName}, M: {MethodName}");
             return customization;
         }
+
+        // GET: Tenat Customization
+        [HttpGet]
+        public async Task<ActionResult<IList<TenantCustomization>>> GetAllCustomizaitons()
+        {
+            var customizations = await _context
+                .TenantCustomizations
+                .ToListAsync();
+
+            return customizations;
+        }
     }
 }

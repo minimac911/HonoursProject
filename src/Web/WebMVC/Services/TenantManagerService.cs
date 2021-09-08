@@ -36,6 +36,23 @@ namespace WebMVC.Services
             _customizationApiGatewayUrl = $"{customizationApiGatewayUrl}";
         }
 
+        public async Task<IList<TenantCustomization>> GetAllCustomizations()
+        {
+            var url = API.TenantManager.GetAllCustomizations(_serviceUrl);
+
+            var responseString = await _httpClient.GetStringAsync(url);
+
+            var foundCustomization = JsonSerializer.Deserialize<IList<TenantCustomization>>(responseString, new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            });
+
+            if (foundCustomization == null || foundCustomization.Count == 0) 
+                return null;
+
+            return foundCustomization;
+        }
+
         public async Task<TenantCustomization> GetTenantCustomizaiton(TenantCustomizationRequest dto)
         {
             // get the url for the api endpoint
@@ -65,10 +82,11 @@ namespace WebMVC.Services
             }
         }
 
-        public async Task<string> RunCustomizationGET(TenantCustomization customization)
+        public async Task<string> RunCustomizationGET(TenantCustomization customization, string TenantName)
         {
             var url = API.TenantManager.RunTenantCustomizaton(
                 _customizationApiGatewayUrl,
+                TenantName,
                 customization);
 
             try
@@ -84,10 +102,11 @@ namespace WebMVC.Services
             }
         }
 
-        public async Task<string> RunCustomizationPOST(TenantCustomization customization, HttpRequest req)
+        public async Task<string> RunCustomizationPOST(TenantCustomization customization, string TenantName, HttpRequest req)
         {
             var url = API.TenantManager.RunTenantCustomizaton(
                 _customizationApiGatewayUrl,
+                TenantName,
                 customization);
 
             try

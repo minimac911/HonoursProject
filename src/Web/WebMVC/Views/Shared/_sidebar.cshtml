@@ -1,13 +1,16 @@
-﻿<div class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark" style="width: 280px; max-height: 100vh;">
+﻿@{ 
+    var currentActiveOption = "";
+    if (ViewData["active"] != null)
+    {
+        currentActiveOption = ViewData["active"].ToString().ToLower();
+    }
+} 
+
+<div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px; ">
     <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-            <a href="/" class="nav-link active" aria-current="page">
-                Home
-            </a>
-        </li>
         <li>
-            <a asp-area="" asp-controller="Admin" asp-action="Customizations" class="nav-link text-white">
-                Customizations
+            <a asp-area="" asp-controller="Admin" asp-action="Customizations" class="nav-link @(currentActiveOption == "customizations" ? "active" : "") ">
+                customizations
             </a>
         </li>
     </ul>

@@ -22,11 +22,6 @@ namespace TenantManager.Data
 
             // Configure the PK
             modelBuilder.Entity<TenantCustomization>().HasKey(itm => itm.Id).HasName("tenant_manager_customization");
-
-            // Seed test data
-            modelBuilder.Entity<TenantCustomization>().HasData(
-                new TenantCustomization { Id = 1, ControllerName = "TestTenantCustomization", MethodName = "Index", ServiceName = "debug:test", ServiceEndPoint="/TestTenantCustomization", IsActive = true }
-                );
         }
     }
 }
