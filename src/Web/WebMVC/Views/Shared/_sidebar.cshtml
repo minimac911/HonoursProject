@@ -6,11 +6,22 @@
     }
 } 
 
-<div class="d-flex flex-column flex-shrink-0 p-3" style="width: 280px; ">
+<div class="card d-flex flex-column flex-shrink-0 p-3" style="width: 280px; ">
+    <h3>Customizations</h3>
     <ul class="nav nav-pills flex-column mb-auto">
         <li>
             <a asp-area="" asp-controller="Admin" asp-action="Customizations" class="nav-link @(currentActiveOption == "customizations" ? "active" : "") ">
-                customizations
+                Tenant Customizations
+            </a>
+        </li>
+        <li>
+            <a asp-area="" asp-controller="TenantCustomization" asp-action="Index" class="nav-link @(currentActiveOption == "available_customizations_points" ? "active" : "") ">
+                Available Customization Points
+            </a>
+        </li>
+        <li>
+            <a target="_blank" href="https://documenter.getpostman.com/view/8936148/U16jNm7b" class="nav-link">
+                API Documentation
             </a>
         </li>
     </ul>

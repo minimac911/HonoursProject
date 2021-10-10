@@ -31,14 +31,14 @@ namespace WebMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
-            
+            // Get Catalog items from CatalogService
             var items = await _catalogService.GetCatalogItems();
-
+            // Create view model
             var data = new IndexViewModel()
             {
                 CatalogItems = items
             };
-
+            // load view
             return View(data);
         }
     }

@@ -1,0 +1,7 @@
+﻿@model WebMVC.Models.TenantManager.CustomizationPoint
+
+<tr>
+    <td><a asp-area="" asp-controller="TenantCustomization" asp-action="ViewCustomizationPoint" asp-route-id="@Model.Id">@Model.Description</a></td>
+    <td>@Model.ControllerName</td>
+    <td>@Model.MethodName</td>
+</tr>

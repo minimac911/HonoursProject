@@ -39,7 +39,9 @@ namespace WebMVC.Controllers
         {
             // get the user id 
             var user = _identityParser.Parse(HttpContext.User);
+            // get the cart of user
             var cartDetails = await _cartService.GetCart(user);
+            // load view
             return View(cartDetails);
         }
 

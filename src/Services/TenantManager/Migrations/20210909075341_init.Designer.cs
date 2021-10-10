@@ -8,7 +8,7 @@ using TenantManager.Data;
 namespace TenantManager.Migrations
 {
     [DbContext(typeof(TenantCustomizationContext))]
-    [Migration("20210907065033_init")]
+    [Migration("20210909075341_init")]
     partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,6 +17,30 @@ namespace TenantManager.Migrations
             modelBuilder
                 .HasAnnotation("Relational:MaxIdentifierLength", 64)
                 .HasAnnotation("ProductVersion", "5.0.8");
+
+            modelBuilder.Entity("TenantManager.Models.CustomizationPoint", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    b.Property<string>("CodeSnippet")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("ControllerName")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("longtext");
+
+                    b.Property<string>("MethodName")
+                        .HasColumnType("longtext");
+
+                    b.HasKey("Id")
+                        .HasName("tenant_manager_customization_point");
+
+                    b.ToTable("tenant_manager_customization_point");
+                });
 
             modelBuilder.Entity("TenantManager.Models.TenantCustomization", b =>
                 {

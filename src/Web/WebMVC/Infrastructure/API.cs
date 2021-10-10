@@ -67,6 +67,11 @@ namespace WebMVC.Infrastructure
                 return $"{baseUrl}/{ControllerName}/{MethodName}";
             }
 
+            public static string GetTenatCustomization(string baseUrl, int id)
+            {
+                return $"{baseUrl}/{id}";
+            }
+
             public static string GetAllCustomizations(string baseUrl)
             {
                 return $"{baseUrl}";
@@ -83,6 +88,26 @@ namespace WebMVC.Infrastructure
                 var url = $"{baseUrl}/{TenantName}:{customization.ServiceName + customization.ServiceEndPoint}";
 
                 return url;
+            }
+
+            public static string GetAllCustomizationPoints(string baseUrl)
+            {
+                return $"{baseUrl}/customization_points";
+            }
+
+            public static string GetSingleCustomizationPoint(string baseUrl, int id)
+            {
+                return $"{baseUrl}/customization_points/{id}";
+            }
+
+            public static string UpdateTenantCustomization(string baseUrl)
+            {
+                return $"{baseUrl}/update_tenant_customization";
+            }
+
+            public static string CreateNewTenantCustomization(string baseUrl)
+            {
+                return $"{baseUrl}";
             }
         }
     }

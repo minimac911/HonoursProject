@@ -50,6 +50,23 @@ namespace TenantManager.Controllers
             return customization;
         }
 
+        [HttpGet("{id}")]
+        public async Task<ActionResult<TenantCustomization>> GetSingleTenantCustomization(int id)
+        {
+            // get active customization using controller and method name
+            var customization = await _context
+                .TenantCustomizations
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            // if no customization was found
+            if (customization == null)
+            {
+                return NotFound();
+            }
+
+            return customization;
+        }
+
         // GET: Tenat Customization
         [HttpGet]
         public async Task<ActionResult<IList<TenantCustomization>>> GetAllCustomizaitons()
@@ -59,6 +76,76 @@ namespace TenantManager.Controllers
                 .ToListAsync();
 
             return customizations;
+        }
+
+        [HttpPost]
+        public async Task<ActionResult<bool>> CreateNewTenantCustomization(TenantCustomization data)
+        {
+            TenantCustomization newCust = new TenantCustomization
+            {
+                ControllerName = data.ControllerName,
+                Description = data.Description,
+                IsActive = true,
+                MethodName = data.MethodName,
+                ServiceEndPoint = data.ServiceEndPoint,
+                ServiceName = data.ServiceName,
+                Title = data.Title
+            };
+
+            // add the customization to the db
+            _context.TenantCustomizations.Add(newCust);
+
+            // save the customization to the database
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        // GET: customization points
+        [HttpGet("customization_points")]
+        public async Task<ActionResult<IList<CustomizationPoint>>> GetCustomizationsPoints()
+        {
+            var customizationPoints = await _context
+                .CustomizationPoints
+                .ToListAsync();
+
+            return customizationPoints;
+        }
+
+        [HttpGet("customization_points/{id}")]
+        public async Task<ActionResult<CustomizationPoint>> GetSingleCustomizationsPoints(int id)
+        {
+            var customizationPoint = await _context
+                .CustomizationPoints
+                .FindAsync(id);
+
+            return customizationPoint;
+        }
+
+        [HttpPost("update_tenant_customization")]
+        public async Task<ActionResult<bool>> UpdateTenantCustomization(TenantCustomization data)
+        {
+            var found = await _context.TenantCustomizations.FindAsync(data.Id);
+
+            if (found == null) return NotFound();
+
+            found.Description = data.Description ?? found.Description;
+            found.MethodName = data.MethodName ?? found.MethodName;
+            found.ControllerName = data.ControllerName ?? found.ControllerName;
+            found.IsActive = data.IsActive;
+            found.Title = data.Title ?? found.Title;
+
+            _context.TenantCustomizations.Update(found);
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+
+            return true;
         }
     }
 }

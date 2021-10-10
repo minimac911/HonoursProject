@@ -1,0 +1,79 @@
+﻿@model WebMVC.Models.TenantManager.TenantCustomization
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <ul class="nav nav-pills card-header-pills">
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="" asp-controller="Admin" asp-action="Customizations">Back</a>
+                        </li>
+                        <li class="nav-item">
+                            <h2 class="ml-3">
+                                Edit Customization
+                            </h2>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Admin" asp-action="UpdateCustomization">
+                        <div class="card-text">
+                            <div class="form-group">
+                                <label for="title">Title</label>
+                                <input type="text" class="form-control" id="title" name="title" value="@Model.Title" placeholder="Enter Title">
+                            </div>
+                            <div class="form-group">
+                                <label for="description">Description</label>
+                                <input type="text" class="form-control" id="description" name="description" value="@Model.Description" placeholder="Enter Description">
+                            </div>
+                            <div class="form-group">
+                                <label for="service">Service Name</label>
+                                <input type="text" class="form-control" id="service" name="service" value="@Model.ServiceName" placeholder="Enter Service Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="controller">Controller Name</label>
+                                <input type="text" class="form-control" id="controller" name="controller" value="@Model.ControllerName" placeholder="Enter Controller Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="method">Action Name</label>
+                                <input type="text" class="form-control" id="method" name="method" value="@Model.MethodName" placeholder="Enter Action Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="endPoint">Service End Point</label>
+                                <input type="text" class="form-control" id="endPoint" name="endPoint" value="@Model.ServiceEndPoint" placeholder="Enter Service End Point">
+                            </div>
+                            <!-- Button trigger modal -->
+                            <button type="button"
+                                    class="btn btn-primary"
+                                    data-toggle="modal"
+                                    data-target="#updateCustomizationModal">
+                                Update
+                            </button>
+                            <!-- Modal -->
+                            <div id="updateCustomizationModal" class="modal fade" role="dialog">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            Are you sure that you want to update this customization?
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                            <input type="hidden" name="id" value="@Model.Id" />
+                                            <button type="submit" class="btn btn-primary">Save</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

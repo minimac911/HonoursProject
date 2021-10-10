@@ -1,4 +1,4 @@
 BUILD: 
 docker build -f ./CustomizationServices/One/CatalogCustomization/Dockerfile -t catalogcustomization .
 RUN: 
-docker run --rm -p 8000:80 --network honours_projecnetwork --name catalogcustomization catalogcustomization
+docker run --rm -p 8000:80 --network honours_project_network --name catalogcustomization catalogcustomization

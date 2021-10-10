@@ -9,7 +9,16 @@
     <partial name="_sidebar" view-data="sideData" />
     <div class="col">
         <div class="text-center">
-            <h1>Tenant Customizations</h1>
+            <ul class="nav nav-pills card-header-pills">
+                <li class="nav-item">
+                    <h2 class="mr-3">
+                        Tenant Customizations
+                    </h2>
+                </li>
+                <li class="nav-item">
+                    <a class="btn btn-primary" asp-controller="Admin" asp-action="Create">New</a>
+                </li>
+            </ul>
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
@@ -26,5 +35,5 @@
                 }
             </table>
         </div>
-    </div>
+    </>
 </div>

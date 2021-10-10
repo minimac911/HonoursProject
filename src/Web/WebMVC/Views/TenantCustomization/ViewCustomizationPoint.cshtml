@@ -1,0 +1,52 @@
+﻿@model WebMVC.Models.TenantManager.CustomizationPoint
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-10">
+            <div class="card">
+                <div></div>
+                
+                <div class="card-header">
+                    <ul class="nav nav-pills card-header-pills">
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="" asp-controller="TenantCustomization" asp-action="Index">Back</a>
+                        </li>
+                        <li class="nav-item">
+                            <h2 class="ml-3">
+                                @if (Model.Description != null)
+                                {
+                                    <span>@Model.Description</span>
+                                }
+                                else
+                                {
+                                    <span>No Description</span>
+                                }
+                            </h2>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td><b>Controller Name</b></td>
+                                <td>@Model.ControllerName</td>
+                            </tr>
+                            <tr>
+                                <td><b>Action Name</b></td>
+                                <td>@Model.MethodName</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="card">
+                        <div class="card-header">
+                            <p>Code Snippet</p>
+                        </div>
+                        <div class="card-text p-2">
+                            <pre><code>@Model.CodeSnippet</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

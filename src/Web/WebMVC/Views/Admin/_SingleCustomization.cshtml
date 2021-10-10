@@ -1,7 +1,7 @@
 ﻿@model WebMVC.Models.TenantManager.TenantCustomization
 
 <tr>
-    <td><a asp-area="" asp-controller="Admin" asp-action="Customization">@Model.Title</a></td>
+    <td><a asp-area="" asp-controller="Admin" asp-action="ViewCustomization" asp-route-id="@Model.Id">@Model.Title</a></td>
     <td>@Model.ServiceName</td>
     <td>@Model.ControllerName</td>
     <td>@Model.MethodName</td>

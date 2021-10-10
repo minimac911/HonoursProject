@@ -1,0 +1,94 @@
+﻿@model WebMVC.Models.TenantManager.TenantCustomization
+<div class="container">
+    <div class="row justify-content-md-center">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-header">
+                    <ul class="nav nav-pills card-header-pills">
+                        <li class="nav-item">
+                            <a class="btn btn-primary" asp-area="" asp-controller="Admin" asp-action="Customizations">Back</a>
+                        </li>
+                        <li class="nav-item">
+                            <h2 class="ml-3">
+                                @Model.Title
+                            </h2>
+                        </li>
+                    </ul>
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">
+                        @if (Model.Description != null)
+                        {
+                            <span>@Model.Description</span>
+                        }
+                        else
+                        {
+                            <span>No Description</span>
+                        }
+                    </h5>
+                    <table class="table table-bordered">
+                        <tbody>
+                            <tr>
+                                <td><b>Service Name</b></td>
+                                <td>@Model.ServiceName</td>
+                            </tr>
+                            <tr>
+                                <td><b>Controller Name</b></td>
+                                <td>@Model.ControllerName</td>
+                            </tr>
+                            <tr>
+                                <td><b>Action Name</b></td>
+                                <td>@Model.MethodName</td>
+                            </tr>
+                            <tr>
+                                <td><b>Service End Point</b></td>
+                                <td>@Model.ServiceEndPoint</td>
+                            </tr>
+                            <tr>
+                                <td><b>Is Active?</b></td>
+                                <td>@(Model.IsActive ? "Yes" : "No")</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="text-right">
+                        <a type="button" class="btn btn-primary" asp-controller="Admin" asp-action="ViewEditCustomization" asp-route-id="@Model.Id">
+                            Edit
+                        </a>
+                        <!-- Button trigger modal -->
+                        <button type="button"
+                                class="btn @(Model.IsActive ? "btn-danger" : "btn-success")"
+                                data-toggle="modal"
+                                data-target="#myModal">
+                            @(Model.IsActive ? "Deactivate" : "Activate")
+                        </button>
+                    </div>
+
+                    <!-- Modal -->
+                    <div id="myModal" class="modal fade" role="dialog">
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">Are you sure?</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    Are you sure that you want to @(Model.IsActive ? "dactivate" : "activate") this customization?
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <form asp-controller="Admin" asp-action="UpdateActiveStatusForCustomization">
+                                        <input type="hidden" name="id" value="@Model.Id" />
+                                        <button type="submit" class="btn @(Model.IsActive ? "btn-danger" : "btn-success")">@(Model.IsActive ? "Deactivate" : "Activate")</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

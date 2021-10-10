@@ -1,0 +1,28 @@
+﻿@model WebMVC.ViewModels.TenantCustomizaiton.IndexViewModel
+@{
+    var sideData = new ViewDataDictionary(ViewData)
+{
+        { "active", "available_customizations_points" }
+    };
+}
+<div class="row">
+    <partial name="_sidebar" view-data="sideData" />
+    <div class="col">
+        <div class="text-center">
+            <h1>Available Customizations Points</h1>
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th>Controller Name</th>
+                        <th>Method Name</th>
+                    </tr>
+                </thead>
+                @foreach (var cust in Model.CustomizationPoints)
+                {
+                    <partial name="_SingleCustomizationPoint" model="cust" />
+                }
+            </table>
+        </div>
+    </div>
+</div>
