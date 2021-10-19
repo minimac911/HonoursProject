@@ -4,6 +4,7 @@ using CatalogCustomization.Models.Cart.DTO;
 using CatalogCustomization.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,15 @@ namespace CatalogCustomization.Controllers
     {
         private IIdentityService _identityService;
         private ICartService _cartService;
+        private readonly ILogger<CartController> _logger;
 
         public CartController(IIdentityService identityService,
-            ICartService cartService)
+            ICartService cartService,
+            ILogger<CartController> logger)
         {
             _identityService = identityService;
             _cartService = cartService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -31,7 +35,9 @@ namespace CatalogCustomization.Controllers
         {
             // get the user id 
             var userId = _identityService.GetUserId();
+            _logger.LogInformation("Get user's cart from core BL services");
             var cartDetails = await _cartService.GetCart(userId);
+            _logger.LogInformation("Retrun custom view for cart");
             return View(cartDetails);
         }
 
@@ -45,6 +51,7 @@ namespace CatalogCustomization.Controllers
             }
             // get the user id 
             var userId = _identityService.GetUserId();
+            _logger.LogInformation("Get user's cart from core BL services");
             var cartDetails = await _cartService.GetCart(userId);
 
             foreach (UpdateCartItemDTO itm in items)
@@ -57,9 +64,10 @@ namespace CatalogCustomization.Controllers
                     cartDetails = await _cartService.GetCart(userId);
                 }
             }
-
+            _logger.LogInformation("Send updated cart to core BL services");
             await _cartService.UpdateCart(userId, cartDetails);
 
+            _logger.LogInformation("Redirect");
             return new RedirectResponse("Index", "Cart");
         }
     }

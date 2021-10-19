@@ -29,7 +29,7 @@ namespace TenantManager.Controllers
         [HttpGet("{ControllerName}/{MethodName}")]
         public async Task<ActionResult<TenantCustomization>> GetTenantCustomization(string ControllerName, string MethodName)
         {
-            _logger.LogDebug($"Checking for tenant customization (C: {ControllerName}, M: {MethodName})");
+            _logger.LogInformation($"Checking for tenant customization (C: {ControllerName}, M: {MethodName})");
 
             // get active customization using controller and method name
             var customization = await _context
@@ -42,11 +42,11 @@ namespace TenantManager.Controllers
             // if no customization was found
             if(customization == null)
             {
-                _logger.LogDebug($"No customization was found (C: {ControllerName}, M: {MethodName})");
+                _logger.LogInformation($"No customization was found (C: {ControllerName}, M: {MethodName})");
                 return NotFound();
             }
 
-            _logger.LogDebug($"Customization was found (C: {ControllerName}, M: {MethodName}");
+            _logger.LogInformation($"Customization was found (C: {ControllerName}, M: {MethodName}");
             return customization;
         }
 
