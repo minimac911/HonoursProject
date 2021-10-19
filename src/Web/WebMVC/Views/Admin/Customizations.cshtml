@@ -19,21 +19,29 @@
                     <a class="btn btn-primary" asp-controller="Admin" asp-action="Create">New</a>
                 </li>
             </ul>
-            <table class="table table-bordered table-hover">
-                <thead>
-                    <tr>
-                        <th>Title</th>
-                        <th>Service Name</th>
-                        <th>Controller Name</th>
-                        <th>Method Name</th>
-                        <th>Status</th>
-                    </tr>
-                </thead>
-                @foreach (var cust in Model.Customizations)
-                {
-                    <partial name="_SingleCustomization" model="cust" />
-                }
-            </table>
+            @if (Model.Customizations != null)
+            {
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Service Name</th>
+                            <th>Controller Name</th>
+                            <th>Method Name</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    @foreach (var cust in Model.Customizations)
+                    {
+                        <partial name="_SingleCustomization" model="cust" />
+                    }
+                </table>
+            }
+            else
+            {
+                <h1>No Customizations Found</h1>
+            }
         </div>
     </>
 </div>

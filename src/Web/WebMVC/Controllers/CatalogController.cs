@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using WebMVC.Infastrucutre.Helper;
 using WebMVC.Infrastructure;
 using WebMVC.Models;
 using WebMVC.Services;
@@ -31,6 +32,7 @@ namespace WebMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
+            await ServiceReporting.Log($"Get catalog");
             // Get Catalog items from CatalogService
             var items = await _catalogService.GetCatalogItems();
             // Create view model
@@ -38,6 +40,7 @@ namespace WebMVC.Controllers
             {
                 CatalogItems = items
             };
+            await ServiceReporting.Log("Display catalog");
             // load view
             return View(data);
         }

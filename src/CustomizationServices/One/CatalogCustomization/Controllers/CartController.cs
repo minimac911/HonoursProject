@@ -35,9 +35,11 @@ namespace CatalogCustomization.Controllers
         {
             // get the user id 
             var userId = _identityService.GetUserId();
+            await ServiceReporting.Log($"Get user's cart from core BL services");
             _logger.LogInformation("Get user's cart from core BL services");
             var cartDetails = await _cartService.GetCart(userId);
-            _logger.LogInformation("Retrun custom view for cart");
+            await ServiceReporting.Log($"Return custom view for cart");
+            _logger.LogInformation("Return custom view for cart");
             return View(cartDetails);
         }
 
@@ -51,6 +53,7 @@ namespace CatalogCustomization.Controllers
             }
             // get the user id 
             var userId = _identityService.GetUserId();
+            await ServiceReporting.Log($"Get user's cart from core BL services");
             _logger.LogInformation("Get user's cart from core BL services");
             var cartDetails = await _cartService.GetCart(userId);
 
@@ -64,7 +67,8 @@ namespace CatalogCustomization.Controllers
                     cartDetails = await _cartService.GetCart(userId);
                 }
             }
-            _logger.LogInformation("Send updated cart to core BL services");
+            _logger.LogInformation("Get user's cart from core BL services");
+            await ServiceReporting.Log($"Get user's cart from core BL services");
             await _cartService.UpdateCart(userId, cartDetails);
 
             _logger.LogInformation("Redirect");

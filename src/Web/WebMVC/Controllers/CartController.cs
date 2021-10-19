@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
+using WebMVC.Infastrucutre.Helper;
 using WebMVC.Infrastructure;
 using WebMVC.Models;
 using WebMVC.Models.Cart;
@@ -37,16 +38,19 @@ namespace WebMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
+            await ServiceReporting.Log($"Get cart");
             // get the user id 
             var user = _identityParser.Parse(HttpContext.User);
             // get the cart of user
             var cartDetails = await _cartService.GetCart(user);
+            await ServiceReporting.Log("Display cart");
             // load view
             return View(cartDetails);
         }
 
         public async Task<IActionResult> AddItemToCart(int id, int qty)
         {
+            await ServiceReporting.Log($"Add item to cart");
             // TODO: ApiGateway Agregation
             // STEP 1: Get item
             var item = await _catalogService.GetSingleCatalogItemById(id);
@@ -71,6 +75,7 @@ namespace WebMVC.Controllers
 
         public async Task<IActionResult> UpdateCart(UpdateCartItemDTO[] items)
         {
+            await ServiceReporting.Log($"Update cart");
             if(items.Length == 0)
             {
                 return RedirectToAction("Index", "Cart");

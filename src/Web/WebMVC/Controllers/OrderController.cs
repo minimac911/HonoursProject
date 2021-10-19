@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
+using WebMVC.Infastrucutre.Helper;
 using WebMVC.Infrastructure;
 using WebMVC.Models;
 using WebMVC.Models.Cart;
@@ -41,16 +42,19 @@ namespace WebMVC.Controllers
 
         public async Task<IActionResult> Index()
         {
+            await ServiceReporting.Log($"Get orders");
             var orders = await _orderService.GetOrdersForUser();
             var data = new OrdersViewModel
             {
                 Orders = orders
             };
+            await ServiceReporting.Log("Display orders");
             return View(data);
         }
 
         public async Task<IActionResult> CreateOrder()
         {
+            await ServiceReporting.Log($"Create order");
             // TODO: Add to aggregator
             // STEP 1: Get Cart info
             var user = _identityParser.Parse(HttpContext.User);

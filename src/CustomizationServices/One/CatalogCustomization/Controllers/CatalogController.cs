@@ -1,4 +1,5 @@
-﻿using CatalogCustomization.Services;
+﻿using CatalogCustomization.Infastrucutre.Helper;
+using CatalogCustomization.Services;
 using CatalogCustomization.ViewModels.Catalog;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -29,6 +30,7 @@ namespace CatalogCustomization.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            await ServiceReporting.Log($"Get catalog from core BL services");
             _logger.LogInformation("Get catalog from core BL services");
             var items = await _catalogService.GetCatalogItems();
 
@@ -38,14 +40,17 @@ namespace CatalogCustomization.Controllers
             };
 
             _logger.LogInformation("Return Custom Catalog View");
+            await ServiceReporting.Log($"Return Custom Catalog View");
             return View(data);
         }
 
         [HttpGet("{itemId}")]
         public async Task<IActionResult> ViewItem(int ItemId)
         {
+            await ServiceReporting.Log($"Get a single catalog item from core BL services");
             _logger.LogInformation("Get a single catalog item from core BL services");
             var singleItem = await _catalogService.GetSingleCatalogItemById(ItemId);
+            await ServiceReporting.Log($"Return Custom item view");
             _logger.LogInformation("Return Custom item view");
             return View(singleItem);
         }

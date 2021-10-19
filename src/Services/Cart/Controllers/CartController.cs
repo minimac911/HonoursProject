@@ -1,4 +1,5 @@
 ﻿using Cart.Data;
+using Cart.Infastrucutre.Helper;
 using Cart.Models;
 using Cart.ViewModel;
 using Microsoft.AspNetCore.Authorization;
@@ -29,6 +30,7 @@ namespace Cart.Controllers
         [HttpGet("{userId}")]
         public async Task<ActionResult<CartDetails>> GetCart(string userId)
         {
+            await ServiceReporting.Log($"Get cart");
             // get the cart details for the user
             var foundCart = await _context.CartDetails
                 .Include(a => a.Items)
@@ -47,6 +49,7 @@ namespace Cart.Controllers
         [HttpPost("{userId}/item")]
         public async Task<ActionResult> AddItemToCart(string userId, CartItemDTO newItemDto)
         {
+            await ServiceReporting.Log($"Add item to cart");
             var foundCartDetails = await _context.CartDetails.FindAsync(userId);
 
             CartItem newItem = new CartItem
@@ -96,6 +99,7 @@ namespace Cart.Controllers
         [HttpGet("{userId}/item/{cartItemId}")]
         public async Task<ActionResult<CartItem>> GetCartItem(string userId, int cartItemId)
         {
+            await ServiceReporting.Log($"Get item from cart");
             // get teh details of the item
             var foundItem = await _context.CartItems.FindAsync(cartItemId);
             
@@ -118,6 +122,7 @@ namespace Cart.Controllers
         [HttpDelete("{userId}")]
         public async Task<IActionResult> DeleteCart(string userId)
         {
+            await ServiceReporting.Log($"Delete cart");
             // get teh details of the item
             var foundCart = await _context.CartDetails.FindAsync(userId);
 
@@ -145,6 +150,7 @@ namespace Cart.Controllers
         [HttpDelete("{userId}/{id}")]
         public async Task<IActionResult> DeleteItemFromCart(string userId, int id)
         {
+            await ServiceReporting.Log($"Delete item from cart");
             // get teh details of the item
             var foundCart = await _context.CartDetails.Include(inc => inc.Items).FirstOrDefaultAsync(c => c.UserId == userId);
 
@@ -174,6 +180,7 @@ namespace Cart.Controllers
         [HttpPut("{userId}")]
         public async Task<ActionResult<CartDetails>> UpdateCart(string userId, CartDetails cartDetails)
         {
+            await ServiceReporting.Log($"Update cart");
             // get teh details of the item
             var foundCart = await _context.CartDetails.FindAsync(userId);
 

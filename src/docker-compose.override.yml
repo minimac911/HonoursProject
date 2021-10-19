@@ -47,6 +47,8 @@ services:
       - IamServiceUrl=http://iam:80
     ports:
       - "5101:80"
+    volumes: 
+      - ./Logs:/app/Logs
     networks:
       - app-network
 
@@ -65,6 +67,8 @@ services:
       - IamServiceUrl=http://iam:80
     ports:
       - "5102:80"
+    volumes: 
+      - ./Logs:/app/Logs
     networks:
       - app-network
 
@@ -83,6 +87,8 @@ services:
       - IamServiceUrl=http://iam:80
     ports:
       - "5103:80"
+    volumes: 
+      - ./Logs:/app/Logs
     networks:
       - app-network
 
@@ -101,6 +107,8 @@ services:
       - IamServiceUrl=http://iam:80
     ports:
       - "5300:80"
+    volumes: 
+      - ./Logs:/app/Logs
     networks:
       - app-network
 
@@ -118,6 +126,8 @@ services:
       - IDENTITY_ISSUER=http://${EXTERNAL_DNS_NAME_OR_IP}:5100
     ports:
       - "5100:80"
+    volumes: 
+      - ./Logs:/app/Logs
     networks:
       - app-network
 
@@ -131,6 +141,8 @@ services:
       - CallBackUrl=http://${EXTERNAL_DNS_NAME_OR_IP}
     ports:
       - "80:80"
+    volumes: 
+      - ./Logs:/app/Logs
     networks:
       - app-network
 
@@ -141,6 +153,8 @@ services:
       - IamServiceUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5100
     ports:
       - "5200:80"
+    volumes: 
+      - ./Logs:/app/Logs
     networks:
       - app-network
 
@@ -165,6 +179,8 @@ services:
       - IamServiceUrl=http://${EXTERNAL_DNS_NAME_OR_IP}:5100
     ports:
       - "5201:80"
+    volumes: 
+      - ./Logs:/app/Logs
     networks:
       - app-network
 

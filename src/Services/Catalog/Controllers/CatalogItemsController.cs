@@ -9,6 +9,7 @@ using Catalog.Data;
 using Catalog.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Authorization;
+using Catalog.Infastrucutre.Helper;
 
 namespace Catalog.Controllers
 {
@@ -30,6 +31,7 @@ namespace Catalog.Controllers
         [HttpGet()]
         public async Task<IList<CatalogItem>> GetCatalog()
         {
+            await ServiceReporting.Log($"Get catalog");
             _logger.LogInformation("Items are going to be loaded");
             // TODO: add pagination 
             var items = await _context.CatalogItems.ToListAsync();
@@ -41,6 +43,7 @@ namespace Catalog.Controllers
         [HttpPost]
         public async Task<ActionResult<CatalogItem>> CreateCatalogItem(CatalogItem newItem)
         {
+            await ServiceReporting.Log($"Create a catalog item");
             // Add the new item to the catalog 
             _context.CatalogItems.Add(newItem);
             // save the item to the database
@@ -53,6 +56,7 @@ namespace Catalog.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<CatalogItem>> GetCatalogItem(int id)
         {
+            await ServiceReporting.Log($"Get single item from catalog");
             // get a single catalog item
             var item = await _context.CatalogItems.FindAsync(id);
 
@@ -69,6 +73,7 @@ namespace Catalog.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult<CatalogItem>> UpdateCatalogItem(int id, CatalogItem item)
         {
+            await ServiceReporting.Log($"Update catalog item");
             if (id != item.Id)
             {
                 return BadRequest();

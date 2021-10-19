@@ -14,6 +14,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using WebMVC.Exceptions;
 using WebMVC.Helpers;
+using WebMVC.Infastrucutre.Helper;
 using WebMVC.Models;
 using WebMVC.Models.TenantManager;
 using WebMVC.Services.Intrefaces;
@@ -46,14 +47,16 @@ namespace WebMVC.Infrastructure
                 ControllerName = controllerName,
                 MethodName = method
             };
-
+            await ServiceReporting.Log($"WebMVC Customizer - Check for customization (C: {controllerName}, M: {method})");
             try
             {
                 var result = await GetAndRunTenantCustomization(context, tenantCustomiztionRequestInfo);
+                await ServiceReporting.Log($"WebMVC Customizer - return customized HTML view (C: {controllerName}, M: {method})");
                 context.Result = result;
             }
             catch (TenantCustomizationNotFoundException ex)
             {
+                await ServiceReporting.Log($"WebMVC Customizer - No customization found (C: {controllerName}, M: {method})");
                 _logger.LogWarning(ex.Message);
                 // go to next
                 await next();
@@ -82,6 +85,7 @@ namespace WebMVC.Infrastructure
             var html = "";
             try
             {
+                await ServiceReporting.Log($"WebMVC Customizer - run customization (C: {data.ControllerName}, M: {data.MethodName})");
                 // get the tenant name
                 var tenantName = JwtClaimHelper.GetTenantName(HttpContext);
                 switch (httpMethodFromRequest)

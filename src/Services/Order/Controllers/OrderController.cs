@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Order.Data;
+using Order.Infastrucutre.Helper;
 using Order.Models;
 using Order.Models.DTO;
 using Order.Services;
@@ -29,6 +30,7 @@ namespace Order.Controllers
         [HttpGet]
         public async Task<IEnumerable<OrderDetails>> GetAllOrders()
         {
+            await ServiceReporting.Log($"Get all orders");
             // get the user id throuhg 
             var userId = _identityService.GetUserId();
             // Get all orders for the user
@@ -44,6 +46,7 @@ namespace Order.Controllers
         [HttpPost]
         public async Task<ActionResult> CreateOrder(OrderDTO order)
         {
+            await ServiceReporting.Log($"Create order");
             // get the user id throuhg 
             var userId = _identityService.GetUserId();
 

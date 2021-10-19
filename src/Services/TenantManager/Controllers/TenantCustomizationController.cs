@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TenantManager.Data;
+using TenantManager.Infastrucutre.Helper;
 using TenantManager.Models;
 
 namespace TenantManager.Controllers
@@ -29,6 +30,7 @@ namespace TenantManager.Controllers
         [HttpGet("{ControllerName}/{MethodName}")]
         public async Task<ActionResult<TenantCustomization>> GetTenantCustomization(string ControllerName, string MethodName)
         {
+            await ServiceReporting.Log($"Checking for tenant customization (C: {ControllerName}, M: {MethodName})");
             _logger.LogInformation($"Checking for tenant customization (C: {ControllerName}, M: {MethodName})");
 
             // get active customization using controller and method name
@@ -43,16 +45,19 @@ namespace TenantManager.Controllers
             if(customization == null)
             {
                 _logger.LogInformation($"No customization was found (C: {ControllerName}, M: {MethodName})");
+                await ServiceReporting.Log($"No customization was found (C: {ControllerName}, M: {MethodName})");
                 return NotFound();
             }
 
-            _logger.LogInformation($"Customization was found (C: {ControllerName}, M: {MethodName}");
+            _logger.LogInformation($"Customization was found (C: {ControllerName}, M: {MethodName})");
+            await ServiceReporting.Log($"Customization was found (C: {ControllerName}, M: {MethodName})");
             return customization;
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult<TenantCustomization>> GetSingleTenantCustomization(int id)
         {
+            await ServiceReporting.Log($"Get customizations for tenat id: {id}");
             // get active customization using controller and method name
             var customization = await _context
                 .TenantCustomizations
@@ -71,6 +76,7 @@ namespace TenantManager.Controllers
         [HttpGet]
         public async Task<ActionResult<IList<TenantCustomization>>> GetAllCustomizaitons()
         {
+            await ServiceReporting.Log($"Get all teant customiations");
             var customizations = await _context
                 .TenantCustomizations
                 .ToListAsync();
@@ -81,6 +87,7 @@ namespace TenantManager.Controllers
         [HttpPost]
         public async Task<ActionResult<bool>> CreateNewTenantCustomization(TenantCustomization data)
         {
+            await ServiceReporting.Log($"Create a new tenat customization");
             TenantCustomization newCust = new TenantCustomization
             {
                 ControllerName = data.ControllerName,
@@ -105,6 +112,7 @@ namespace TenantManager.Controllers
         [HttpGet("customization_points")]
         public async Task<ActionResult<IList<CustomizationPoint>>> GetCustomizationsPoints()
         {
+            await ServiceReporting.Log($"Get all customization points");
             var customizationPoints = await _context
                 .CustomizationPoints
                 .ToListAsync();
@@ -115,6 +123,7 @@ namespace TenantManager.Controllers
         [HttpGet("customization_points/{id}")]
         public async Task<ActionResult<CustomizationPoint>> GetSingleCustomizationsPoints(int id)
         {
+            await ServiceReporting.Log($"Get a single customization point ({id})");
             var customizationPoint = await _context
                 .CustomizationPoints
                 .FindAsync(id);
@@ -125,6 +134,7 @@ namespace TenantManager.Controllers
         [HttpPost("update_tenant_customization")]
         public async Task<ActionResult<bool>> UpdateTenantCustomization(TenantCustomization data)
         {
+            await ServiceReporting.Log($"Update tenant customization");
             var found = await _context.TenantCustomizations.FindAsync(data.Id);
 
             if (found == null) return NotFound();
