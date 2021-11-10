@@ -17,6 +17,7 @@ namespace IAM
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
+                new IdentityResource("roles", new[] { "role" })
             };
 
 
@@ -90,7 +91,8 @@ namespace IAM
                         "cart",
                         "order",
                         "tenant_manager",
-                        "tenant_customization"
+                        "tenant_customization",
+                        "roles"
                     },
                     AccessTokenLifetime = 60*60*2, // 2 hours
                     IdentityTokenLifetime= 60*60*2 // 2 hours

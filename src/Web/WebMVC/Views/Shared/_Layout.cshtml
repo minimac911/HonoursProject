@@ -36,7 +36,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Order" asp-action="Index">Orders</a>
                         </li>
                     </ul>
-                    <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Customizations">Admin</a>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <a class="nav-link text-dark" asp-area="" asp-controller="Admin" asp-action="Customizations">Admin</a>
+                    }
                     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="form-inline">
                         <a class="nav-link text-dark" href="javascript:document.getElementById('logoutForm').submit()">LOG OUT</a>
                     </form>

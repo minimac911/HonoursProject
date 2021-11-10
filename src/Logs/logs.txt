@@ -1,62 +1,116 @@
-10/19/2021 21:24:18 WebMVC		|	WebMVC Customizer - Check for customization (C: Catalog, M: Index)
-10/19/2021 21:24:18 TenantManager	|	Checking for tenant customization (C: Catalog, M: Index)
-10/19/2021 21:24:18 TenantManager	|	Customization was found (C: Catalog, M: Index)
-10/19/2021 21:24:18 WebMVC		|	WebMVC Customizer - run customization (C: Catalog, M: Index)
-10/19/2021 21:24:20 Catalog API		|	Get catalog
-10/19/2021 21:24:20 WebMVC		|	WebMVC Customizer - return customized HTML view (C: Catalog, M: Index)
-10/19/2021 21:26:20 WebMVC		|	WebMVC Customizer - Check for customization (C: Catalog, M: Index)
-10/19/2021 21:26:23 TenantManager	|	Checking for tenant customization (C: Catalog, M: Index)
-10/19/2021 21:26:24 TenantManager	|	Customization was found (C: Catalog, M: Index)
-10/19/2021 21:26:25 WebMVC		|	WebMVC Customizer - run customization (C: Catalog, M: Index)
-10/19/2021 21:26:46 WebMVC		|	WebMVC Customizer - Check for customization (C: Catalog, M: Index)
-10/19/2021 21:26:46 TenantManager	|	Checking for tenant customization (C: Catalog, M: Index)
-10/19/2021 21:26:46 TenantManager	|	Customization was found (C: Catalog, M: Index)
-10/19/2021 21:26:47 WebMVC		|	WebMVC Customizer - run customization (C: Catalog, M: Index)
-10/19/2021 21:26:48 Catlog Customization	|	Get catalog from core BL services
-10/19/2021 21:26:49 Catalog API		|	Get catalog
-10/19/2021 21:26:49 Catlog Customization	|	Return Custom Catalog View
-10/19/2021 21:26:50 WebMVC		|	WebMVC Customizer - return customized HTML view (C: Catalog, M: Index)
-10/19/2021 21:28:49 WebMVC		|	WebMVC Customizer - Check for customization (C: Catalog, M: Index)
-10/19/2021 21:28:49 TenantManager	|	Checking for tenant customization (C: Catalog, M: Index)
-10/19/2021 21:28:49 TenantManager	|	Customization was found (C: Catalog, M: Index)
-10/19/2021 21:28:49 WebMVC		|	WebMVC Customizer - run customization (C: Catalog, M: Index)
-10/19/2021 21:28:50 Catlog Customization|	Get catalog from core BL services
-10/19/2021 21:28:50 Catalog API		|	Get catalog
-10/19/2021 21:28:50 Catlog Customization|	Return Custom Catalog View
-10/19/2021 21:28:51 WebMVC		|	WebMVC Customizer - return customized HTML view (C: Catalog, M: Index)
-10/19/2021 21:29:56 WebMVC		|	WebMVC Customizer - Check for customization (C: Cart, M: Index)
-10/19/2021 21:29:57 TenantManager	|	Checking for tenant customization (C: Cart, M: Index)
-10/19/2021 21:29:57 TenantManager	|	Customization was found (C: Cart, M: Index)
-10/19/2021 21:29:57 WebMVC		|	WebMVC Customizer - run customization (C: Cart, M: Index)
-10/19/2021 21:29:57 Catlog Customization|	Get user's cart from core BL services
-10/19/2021 21:29:58 Cart API		|	Get cart
-10/19/2021 21:29:59 Catlog Customization|	Return custom view for cart
-10/19/2021 21:29:59 WebMVC		|	WebMVC Customizer - return customized HTML view (C: Cart, M: Index)
-10/19/2021 21:31:00 WebMVC		|	WebMVC Customizer - Check for customization (C: Catalog, M: Index)
-10/19/2021 21:31:00 TenantManager	|	Checking for tenant customization (C: Catalog, M: Index)
-10/19/2021 21:31:01 TenantManager	|	No customization was found (C: Catalog, M: Index)
-10/19/2021 21:31:01 WebMVC		|	WebMVC Customizer - No customization found (C: Catalog, M: Index)
-10/19/2021 21:31:01 WebMVC		|	Get catalog
-10/19/2021 21:31:01 Catalog API		|	Get catalog
-10/19/2021 21:31:01 WebMVC		|	Display catalog
-10/19/2021 21:31:03 WebMVC		|	WebMVC Customizer - Check for customization (C: Catalog, M: Index)
-10/19/2021 21:31:03 TenantManager	|	Checking for tenant customization (C: Catalog, M: Index)
-10/19/2021 21:31:03 TenantManager	|	No customization was found (C: Catalog, M: Index)
-10/19/2021 21:31:03 WebMVC		|	WebMVC Customizer - No customization found (C: Catalog, M: Index)
-10/19/2021 21:31:03 WebMVC		|	Get catalog
-10/19/2021 21:31:03 Catalog API		|	Get catalog
-10/19/2021 21:31:03 WebMVC		|	Display catalog
-10/19/2021 21:31:58 WebMVC		|	WebMVC Customizer - Check for customization (C: Cart, M: Index)
-10/19/2021 21:31:58 TenantManager	|	Checking for tenant customization (C: Cart, M: Index)
-10/19/2021 21:31:58 TenantManager	|	No customization was found (C: Cart, M: Index)
-10/19/2021 21:31:58 WebMVC		|	WebMVC Customizer - No customization found (C: Cart, M: Index)
-10/19/2021 21:31:58 WebMVC		|	Get cart
-10/19/2021 21:31:58 Cart API		|	Get cart
-10/19/2021 21:31:59 WebMVC		|	Display cart
-10/19/2021 21:32:00 WebMVC		|	WebMVC Customizer - Check for customization (C: Order, M: Index)
-10/19/2021 21:32:00 TenantManager	|	Checking for tenant customization (C: Order, M: Index)
-10/19/2021 21:32:01 TenantManager	|	No customization was found (C: Order, M: Index)
-10/19/2021 21:32:01 WebMVC		|	WebMVC Customizer - No customization found (C: Order, M: Index)
-10/19/2021 21:32:01 WebMVC		|	Get orders
-10/19/2021 21:32:02 Order API		|	Get all orders
-10/19/2021 21:32:02 WebMVC		|	Display orders
+11/10/2021 09:52:54 WebMVC		|	WebMVC Customizer - Check for customization (C: Catalog, M: Index)
+11/10/2021 09:52:54 TenantManager	|	Checking for tenant customization (C: Catalog, M: Index)
+11/10/2021 09:52:55 TenantManager	|	No customization was found (C: Catalog, M: Index)
+11/10/2021 09:52:55 WebMVC		|	WebMVC Customizer - No customization found (C: Catalog, M: Index)
+11/10/2021 09:52:55 WebMVC		|	Get catalog
+11/10/2021 09:52:55 Catalog API		|	Get catalog
+11/10/2021 09:52:55 WebMVC		|	Display catalog
+11/10/2021 09:53:11 WebMVC		|	WebMVC Customizer - Check for customization (C: Catalog, M: Index)
+11/10/2021 09:53:11 TenantManager	|	Checking for tenant customization (C: Catalog, M: Index)
+11/10/2021 09:53:11 TenantManager	|	No customization was found (C: Catalog, M: Index)
+11/10/2021 09:53:11 WebMVC		|	WebMVC Customizer - No customization found (C: Catalog, M: Index)
+11/10/2021 09:53:11 WebMVC		|	Get catalog
+11/10/2021 09:53:11 Catalog API		|	Get catalog
+11/10/2021 09:53:11 WebMVC		|	Display catalog
+11/10/2021 10:18:55 WebMVC		|	WebMVC Customizer - Check for customization (C: Cart, M: AddItemToCart)
+11/10/2021 10:18:55 TenantManager	|	Checking for tenant customization (C: Cart, M: AddItemToCart)
+11/10/2021 10:18:55 TenantManager	|	No customization was found (C: Cart, M: AddItemToCart)
+11/10/2021 10:18:55 WebMVC		|	WebMVC Customizer - No customization found (C: Cart, M: AddItemToCart)
+11/10/2021 10:18:55 WebMVC		|	Add item to cart
+11/10/2021 10:18:55 Catalog API		|	Get single item from catalog
+11/10/2021 10:18:55 Cart API		|	Add item to cart
+11/10/2021 10:18:55 WebMVC		|	WebMVC Customizer - Check for customization (C: Cart, M: Index)
+11/10/2021 10:18:55 TenantManager	|	Checking for tenant customization (C: Cart, M: Index)
+11/10/2021 10:18:55 TenantManager	|	No customization was found (C: Cart, M: Index)
+11/10/2021 10:18:55 WebMVC		|	WebMVC Customizer - No customization found (C: Cart, M: Index)
+11/10/2021 10:18:55 WebMVC		|	Get cart
+11/10/2021 10:18:55 Cart API		|	Get cart
+11/10/2021 10:18:56 WebMVC		|	Display cart
+11/10/2021 10:19:05 WebMVC		|	View customizations
+11/10/2021 10:19:05 TenantManager	|	Get all teant customiations
+11/10/2021 10:19:05 WebMVC		|	Display customization
+11/10/2021 10:19:29 WebMVC		|	View to create new customization
+11/10/2021 10:19:59 WebMVC		|	View customizations
+11/10/2021 10:19:59 TenantManager	|	Get all teant customiations
+11/10/2021 10:19:59 WebMVC		|	Display customization
+11/10/2021 10:20:05 WebMVC		|	Get possible customizations
+11/10/2021 10:20:05 TenantManager	|	Get all customization points
+11/10/2021 10:20:05 WebMVC		|	Display possible customizaitons
+11/10/2021 10:20:14 WebMVC		|	View specific possible customization
+11/10/2021 10:20:14 TenantManager	|	Get a single customization point (1)
+11/10/2021 10:20:14 WebMVC		|	Display specific possible customizaitons
+11/10/2021 10:20:36 WebMVC		|	Get possible customizations
+11/10/2021 10:20:36 TenantManager	|	Get all customization points
+11/10/2021 10:20:36 WebMVC		|	Display possible customizaitons
+11/10/2021 10:21:13 WebMVC		|	WebMVC Customizer - Check for customization (C: Catalog, M: Index)
+11/10/2021 10:21:13 TenantManager	|	Checking for tenant customization (C: Catalog, M: Index)
+11/10/2021 10:21:13 TenantManager	|	Customization was found (C: Catalog, M: Index)
+11/10/2021 10:21:13 WebMVC		|	WebMVC Customizer - run customization (C: Catalog, M: Index)
+11/10/2021 10:21:13 Catlog Customization|	Get catalog from core BL services
+11/10/2021 10:21:13 Catalog API		|	Get catalog
+11/10/2021 10:21:13 Catlog Customization|	Return Custom Catalog View
+11/10/2021 10:21:13 WebMVC		|	WebMVC Customizer - return customized HTML view (C: Catalog, M: Index)
+11/10/2021 10:21:22 WebMVC		|	WebMVC Customizer - Check for customization (C: Cart, M: AddItemToCart)
+11/10/2021 10:21:22 TenantManager	|	Checking for tenant customization (C: Cart, M: AddItemToCart)
+11/10/2021 10:21:22 TenantManager	|	No customization was found (C: Cart, M: AddItemToCart)
+11/10/2021 10:21:22 WebMVC		|	WebMVC Customizer - No customization found (C: Cart, M: AddItemToCart)
+11/10/2021 10:21:22 WebMVC		|	Add item to cart
+11/10/2021 10:21:22 Catalog API		|	Get single item from catalog
+11/10/2021 10:21:22 Cart API		|	Add item to cart
+11/10/2021 10:21:22 WebMVC		|	WebMVC Customizer - Check for customization (C: Cart, M: Index)
+11/10/2021 10:21:22 TenantManager	|	Checking for tenant customization (C: Cart, M: Index)
+11/10/2021 10:21:22 TenantManager	|	Customization was found (C: Cart, M: Index)
+11/10/2021 10:21:22 WebMVC		|	WebMVC Customizer - run customization (C: Cart, M: Index)
+11/10/2021 10:21:22 Catlog Customization|	Get user's cart from core BL services
+11/10/2021 10:21:22 Cart API		|	Get cart
+11/10/2021 10:21:22 Catlog Customization|	Return custom view for cart
+11/10/2021 10:21:22 WebMVC		|	WebMVC Customizer - return customized HTML view (C: Cart, M: Index)
+11/10/2021 10:21:36 WebMVC		|	WebMVC Customizer - Check for customization (C: Cart, M: UpdateCart)
+11/10/2021 10:21:36 TenantManager	|	Checking for tenant customization (C: Cart, M: UpdateCart)
+11/10/2021 10:21:36 TenantManager	|	Customization was found (C: Cart, M: UpdateCart)
+11/10/2021 10:21:36 WebMVC		|	WebMVC Customizer - run customization (C: Cart, M: UpdateCart)
+11/10/2021 10:21:36 Catlog Customization|	Get user's cart from core BL services
+11/10/2021 10:21:36 Cart API		|	Get cart
+11/10/2021 10:21:36 Cart API		|	Delete item from cart
+11/10/2021 10:21:36 Cart API		|	Get cart
+11/10/2021 10:21:36 Catlog Customization|	Get user's cart from core BL services
+11/10/2021 10:21:36 Cart API		|	Update cart
+11/10/2021 10:21:36 WebMVC		|	WebMVC Customizer - return customized HTML view (C: Cart, M: UpdateCart)
+11/10/2021 10:21:36 WebMVC		|	WebMVC Customizer - Check for customization (C: Cart, M: Index)
+11/10/2021 10:21:36 TenantManager	|	Checking for tenant customization (C: Cart, M: Index)
+11/10/2021 10:21:36 TenantManager	|	Customization was found (C: Cart, M: Index)
+11/10/2021 10:21:36 WebMVC		|	WebMVC Customizer - run customization (C: Cart, M: Index)
+11/10/2021 10:21:36 Catlog Customization|	Get user's cart from core BL services
+11/10/2021 10:21:36 Cart API		|	Get cart
+11/10/2021 10:21:36 Catlog Customization|	Return custom view for cart
+11/10/2021 10:21:36 WebMVC		|	WebMVC Customizer - return customized HTML view (C: Cart, M: Index)
+11/10/2021 10:21:41 WebMVC		|	WebMVC Customizer - Check for customization (C: Catalog, M: Index)
+11/10/2021 10:21:41 TenantManager	|	Checking for tenant customization (C: Catalog, M: Index)
+11/10/2021 10:21:41 TenantManager	|	Customization was found (C: Catalog, M: Index)
+11/10/2021 10:21:41 WebMVC		|	WebMVC Customizer - run customization (C: Catalog, M: Index)
+11/10/2021 10:21:41 Catlog Customization|	Get catalog from core BL services
+11/10/2021 10:21:41 Catalog API		|	Get catalog
+11/10/2021 10:21:41 Catlog Customization|	Return Custom Catalog View
+11/10/2021 10:21:41 WebMVC		|	WebMVC Customizer - return customized HTML view (C: Catalog, M: Index)
+11/10/2021 10:21:51 WebMVC		|	WebMVC Customizer - Check for customization (C: Catalog, M: Index)
+11/10/2021 10:21:51 TenantManager	|	Checking for tenant customization (C: Catalog, M: Index)
+11/10/2021 10:21:51 TenantManager	|	Customization was found (C: Catalog, M: Index)
+11/10/2021 10:21:51 WebMVC		|	WebMVC Customizer - run customization (C: Catalog, M: Index)
+11/10/2021 10:21:51 Catlog Customization|	Get catalog from core BL services
+11/10/2021 10:21:51 Catalog API		|	Get catalog
+11/10/2021 10:21:51 Catlog Customization|	Return Custom Catalog View
+11/10/2021 10:21:51 WebMVC		|	WebMVC Customizer - return customized HTML view (C: Catalog, M: Index)
+11/10/2021 10:23:54 WebMVC		|	WebMVC Customizer - Check for customization (C: Catalog, M: Index)
+11/10/2021 10:23:54 TenantManager	|	Checking for tenant customization (C: Catalog, M: Index)
+11/10/2021 10:23:54 TenantManager	|	Customization was found (C: Catalog, M: Index)
+11/10/2021 10:23:54 WebMVC		|	WebMVC Customizer - run customization (C: Catalog, M: Index)
+11/10/2021 10:23:54 Catlog Customization|	Get catalog from core BL services
+11/10/2021 10:23:54 Catalog API		|	Get catalog
+11/10/2021 10:23:54 Catlog Customization|	Return Custom Catalog View
+11/10/2021 10:23:54 WebMVC		|	WebMVC Customizer - return customized HTML view (C: Catalog, M: Index)
+11/10/2021 10:24:00 WebMVC		|	View customizations
+11/10/2021 10:24:00 TenantManager	|	Get all teant customiations
+11/10/2021 10:24:00 WebMVC		|	Display customization
+11/10/2021 10:24:10 WebMVC		|	View single customization
+11/10/2021 10:24:10 TenantManager	|	Get customizations for tenat id: 1
+11/10/2021 10:24:10 WebMVC		|	Display single customization

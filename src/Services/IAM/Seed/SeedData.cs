@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using IAM.Data;
 using IAM.Models;
 using IdentityModel;
@@ -29,7 +30,17 @@ namespace IAM
             },
             new ApplicationUser()
             {
+                UserName = "UserOneAdmin",
+                TenantId = SAMPLE_TENANTS.Find(x => x.Name == "one").Id,
+            },
+            new ApplicationUser()
+            {
                 UserName = "UserTwo",
+                TenantId = SAMPLE_TENANTS.Find(x => x.Name == "two").Id,
+            },
+            new ApplicationUser()
+            {
+                UserName = "UserTwoAdmin",
                 TenantId = SAMPLE_TENANTS.Find(x => x.Name == "two").Id,
             }
         };
@@ -57,6 +68,9 @@ namespace IAM
                 {
                     var context = scope.ServiceProvider.GetService<ApplicationDbContext>();
                     context.Database.Migrate();
+
+                    // create user roles
+                    CreateUserRoles(serviceProvider).Wait();
 
                     /*****************
                     * Seed Tenants
@@ -117,6 +131,9 @@ namespace IAM
                      *****************/
                     var userManager = scope.ServiceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
+                    /*****************
+                    * UserOne
+                    *****************/
                     var userOne = SAMPLE_USERS.Find(x => x.UserName == "UserOne");
                     // get user from db
                     var foundUser1 = userManager.FindByNameAsync(userOne.UserName).Result;
@@ -134,6 +151,32 @@ namespace IAM
                         Log.Debug("user1 already exists");
                     }
 
+                    /*****************
+                    * UserOneAdmin
+                    *****************/
+                    var userOneAdmin = SAMPLE_USERS.Find(x => x.UserName == "UserOneAdmin");
+                    // get user from db
+                    var foundUser1Admin = userManager.FindByNameAsync(userOneAdmin.UserName).Result;
+                    if (foundUser1Admin == null)
+                    {
+                        var result = userManager.CreateAsync(userOneAdmin, UNIVERSAL_PASSWORD_FOR_USERS).Result;
+                        if (!result.Succeeded)
+                        {
+                            throw new Exception(result.Errors.First().Description);
+                        }
+                        Log.Debug("user1admin created");
+                        var usr = userManager.FindByNameAsync(userOneAdmin.UserName).Result;
+                        userManager.AddToRoleAsync(usr, "admin").Wait();
+                        Log.Debug("user1admin made admin");
+                    }
+                    else
+                    {
+                        Log.Debug("user1admin already exists");
+                    }
+
+                    /*****************
+                    * UserTwo
+                    *****************/
                     var userTwo = SAMPLE_USERS.Find(x => x.UserName == "UserTwo");
 
                     var foundUserTwo = userManager.FindByNameAsync(userTwo.UserName).Result;
@@ -151,7 +194,45 @@ namespace IAM
                     {
                         Log.Debug("user2 already exists");
                     }
+
+                    /*****************
+                    * UserTwoAdmin
+                    *****************/
+                    var userTwoAdmin = SAMPLE_USERS.Find(x => x.UserName == "UserTwoAdmin");
+
+                    var foundUserTwoAdmin = userManager.FindByNameAsync(userTwoAdmin.UserName).Result;
+                    if (foundUserTwoAdmin == null)
+                    {
+                        var result = userManager.CreateAsync(userTwoAdmin, UNIVERSAL_PASSWORD_FOR_USERS).Result;
+
+                        if (!result.Succeeded)
+                        {
+                            throw new Exception(result.Errors.First().Description);
+                        }
+                        Log.Debug("user2admin created");
+                        var usr = userManager.FindByNameAsync(userTwoAdmin.UserName).Result;
+                        userManager.AddToRoleAsync(usr, "admin").Wait();
+                        Log.Debug("user2admin made admin");
+                    }
+                    else
+                    {
+                        Log.Debug("user2admin already exists");
+                    }
                 }
+            }
+        }
+
+        private static async Task CreateUserRoles(IServiceProvider provider)
+        {
+            var rolesManager = provider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = provider.GetRequiredService<UserManager<ApplicationUser>>();
+
+            IdentityResult adminUserRole;
+            bool doesAdminUserRoleExist = await rolesManager.RoleExistsAsync("admin");
+
+            if (!doesAdminUserRoleExist)
+            {
+                adminUserRole = await rolesManager.CreateAsync(new IdentityRole("admin"));
             }
         }
     }

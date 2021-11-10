@@ -18,6 +18,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Threading.Tasks;
 
 namespace IAM
 {
@@ -76,7 +77,7 @@ namespace IAM
 
         }
 
-        public void Configure(IApplicationBuilder app)
+        public void Configure(IApplicationBuilder app, IServiceProvider services)
         {
             if (Environment.IsDevelopment())
             {
@@ -95,6 +96,7 @@ namespace IAM
             {
                 endpoints.MapDefaultControllerRoute();
             });
-        }
+
+        }     
     }
 }

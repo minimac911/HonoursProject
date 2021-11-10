@@ -40,6 +40,9 @@ namespace IAM.Services
             var claims = GetUserClaims(user);
             // set the issued claims to the geneterated ones
             context.IssuedClaims = claims.ToList();
+            // get role claims and add them to issued claims
+            var roleClaims = context.Subject.FindAll(JwtClaimTypes.Role);
+            context.IssuedClaims.AddRange(roleClaims);
         }
 
         public async Task IsActiveAsync(IsActiveContext context)
@@ -52,7 +55,6 @@ namespace IAM.Services
         {
             // get the tenant id
             var tenant = _tenantContext.Tenant.FirstOrDefault(x => x.Id == user.TenantId);
-
             return new List<Claim>()
             {
                 // set the subject to user id
@@ -63,7 +65,7 @@ namespace IAM.Services
                 new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
                 // set the tenant Id and tenant name
                 new Claim("tenant", user.TenantId.ToString()),
-                new Claim("tenant_name", tenant.Name),
+                new Claim("tenant_name", tenant.Name)
             };
         }
     }

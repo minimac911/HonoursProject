@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authentication.OpenIdConnect;
@@ -160,6 +161,10 @@ namespace WebMVC
                 options.Scope.Add("order");
                 options.Scope.Add("tenant_manager");
                 options.Scope.Add("tenant_customization");
+                options.Scope.Add("roles");
+                // map roles to role
+                options.ClaimActions.MapJsonKey("role", "role", "role");
+                options.TokenValidationParameters.RoleClaimType = "role";
             });
 
             return services;
